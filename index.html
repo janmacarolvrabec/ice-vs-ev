@@ -1004,7 +1004,8 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
 const SEGMENTS = [
   {id:"b", name:"Mestni / mali (B)"},
   {id:"c", name:"Kompaktni (C)"},
-  {id:"suv", name:"SUV / križanci"}
+  {id:"suv", name:"SUV / križanci"},
+  {id:"premium", name:"Premium / luksuzni (E/F)"}
 ];
 
 const ICE = [
@@ -1020,7 +1021,11 @@ const ICE = [
   {seg:"suv", name:"Hyundai Tucson 1.6 T-GDI", price:33900, fuel:"bencin", cons:6.9, serv:470, ins:520, reg:180, tyre:15, res:46},
   {seg:"suv", name:"Kia Sportage 1.6 T-GDI", price:34900, fuel:"bencin", cons:7.0, serv:470, ins:520, reg:180, tyre:15, res:47},
   {seg:"suv", name:"Dacia Duster TCe 130", price:22500, fuel:"bencin", cons:6.3, serv:380, ins:450, reg:150, tyre:14, res:47},
-  {seg:"suv", name:"Toyota RAV4 2.5 Hybrid", price:39900, fuel:"bencin", cons:5.8, serv:430, ins:560, reg:175, tyre:15, res:52}
+  {seg:"suv", name:"Toyota RAV4 2.5 Hybrid", price:39900, fuel:"bencin", cons:5.8, serv:430, ins:560, reg:175, tyre:15, res:52},
+  // Premium / luksuzni (E/F)
+  {seg:"premium", name:"BMW 520d xDrive M Sport Pro Touring", price:83270, fuel:"dizel", cons:5.2, serv:650, ins:1050, reg:420, tyre:22, res:44},
+  {seg:"premium", name:"Mercedes-Benz E 220 d 4MATIC AMG Line", price:79004, fuel:"dizel", cons:5.3, serv:640, ins:1020, reg:400, tyre:22, res:45},
+  {seg:"premium", name:"Audi Q5 Sportback TDI quattro", price:64860, fuel:"dizel", cons:5.8, serv:620, ins:980, reg:380, tyre:21, res:46}
 ];
 
 const EV = [
@@ -1036,7 +1041,11 @@ const EV = [
   {seg:"suv", name:"Hyundai Kona Electric 65 kWh", price:37900, cons:15.8, batt:65, serv:220, ins:540, reg:75, tyre:17, res:45},
   {seg:"suv", name:"Kia EV3 Long Range 81 kWh", price:39900, cons:15.6, batt:81, serv:220, ins:540, reg:75, tyre:17, res:46},
   {seg:"suv", name:"Tesla Model Y RWD 60 kWh", price:44990, cons:16.0, batt:60, serv:190, ins:600, reg:75, tyre:18, res:48},
-  {seg:"suv", name:"Škoda Elroq 55 kWh", price:35900, cons:16.2, batt:55, serv:220, ins:520, reg:75, tyre:16, res:45}
+  {seg:"suv", name:"Škoda Elroq 55 kWh", price:35900, cons:16.2, batt:55, serv:220, ins:520, reg:75, tyre:16, res:45},
+  // Premium / luksuzni (E/F)
+  {seg:"premium", name:"BMW i5 eDrive40 M Sport Pro Touring", price:78700, cons:16.5, batt:84, serv:300, ins:1080, reg:100, tyre:23, res:40},
+  {seg:"premium", name:"Audi A6 Avant e-tron quattro Business", price:82673, cons:17.0, batt:95, serv:300, ins:1120, reg:105, tyre:24, res:41},
+  {seg:"premium", name:"Zeekr 7X Privilege AWD", price:68590, cons:18.5, batt:100, serv:280, ins:1050, reg:100, tyre:23, res:38}
 ];
 
 /* energetska ekvivalenca goriv (kWh na liter, spodnja kurilna vrednost) */

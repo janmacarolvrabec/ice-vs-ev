@@ -10,9 +10,11 @@ tudi brez interneta).
 ## Kaj zna
 
 - **Živ „semafor" prihrankov** v lepljivi glavi — skupni prihranek se preračunava sproti.
-- **Baza vozil** za slovenski trg 2026: 10 klasičnih (3–4 na razred) + komplementarni električni,
-  razvrščeni po razredih (mestni, kompaktni, SUV). Vse WLTP porabe in cene so **urejljive**.
-- **Subvencija Eko sklada** se samodejno nastavi po cenovnem razredu vozila (7.200 / 6.500 / 4.500 €).
+- **Baza vozil** za slovenski trg 2026: klasični + komplementarni električni po štirih razredih
+  (mestni, kompaktni, SUV, **premium / luksuzni E/F**). Vse WLTP porabe in cene so **urejljive**.
+- **Subvencija Eko sklada** se samodejno nastavi po cenovnem razredu (7.200 / 6.500 / 4.500 €;
+  nad 65.000 € **0 €**). Odbitek DDV velja le za BEV **do 80.000 €** — oboje samodejno upoštevano
+  (npr. premium vozila nad tema mejama pravilno dobijo 0).
 - **Sekcije po korakih**: nakup + subvencija · uporaba · gorivo/elektrika · vzdrževanje in dajatve ·
   amortizacija · poslovni scenarij · ogljični odtis.
 - **Energetska ekvivalenca**: koliko kWh nosi „en liter" goriva in koliko manj energije
