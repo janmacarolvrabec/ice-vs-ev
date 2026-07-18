@@ -3,8 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Elektro vs. Bencin — Kalkulator stroškov lastništva</title>
-<meta name="description" content="Primerjaj resnične stroške lastništva električnega in klasičnega avtomobila na slovenskem trgu. Vse številke lahko prilagodiš sam.">
+
+<!-- ============ SEO ============ -->
+<title>Koliko prihraniš z električnim avtomobilom? · Kalkulator stroškov lastništva</title>
+<meta name="description" content="Koliko prihraniš z električnim avtomobilom v primerjavi z bencinskim? Interaktiven kalkulator stroškov lastništva (TCO) za slovenski trg 2026: gorivo, subvencija Eko sklada, servis, boniteta in odbitek DDV za podjetja. Vse številke prilagodiš sam.">
+<meta name="keywords" content="električni avtomobil, prihranek, kalkulator, stroški lastništva, TCO, bencin, dizel, subvencija Eko sklad, boniteta, odbitek DDV, električno vozilo Slovenija, poraba, WLTP, polnjenje">
+<meta name="author" content="Električna vozila Slovenije">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E9F63">
+<!-- Zamenjaj domeno spodaj s svojo (npr. GitHub Pages) pred objavo: -->
+<link rel="canonical" href="https://janmacarolvrabec.github.io/ice-vs-ev/">
+
+<!-- ============ Open Graph (Facebook, LinkedIn, ...) ============ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kalkulator stroškov lastništva · ICE vs EV">
+<meta property="og:locale" content="sl_SI">
+<meta property="og:title" content="Koliko prihraniš z električnim avtomobilom?">
+<meta property="og:description" content="Praktični dokaz za slovenski trg 2026: primerjaj skupne stroške lastništva električnega in bencinskega avta. Gorivo, subvencija, servis, boniteta, odbitek DDV — vse prilagodljivo.">
+<meta property="og:url" content="https://janmacarolvrabec.github.io/ice-vs-ev/">
+<meta property="og:image" content="https://janmacarolvrabec.github.io/ice-vs-ev/share/prihranek-1200x630-facebook-og.png">
+<meta property="og:image:secure_url" content="https://janmacarolvrabec.github.io/ice-vs-ev/share/prihranek-1200x630-facebook-og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="Toliko prihraniš z električnim avtom — skupni prihranek 11.197 € v 5 letih">
+
+<!-- ============ Twitter / X ============ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Koliko prihraniš z električnim avtomobilom?">
+<meta name="twitter:description" content="Interaktiven kalkulator stroškov lastništva za slovenski trg 2026. Primerjaj električni in bencinski avto — z bonitetnimi in DDV prihranki za podjetja.">
+<meta name="twitter:image" content="https://janmacarolvrabec.github.io/ice-vs-ev/share/prihranek-1200x630-facebook-og.png">
+<meta name="twitter:image:alt" content="Toliko prihraniš z električnim avtom — skupni prihranek v 5 letih">
+
+<!-- ============ Structured data (Google rich results) ============ -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Kalkulator stroškov lastništva — električni vs. bencinski avto",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"Web",
+  "inLanguage":"sl",
+  "description":"Koliko prihraniš z električnim avtomobilom v primerjavi z bencinskim? Kalkulator skupnih stroškov lastništva (TCO) za slovenski trg 2026, vključno z boniteto in odbitkom DDV za podjetja.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}
+}
+</script>
+
 <style>
 :root{
   --bg:#EBEEF2; --surface:#FFFFFF; --surface-2:#F4F7F9; --surface-3:#EDF1F4;
@@ -167,6 +211,36 @@ label.fl .hint{color:var(--muted);font-size:11.5px;font-weight:400}
 /* split slider */
 .splitrow{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:4px}
 .splitrow b{color:var(--ink-2)}
+
+/* field note / disclaimer */
+.fnote{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--muted);
+  margin-top:8px;line-height:1.45}
+.fnote .i{flex:none;opacity:.8}
+.grid2 .fnote{margin-top:2px;margin-bottom:12px}
+
+/* ownership segmented control */
+.owner{display:flex;flex-direction:column;gap:10px;padding:18px 0 4px}
+.owner .oc-lab{font-size:13px;font-weight:600;color:var(--ink-2)}
+.segbig{display:flex;gap:6px;background:var(--surface-3);border-radius:12px;padding:5px;
+  max-width:440px}
+.segbig button{flex:1;border:none;background:transparent;color:var(--ink-2);font:inherit;
+  font-size:14.5px;font-weight:700;padding:11px 14px;border-radius:9px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.segbig button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.segbig button .ic{font-size:16px}
+
+/* business-only reveal */
+body:not(.biz) [data-biz-only]{display:none}
+.biz-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;color:#04180F;background:var(--accent);
+  padding:3px 9px;border-radius:100px;vertical-align:middle;margin-left:8px}
+.biz-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-top:16px}
+@media(max-width:620px){.biz-cards{grid-template-columns:1fr}}
+.biz-card{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px}
+.biz-card .bt{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.biz-card .bv{font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--ev-ink);font-variant-numeric:tabular-nums}
+.biz-card .bd2{font-size:12.5px;color:var(--muted);margin-top:4px}
+.biz-card.muted .bv{color:var(--muted)}
 
 /* toggle */
 .toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:var(--ink-2)}
@@ -360,6 +434,14 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <div class="sec-chevron">▾</div>
     </div>
     <div class="sec-body">
+      <div class="owner">
+        <div class="oc-lab">Kdo je lastnik vozila?</div>
+        <div class="segbig" id="ownerSeg" role="group" aria-label="Lastništvo vozila">
+          <button data-owner="private" aria-pressed="true"><span class="ic">🏠</span>Zasebnik</button>
+          <button data-owner="biz" aria-pressed="false"><span class="ic">🏢</span>Podjetje</button>
+        </div>
+        <div class="fnote"><span class="i">ℹ️</span><span>Pri poslovnem lastništvu se odpre dodaten scenarij: <b>boniteta</b> (za električnega 0 %) in <b>odbitek DDV</b> — glej sekcijo 7.</span></div>
+      </div>
       <div class="grid2">
         <div>
           <div class="col-head ice"><span class="chip"></span>Klasični</div>
@@ -500,18 +582,27 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
         <div>
           <div class="col-head ice"><span class="chip"></span>Klasični — €/leto</div>
           <div class="field"><label class="fl" for="servIce">Servis in olje</label><div class="inp unit"><input id="servIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
-          <div class="field"><label class="fl" for="insIce">Zavarovanje</label><div class="inp unit"><input id="insIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
-          <div class="field"><label class="fl" for="regIce">Registracija</label><div class="inp unit"><input id="regIce" type="number" min="0" step="5"><span class="unit-tag">€</span></div></div>
-          <div class="field"><label class="fl" for="tyreIce">Gume (letni delež)</label><div class="inp unit"><input id="tyreIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="insIce">Zavarovanje <span class="hint">okvirno</span></label><div class="inp unit"><input id="insIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="regIce">Registracija <span class="hint">okvirno</span></label><div class="inp unit"><input id="regIce" type="number" min="0" step="5"><span class="unit-tag">€</span></div></div>
+          <div class="field">
+            <label class="fl" for="tyreIce">Obraba gum <span class="hint">na 1.000 km</span></label>
+            <div class="inp unit"><input id="tyreIce" type="number" min="0" step="0.5"><span class="unit-tag">€</span></div>
+            <div class="fnote"><span class="i">≈</span><span><b id="tyreYearIce">–</b> na leto pri tvoji kilometrini</span></div>
+          </div>
         </div>
         <div>
           <div class="col-head ev"><span class="chip"></span>Električni — €/leto</div>
           <div class="field"><label class="fl" for="servEv">Servis</label><div class="inp unit"><input id="servEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
-          <div class="field"><label class="fl" for="insEv">Zavarovanje</label><div class="inp unit"><input id="insEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
-          <div class="field"><label class="fl" for="regEv">Registracija</label><div class="inp unit"><input id="regEv" type="number" min="0" step="5"><span class="unit-tag">€</span></div></div>
-          <div class="field"><label class="fl" for="tyreEv">Gume (letni delež)</label><div class="inp unit"><input id="tyreEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="insEv">Zavarovanje <span class="hint">okvirno</span></label><div class="inp unit"><input id="insEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="regEv">Registracija <span class="hint">okvirno</span></label><div class="inp unit"><input id="regEv" type="number" min="0" step="5"><span class="unit-tag">€</span></div></div>
+          <div class="field">
+            <label class="fl" for="tyreEv">Obraba gum <span class="hint">na 1.000 km</span></label>
+            <div class="inp unit"><input id="tyreEv" type="number" min="0" step="0.5"><span class="unit-tag">€</span></div>
+            <div class="fnote"><span class="i">≈</span><span><b id="tyreYearEv">–</b> na leto · električni so težji, zato se gume nekoliko hitreje obrabijo</span></div>
+          </div>
         </div>
       </div>
+      <div class="fnote"><span class="i">ℹ️</span><span><b>Opomba:</b> Zavarovanje in registracija sta <b>okvirni vrednosti</b>. Premija zavarovanja je odvisna od voznika, starosti, regije, bonusa in obsega kritja (obvezno / kasko); letna dajatev za registracijo je odvisna od moči in vrste vozila (električna imajo znižano dajatev). Strošek gum se računa iz obrabe na kilometer × tvoja letna kilometrina. Vpiši svoje dejanske zneske za natančen izračun.</span></div>
     </div>
   </section>
 
@@ -549,6 +640,119 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: business scenario ===== -->
+  <section class="section" data-sec data-biz-only>
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div class="sec-titles">
+        <div class="sec-title">Poslovni scenarij <span class="biz-tag">Podjetje</span></div>
+        <div class="sec-desc">Boniteta in odbitek DDV — dve veliki davčni prednosti električnega.</div>
+      </div>
+      <div class="sec-contrib"><span class="cl">Dodatni prihranek</span><span id="cBiz">–</span></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+
+      <!-- DDV -->
+      <div class="shared" style="padding-top:16px">
+        <div class="field">
+          <label class="fl" for="bizShare">Delež poslovne rabe</label>
+          <div class="rangewrap"><input id="bizShare" type="range" min="0" max="100" step="5"><span class="rout tnum" id="bizShareOut"></span></div>
+          <div class="fnote"><span class="i">≈</span><span>DDV se odbije v sorazmerju s poslovno rabo; pri <b>100 %</b> (izključno poslovno) poln odbitek</span></div>
+        </div>
+      </div>
+      <div class="biz-cards">
+        <div class="biz-card muted" id="vatCardIce">
+          <div class="bt">🟠 Klasični — odbitek DDV</div>
+          <div class="bv" id="vatIce">–</div>
+          <div class="bd2">Osebni bencinski/dizelski avto: vstopni DDV se <b>ne odbije</b>.</div>
+        </div>
+        <div class="biz-card" id="vatCardEv">
+          <div class="bt">🟢 Električni — odbitek DDV</div>
+          <div class="bv" id="vatEv">–</div>
+          <div class="bd2">BEV do 80.000 € z DDV: odbitek <b>sorazmerno z deležem poslovne rabe</b> (66.b člen ZDDV-1).</div>
+        </div>
+      </div>
+      <div class="fnote"><span class="i">ℹ️</span><span>Pogoj za odbitek DDV pri električnem: ničelne emisije CO₂, nabavna vrednost z DDV do <b>80.000 €</b> in uporaba za obdavčeno dejavnost. Odbije se v <b>sorazmerju med poslovno in zasebno rabo</b> — pri izključno poslovni rabi celoten vstopni DDV. Podjetje lahko odbija tudi DDV od stroškov polnjenja in servisa električnega — tu <b>ni</b> upoštevano (konservativno).</span></div>
+
+      <!-- Boniteta -->
+      <div class="col-head" style="margin-top:26px;color:var(--ink-2)">Boniteta za zasebno rabo službenega vozila</div>
+      <div class="shared">
+        <div class="field">
+          <label class="fl" for="bonRate">Efektivna obdavčitev bonitete</label>
+          <div class="rangewrap"><input id="bonRate" type="range" min="20" max="70" step="1"><span class="rout tnum" id="bonRateOut"></span></div>
+          <div class="fnote"><span class="i">≈</span><span>dohodnina + prispevki; odvisno od plače (privzeto 48 %)</span></div>
+        </div>
+      </div>
+      <div class="biz-cards">
+        <div class="biz-card muted">
+          <div class="bt">🟠 Klasični — boniteta</div>
+          <div class="bv" id="bonIce">–</div>
+          <div class="bd2"><b id="bonBaseIce">–</b> osnove/leto (1,5 % vrednosti mesečno) × obdavčitev — <b>strošek voznika</b>.</div>
+        </div>
+        <div class="biz-card">
+          <div class="bt">🟢 Električni — boniteta</div>
+          <div class="bv">0 €</div>
+          <div class="bd2">Za povsem električna vozila je boniteta <b>0 %</b>, brez omejitve vrednosti, do konca <b>2029</b>.</div>
+        </div>
+      </div>
+      <div class="fnote"><span class="i">ℹ️</span><span><b>Kako je vključeno:</b> boniteta klasičnega je v poslovnem načinu dodana kot letni strošek (davek, ki ga plača voznik), odbitek DDV pa zniža nabavno vrednost električnega. Oboje se pozna v skupnem izračunu zgoraj. Za natančno davčno obravnavo se posvetuj z računovodjo.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Section: CO2 ===== -->
+  <section class="section" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div class="sec-titles">
+        <div class="sec-title">Ogljični odtis (CO₂)</div>
+        <div class="sec-desc">Baterija ima ogljični „dolg" ob izdelavi — poglej, kdaj in za koliko ga električni povrne.</div>
+      </div>
+      <div class="sec-contrib"><span class="cl">Prihranek CO₂</span><span id="cCo2">–</span></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <div class="owner">
+        <div class="oc-lab">Vir elektrike za polnjenje</div>
+        <div class="segbig" id="gridSeg" role="group" aria-label="Vir elektrike" style="max-width:560px">
+          <button data-grid="clean" aria-pressed="false"><span class="ic">☢️</span>Jedrska / OVE</button>
+          <button data-grid="si" aria-pressed="true"><span class="ic">🇸🇮</span>Slovensko omrežje</button>
+          <button data-grid="coal" aria-pressed="false"><span class="ic">🏭</span>Premog (TEŠ)</button>
+        </div>
+        <div class="fnote"><span class="i">⚡</span><span id="gridNote">Slovensko omrežje 2025: ~173 g CO₂/kWh (39 % jedrska, 29 % hidro, 12 % premog).</span></div>
+      </div>
+
+      <div class="energy-note" style="margin-top:8px">
+        <div class="ico">🌍</div>
+        <div class="txt">
+          <b>Dokaz skozi življenjsko dobo.</b> Električni na začetku „dolguje" CO₂ zaradi izdelave baterije
+          (<b id="co2DebtTxt">–</b>), a to poravna po <b id="co2BeTxt">–</b> in nato vsak kilometer prihrani.
+          V tvoji dobi (<b id="co2KmTxt">–</b>) izpusti <b id="co2SaveTxt">–</b> manj CO₂ — to je <b id="co2PctTxt">–</b> manj.
+          <div class="eq-bars">
+            <div class="eq-row ice"><span class="nm">Klasični — skupaj CO₂</span><span class="bar" id="co2BarIce"></span><span class="vl" id="co2ValIce">–</span></div>
+            <div class="eq-row ev"><span class="nm">Električni — skupaj CO₂</span><span class="bar" id="co2BarEv"></span><span class="vl" id="co2ValEv">–</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <div class="col-head" style="color:var(--ink-2)">Predpostavke — izdelava & gorivo</div>
+          <div class="field"><label class="fl" for="co2Batt">CO₂ izdelave baterije <span class="hint">ICCT 2025</span></label><div class="inp unit"><input id="co2Batt" type="number" min="0" step="0.1"><span class="unit-tag">kg/kWh</span></div></div>
+          <div class="field"><label class="fl" for="co2Petrol">CO₂ bencina <span class="hint">od vira do kolesa</span></label><div class="inp unit"><input id="co2Petrol" type="number" min="0" step="0.05"><span class="unit-tag">kg/l</span></div></div>
+          <div class="field"><label class="fl" for="co2Diesel">CO₂ dizla <span class="hint">od vira do kolesa</span></label><div class="inp unit"><input id="co2Diesel" type="number" min="0" step="0.05"><span class="unit-tag">kg/l</span></div></div>
+        </div>
+        <div>
+          <div class="col-head" style="color:var(--ink-2)">Predpostavke — elektrika</div>
+          <div class="field"><label class="fl" for="co2Grid">CO₂ elektrike <span class="hint" id="gridLabel">omrežje</span></label><div class="inp unit"><input id="co2Grid" type="number" min="0" step="1" readonly tabindex="-1"><span class="unit-tag">g/kWh</span></div></div>
+          <div class="field"><label class="fl" for="co2Loss">Izgube pri polnjenju</label><div class="inp unit"><input id="co2Loss" type="number" min="0" step="1"><span class="unit-tag">%</span></div></div>
+          <div class="fnote"><span class="i">📚</span><span>Baterija: <b>72,8 kg CO₂e/kWh</b> (ICCT 2025, model GREET). Študije ICCT: BEV v EU izpusti <b>~73 % manj</b> v celotni življenjski dobi (do 78 % z OVE), ogljični dolg baterije se poravna po <b>~17.000 km</b>.</span></div>
+        </div>
+      </div>
+      <div class="fnote"><span class="i">ℹ️</span><span><b>Opomba:</b> Emisije izdelave vozila (brez baterije) so pri obeh podobne, zato se v razliki izničijo; upoštevan je le dodatni ogljični dolg baterije električnega. Vrednosti so okvirne, iz javnih študij (ICCT, ElectricityMaps) — za lasten scenarij jih lahko prilagodiš.</span></div>
     </div>
   </section>
 
@@ -606,11 +810,14 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
     <div class="foot-grid">
       <div>
         <h4>Kako računa</h4>
-        <p>Skupni strošek lastništva (TCO) = (nabavna cena − subvencija − preostala vrednost) + vsota letnih stroškov
-        (energija, servis, zavarovanje, registracija, gume) čez izbrano dobo. Strošek na km deli TCO s prevoženimi kilometri.
-        „Točka preloma" primerja denar iz žepa brez upoštevanja preostale vrednosti.</p>
-        <p class="disclaimer">Privzete cene vozil so okvirne za slovenski trg 2026 in jih je treba preveriti pri prodajalcu.
-        Vse vrednosti lahko urediš — orodje je pripomoček za lasten izračun, ne uradna ponudba.</p>
+        <p>Skupni strošek lastništva (TCO) = (nabavna cena − subvencija − preostala vrednost − odbitek DDV*) + vsota letnih
+        stroškov (energija, servis, zavarovanje, registracija, gume, boniteta*) čez izbrano dobo.
+        Strošek na km deli TCO s prevoženimi kilometri. „Točka preloma" primerja denar iz žepa brez preostale vrednosti.
+        <br>*Odbitek DDV in boniteta se upoštevata le pri <b>poslovnem lastništvu</b>. Strošek gum se računa iz obrabe
+        na kilometer × letna kilometrina. CO₂: primerja se dodatni ogljični dolg baterije + operativne emisije skozi dobo.</p>
+        <p class="disclaimer">Cene vozil, zavarovanje in registracija so <b>okvirne vrednosti</b> za slovenski trg 2026 in jih je treba
+        preveriti pri prodajalcu oz. zavarovalnici. Vse vrednosti lahko urediš — orodje je pripomoček za lasten izračun,
+        ne uradna ponudba ali davčni nasvet.</p>
       </div>
       <div>
         <h4>Viri podatkov (jul. 2026)</h4>
@@ -618,7 +825,9 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           <li>Cene goriv: regulirane cene, <a href="https://www.energetika-portal.si/podrocja/energetika/cene-naftnih-derivatov/regulirane-cene-naftnih-derivatov/" target="_blank" rel="noopener">Portal Energetika</a></li>
           <li>Subvencije: <a href="https://www.ekosklad.si/prebivalstvo/pridobite-spodbudo/seznam-spodbud/elektricna-vozila-3" target="_blank" rel="noopener">Eko sklad</a> / <a href="https://borzen.si/sl-si/podpore-za-mobilnost/subvencije-za-nakup-elektricnih-vozil/subvencije-za-e-vozila-fizicnih-oseb" target="_blank" rel="noopener">Borzen</a></li>
           <li>Cene polnjenja: <a href="https://www.petrol.si/mobilnost/zasebni-uporabniki/javne-elektricne-polnilnice/cenik-polnjenje" target="_blank" rel="noopener">Petrol</a></li>
-          <li>Energija goriv: spodnja kurilna vrednost (bencin ≈ 9,5 kWh/l, dizel ≈ 10,6 kWh/l)</li>
+          <li>Boniteta 0 % za EV (do 2029) in DDV odbitek (66.b člen ZDDV-1): <a href="https://data.si/blog/boniteta-za-elektricna-vozila/" target="_blank" rel="noopener">Data</a>, <a href="https://www.findinfo.si/medijsko-sredisce/v-srediscu/298788" target="_blank" rel="noopener">FinD-INFO</a></li>
+          <li>CO₂ življenjski cikel in baterija (72,8 kg/kWh, −73 %): <a href="https://theicct.org/publication/electric-cars-life-cycle-analysis-emissions-europe-jul25/" target="_blank" rel="noopener">ICCT 2025</a></li>
+          <li>Ogljičnost omrežja (173 g/kWh): <a href="https://www.electricitymaps.com/grid-in-review-2025/slovenia" target="_blank" rel="noopener">Electricity Maps</a></li>
         </ul>
         <p style="margin-top:12px">Za skupino <b>Električna vozila Slovenije</b>. Deli povezavo — vsak si lahko izračuna svoj scenarij.</p>
       </div>
@@ -630,6 +839,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
 "use strict";
 /* ============ Podatkovna baza vozil (slovenski trg, okvirne cene 2026) ============ */
 /* poraba: ICE l/100km (WLTP), EV kWh/100km (WLTP). Cene v EUR z DDV. */
+/* tyre = obraba gum v EUR na 1.000 km (komplet gum / življenjska doba). */
 const SEGMENTS = [
   {id:"b", name:"Mestni / mali (B)"},
   {id:"c", name:"Kompaktni (C)"},
@@ -638,34 +848,34 @@ const SEGMENTS = [
 
 const ICE = [
   // B
-  {seg:"b", name:"Renault Clio TCe 90", price:19900, fuel:"bencin", cons:5.4, serv:340, ins:420, reg:120, tyre:130, res:46},
-  {seg:"b", name:"Volkswagen Polo 1.0 TSI", price:21500, fuel:"bencin", cons:5.3, serv:360, ins:430, reg:120, tyre:130, res:48},
-  {seg:"b", name:"Peugeot 208 PureTech 100", price:20900, fuel:"bencin", cons:5.5, serv:350, ins:420, reg:120, tyre:130, res:44},
+  {seg:"b", name:"Renault Clio TCe 90", price:19900, fuel:"bencin", cons:5.4, serv:340, ins:420, reg:120, tyre:11, res:46},
+  {seg:"b", name:"Volkswagen Polo 1.0 TSI", price:21500, fuel:"bencin", cons:5.3, serv:360, ins:430, reg:120, tyre:11, res:48},
+  {seg:"b", name:"Peugeot 208 PureTech 100", price:20900, fuel:"bencin", cons:5.5, serv:350, ins:420, reg:120, tyre:11, res:44},
   // C
-  {seg:"c", name:"Volkswagen Golf 1.5 TSI", price:29900, fuel:"bencin", cons:5.4, serv:420, ins:480, reg:150, tyre:170, res:47},
-  {seg:"c", name:"Škoda Octavia 1.5 TSI", price:27500, fuel:"bencin", cons:5.3, serv:410, ins:470, reg:150, tyre:170, res:48},
-  {seg:"c", name:"Toyota Corolla 1.8 Hybrid", price:28900, fuel:"bencin", cons:4.6, serv:360, ins:470, reg:145, tyre:160, res:50},
+  {seg:"c", name:"Volkswagen Golf 1.5 TSI", price:29900, fuel:"bencin", cons:5.4, serv:420, ins:480, reg:150, tyre:13, res:47},
+  {seg:"c", name:"Škoda Octavia 1.5 TSI", price:27500, fuel:"bencin", cons:5.3, serv:410, ins:470, reg:150, tyre:13, res:48},
+  {seg:"c", name:"Toyota Corolla 1.8 Hybrid", price:28900, fuel:"bencin", cons:4.6, serv:360, ins:470, reg:145, tyre:13, res:50},
   // SUV
-  {seg:"suv", name:"Hyundai Tucson 1.6 T-GDI", price:33900, fuel:"bencin", cons:6.9, serv:470, ins:520, reg:180, tyre:200, res:46},
-  {seg:"suv", name:"Kia Sportage 1.6 T-GDI", price:34900, fuel:"bencin", cons:7.0, serv:470, ins:520, reg:180, tyre:200, res:47},
-  {seg:"suv", name:"Dacia Duster TCe 130", price:22500, fuel:"bencin", cons:6.3, serv:380, ins:450, reg:150, tyre:180, res:47},
-  {seg:"suv", name:"Toyota RAV4 2.5 Hybrid", price:39900, fuel:"bencin", cons:5.8, serv:430, ins:560, reg:175, tyre:210, res:52}
+  {seg:"suv", name:"Hyundai Tucson 1.6 T-GDI", price:33900, fuel:"bencin", cons:6.9, serv:470, ins:520, reg:180, tyre:15, res:46},
+  {seg:"suv", name:"Kia Sportage 1.6 T-GDI", price:34900, fuel:"bencin", cons:7.0, serv:470, ins:520, reg:180, tyre:15, res:47},
+  {seg:"suv", name:"Dacia Duster TCe 130", price:22500, fuel:"bencin", cons:6.3, serv:380, ins:450, reg:150, tyre:14, res:47},
+  {seg:"suv", name:"Toyota RAV4 2.5 Hybrid", price:39900, fuel:"bencin", cons:5.8, serv:430, ins:560, reg:175, tyre:15, res:52}
 ];
 
 const EV = [
   // B
-  {seg:"b", name:"Renault 5 E-Tech 40 kWh", price:24900, cons:14.7, batt:40, serv:190, ins:430, reg:60, tyre:130, res:44},
-  {seg:"b", name:"Citroën ë-C3 44 kWh", price:23300, cons:16.0, batt:44, serv:180, ins:420, reg:60, tyre:130, res:42},
-  {seg:"b", name:"Peugeot e-208 51 kWh", price:29900, cons:15.0, batt:51, serv:200, ins:440, reg:60, tyre:130, res:43},
+  {seg:"b", name:"Renault 5 E-Tech 40 kWh", price:24900, cons:14.7, batt:40, serv:190, ins:430, reg:60, tyre:12, res:44},
+  {seg:"b", name:"Citroën ë-C3 44 kWh", price:23300, cons:16.0, batt:44, serv:180, ins:420, reg:60, tyre:12, res:42},
+  {seg:"b", name:"Peugeot e-208 51 kWh", price:29900, cons:15.0, batt:51, serv:200, ins:440, reg:60, tyre:12, res:43},
   // C
-  {seg:"c", name:"Volkswagen ID.3 Pro 59 kWh", price:39900, cons:15.5, batt:59, serv:220, ins:500, reg:70, tyre:180, res:44},
-  {seg:"c", name:"Tesla Model 3 RWD 60 kWh", price:41990, cons:14.0, batt:60, serv:180, ins:560, reg:70, tyre:190, res:48},
-  {seg:"c", name:"MG4 Electric 64 kWh", price:32900, cons:16.5, batt:64, serv:210, ins:480, reg:70, tyre:170, res:41},
+  {seg:"c", name:"Volkswagen ID.3 Pro 59 kWh", price:39900, cons:15.5, batt:59, serv:220, ins:500, reg:70, tyre:15, res:44},
+  {seg:"c", name:"Tesla Model 3 RWD (Standard) 60 kWh", price:34990, cons:14.0, batt:60, serv:180, ins:560, reg:70, tyre:15, res:48},
+  {seg:"c", name:"MG4 Electric 64 kWh", price:32900, cons:16.5, batt:64, serv:210, ins:480, reg:70, tyre:14, res:41},
   // SUV
-  {seg:"suv", name:"Hyundai Kona Electric 65 kWh", price:37900, cons:15.8, batt:65, serv:220, ins:540, reg:75, tyre:210, res:45},
-  {seg:"suv", name:"Kia EV3 Long Range 81 kWh", price:39900, cons:15.6, batt:81, serv:220, ins:540, reg:75, tyre:210, res:46},
-  {seg:"suv", name:"Tesla Model Y RWD 60 kWh", price:44990, cons:16.0, batt:60, serv:190, ins:600, reg:75, tyre:220, res:48},
-  {seg:"suv", name:"Škoda Elroq 55 kWh", price:35900, cons:16.2, batt:55, serv:220, ins:520, reg:75, tyre:200, res:45}
+  {seg:"suv", name:"Hyundai Kona Electric 65 kWh", price:37900, cons:15.8, batt:65, serv:220, ins:540, reg:75, tyre:17, res:45},
+  {seg:"suv", name:"Kia EV3 Long Range 81 kWh", price:39900, cons:15.6, batt:81, serv:220, ins:540, reg:75, tyre:17, res:46},
+  {seg:"suv", name:"Tesla Model Y RWD 60 kWh", price:44990, cons:16.0, batt:60, serv:190, ins:600, reg:75, tyre:18, res:48},
+  {seg:"suv", name:"Škoda Elroq 55 kWh", price:35900, cons:16.2, batt:55, serv:220, ins:520, reg:75, tyre:16, res:45}
 ];
 
 /* energetska ekvivalenca goriv (kWh na liter, spodnja kurilna vrednost) */
@@ -675,8 +885,13 @@ const KWH_PER_L = {bencin:9.5, dizel:10.6};
 const DEF = {
   fuelBencin:1.588, fuelDizel:1.723,
   priceHome:0.17, pricePublic:0.42, // javno = mešanica AC 0.35 / DC 0.69 -> ~0.42
-  kmYear:15000, years:5, homeShare:80
+  kmYear:15000, years:5, homeShare:80, bonRate:48
 };
+
+/* davčne konstante (Slovenija 2026) */
+const VAT = 0.22;                 // splošna stopnja DDV
+const VAT_EV_CAP = 80000;         // meja vrednosti za odbitek DDV pri BEV (66.b člen ZDDV-1)
+const BONITETA_M = 0.015;         // mesečna boniteta = 1,5 % nabavne vrednosti (klasični); EV = 0
 
 const EUR = n => Math.round(n).toLocaleString("sl-SI") + " €";
 const EUR1 = n => (Math.round(n*10)/10).toLocaleString("sl-SI",{minimumFractionDigits:1,maximumFractionDigits:1}) + " €";
@@ -692,7 +907,7 @@ function autoSubsidy(price){
 }
 
 /* ============ state ============ */
-let state = {seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true};
+let state = {seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, owner:"private", grid:"si"};
 
 /* populate segment buttons */
 const segbar = $("segbar");
@@ -731,6 +946,32 @@ function loadVehicleDefaults(){
 $("selIce").onchange=e=>{ state.iceIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
 $("selEv").onchange=e=>{ state.evIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
 
+/* ownership segmented control */
+const ownerSeg=$("ownerSeg");
+function syncOwner(){
+  [...ownerSeg.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.owner===state.owner));
+  document.body.classList.toggle("biz", state.owner==="biz");
+}
+[...ownerSeg.children].forEach(b=>{
+  b.onclick=()=>{ state.owner=b.dataset.owner; syncOwner(); recompute(); };
+});
+
+/* electricity source for CO2 (g CO2/kWh) */
+const GRID = {
+  clean:{g:40,  label:"jedrska / OVE", note:"Jedrska in obnovljivi viri: ~40 g CO₂/kWh (nizkoogljično; jedrska ~12 g, sonce/veter ~30–50 g)."},
+  si:   {g:173, label:"slov. omrežje", note:"Slovensko omrežje 2025: ~173 g CO₂/kWh (39 % jedrska, 29 % hidro, 12 % premog)."},
+  coal: {g:1000,label:"premog (TEŠ)", note:"Lignitna elektrarna (TEŠ): ~1.000 g CO₂/kWh — najbolj ogljično intenziven scenarij."}
+};
+const gridSeg=$("gridSeg");
+function syncGrid(){
+  [...gridSeg.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.grid===state.grid));
+  const g=GRID[state.grid];
+  $("co2Grid").value=g.g; $("gridNote").textContent=g.note; $("gridLabel").textContent=g.label;
+}
+[...gridSeg.children].forEach(b=>{
+  b.onclick=()=>{ state.grid=b.dataset.grid; syncGrid(); recompute(); };
+});
+
 /* subsidy manual override detection */
 $("priceEv").addEventListener("input",()=>{ if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value); } recompute(); });
 $("subsidy").addEventListener("input",()=>{ state.subsidyAuto=false; $("subHint").textContent="ročno"; recompute(); });
@@ -763,9 +1004,33 @@ function recompute(){
   const eIce = kmYear/100*consIce*fuelPrice;
   const eEv  = kmYear/100*consEv*evPricePerKwh;
 
-  // yearly running (non-energy)
-  const runIce = val("servIce")+val("insIce")+val("regIce")+val("tyreIce");
-  const runEv  = val("servEv")+val("insEv")+val("regEv")+val("tyreEv");
+  // tyre wear per km -> annual
+  const tyreIceYear = kmYear/1000*val("tyreIce");
+  const tyreEvYear  = kmYear/1000*val("tyreEv");
+  $("tyreYearIce").textContent=EUR(tyreIceYear);
+  $("tyreYearEv").textContent=EUR(tyreEvYear);
+
+  // ---- business scenario: DDV odbitek + boniteta ----
+  const biz = state.owner==="biz";
+  const bizShare = val("bizShare")/100;      // delež poslovne rabe
+  const bonRate = val("bonRate")/100;
+  $("bizShareOut").textContent = Math.round(bizShare*100)+"%";
+  $("bonRateOut").textContent = Math.round(val("bonRate"))+"%";
+  // odbitek DDV: le pri BEV do 80.000 €, sorazmerno z deležem poslovne rabe; osebni klasični avto nima odbitka
+  const vatEvFull = (priceEv>0 && priceEv<=VAT_EV_CAP) ? priceEv*VAT/(1+VAT) : 0;
+  const vatEv = biz ? vatEvFull*bizShare : 0;
+  // boniteta: klasični 1,5 % vrednosti mesečno; električni 0
+  const bonBaseIce = biz ? priceIce*BONITETA_M*12 : 0;   // letna osnova bonitete
+  const bonTaxIce  = bonBaseIce*bonRate;                 // dejanski letni strošek voznika
+  // poslovne kartice
+  $("vatEv").textContent  = biz ? (vatEvFull>0 ? "−"+EUR(vatEv) : "0 € (nad 80.000 €)") : "—";
+  $("vatIce").textContent = biz ? "0 €" : "—";
+  $("bonBaseIce").textContent = EUR(bonBaseIce);
+  $("bonIce").textContent = biz ? "−"+EUR(bonTaxIce) : "—";
+
+  // yearly running (non-energy) — vzdrževanje (brez bonitete)
+  const runIce = val("servIce")+val("insIce")+val("regIce")+tyreIceYear;
+  const runEv  = val("servEv")+val("insEv")+val("regEv")+tyreEvYear;
 
   // residual
   const resIcePct=val("resIce"), resEvPct=val("resEv");
@@ -774,23 +1039,33 @@ function recompute(){
   $("resIceOut").textContent=resIcePct+"%"; $("resEvOut").textContent=resEvPct+"%";
   $("resIceEur").textContent=EUR(resIceEur); $("resEvEur").textContent=EUR(resEvEur);
 
-  // upfront (out of pocket)
+  // upfront (out of pocket) — EV znižan za odbitek DDV v poslovnem načinu
   const upIce = priceIce;
-  const upEv  = priceEv - subsidy;
+  const upEv  = priceEv - subsidy - vatEv;
 
   // depreciation cost (only if toggle)
   const depIce = depOn ? (priceIce - resIceEur) : 0;
-  const depEv  = depOn ? (priceEv - subsidy - resEvEur) : 0;
+  const depEv  = depOn ? (priceEv - subsidy - vatEv - resEvEur) : 0;
+
+  // annual totals (boniteta le pri klasičnem v poslovnem načinu)
+  const yrIce = eIce + runIce + bonTaxIce;
+  const yrEv  = eEv + runEv;
 
   // totals over period
   const energyIce=eIce*years, energyEv=eEv*years;
   const maintIce=runIce*years, maintEv=runEv*years;
+  const bonTotal = bonTaxIce*years;
   const purchaseIce = depOn ? depIce : upIce;
   const purchaseEv  = depOn ? depEv  : upEv;
 
-  const totIce = purchaseIce + energyIce + maintIce;
+  const totIce = purchaseIce + energyIce + maintIce + bonTotal;
   const totEv  = purchaseEv  + energyEv  + maintEv;
   const save = totIce - totEv; // >0 => EV cheaper
+
+  // dodatni poslovni prihranek (DDV enkratno + boniteta v dobi)
+  const bizSave = vatEv + bonTotal;
+  $("cBiz").textContent = signed(bizSave);
+  $("cBiz").style.color = "var(--ev-ink)";
 
   // km per period
   const totalKm = kmYear*years;
@@ -847,42 +1122,47 @@ function recompute(){
   $("kSave").parentElement.querySelector(".kv").style.color=evWins?"var(--good)":"var(--bad)";
   $("kSaveSub").textContent=evWins?"prihranek z EV v dobi":"doplačilo za EV v dobi";
 
-  // break-even (out of pocket, ignoring residual)
-  const be = breakEven(upIce, upEv, eIce+runIce, eEv+runEv);
+  // break-even (out of pocket, ignoring residual; incl. boniteta & DDV v poslovnem načinu)
+  const be = breakEven(upIce, upEv, yrIce, yrEv);
   $("kBreak").textContent = be===null? "nikoli" : be<=0? "takoj" : NUM(be,1)+" let";
   $("kKmIce").textContent=EUR1(kmIce*100)+"/100km";
   $("kKmEv").textContent=EUR1(kmEv*100)+"/100km";
   // show also per 1 km small
-  $("kKmIce").nextElementSibling.textContent=NUM(kmIce,2).replace(",",",")+" €/km · vse vključeno";
+  $("kKmIce").nextElementSibling.textContent=NUM(kmIce,2)+" €/km · vse vključeno";
   $("kKmEv").nextElementSibling.textContent=NUM(kmEv,2)+" €/km · vse vključeno";
 
   // ---- breakdown bars ----
-  renderBreakdown([
+  const bdRows=[
     {label: depOn?"Nakup (amortizacija)":"Nakup − subvencija", ice:purchaseIce, ev:purchaseEv},
     {label:"Energija", ice:energyIce, ev:energyEv},
-    {label:"Servis + gume", ice:(val("servIce")+val("tyreIce"))*years, ev:(val("servEv")+val("tyreEv"))*years},
+    {label:"Servis + gume", ice:(val("servIce")+tyreIceYear)*years, ev:(val("servEv")+tyreEvYear)*years},
     {label:"Zavarovanje", ice:val("insIce")*years, ev:val("insEv")*years},
-    {label:"Registracija", ice:val("regIce")*years, ev:val("regEv")*years},
-    {label:"SKUPAJ", ice:totIce, ev:totEv, sum:true}
-  ]);
-  $("bdSub").textContent = NUM(kmYear)+" km/leto × "+years+" let = "+NUM(totalKm)+" km"+(depOn?" · z upoštevano preostalo vrednostjo":" · brez amortizacije");
+    {label:"Registracija", ice:val("regIce")*years, ev:val("regEv")*years}
+  ];
+  if(biz) bdRows.push({label:"Boniteta (dohodnina)", ice:bonTotal, ev:0});
+  bdRows.push({label:"SKUPAJ", ice:totIce, ev:totEv, sum:true});
+  renderBreakdown(bdRows);
+  $("bdSub").textContent = NUM(kmYear)+" km/leto × "+years+" let = "+NUM(totalKm)+" km"+(depOn?" · z upoštevano preostalo vrednostjo":" · brez amortizacije")+(biz?" · poslovno lastništvo":"");
 
   // ---- break-even chart ----
-  renderChart(upIce, upEv, eIce+runIce, eEv+runEv, years, be);
+  renderChart(upIce, upEv, yrIce, yrEv, years, be);
   $("beNote").innerHTML = be===null
     ? "V teh pogojih se višja cena električnega <b>ne povrne</b> v smiselni dobi — klasični ostaja cenejši iz žepa."
     : be<=0
-      ? "Električni je cenejši <b>že ob nakupu</b> (po subvenciji) in razlika z leti le raste."
+      ? "Električni je cenejši <b>že ob nakupu</b>"+(biz?" (po subvenciji in odbitku DDV)":" (po subvenciji)")+" in razlika z leti le raste."
       : "Električni na začetku stane več, a nižji stroški vožnje razliko poravnajo po <b>"+NUM(be,1)+" letih</b>. Po tem vsak kilometer dela plus.";
 
   // ---- table ----
-  renderTable({purchaseIce,purchaseEv,energyIce,energyEv,maintIce,maintEv,totIce,totEv,depOn,
+  renderTable({purchaseIce,purchaseEv,energyIce,energyEv,maintIce,maintEv,totIce,totEv,depOn,biz,
     servIce:val("servIce")*years,servEv:val("servEv")*years,
     insIce:val("insIce")*years,insEv:val("insEv")*years,
     regIce:val("regIce")*years,regEv:val("regEv")*years,
-    tyreIce:val("tyreIce")*years,tyreEv:val("tyreEv")*years,
-    subsidy, resIceEur, resEvEur});
-  $("tblSub").textContent="Za celotno dobo "+years+" let · "+NUM(totalKm)+" km.";
+    tyreIce:tyreIceYear*years,tyreEv:tyreEvYear*years,
+    bonTotal, vatEv, subsidy, resIceEur, resEvEur});
+  $("tblSub").textContent="Za celotno dobo "+years+" let · "+NUM(totalKm)+" km"+(biz?" · poslovno lastništvo":"")+".";
+
+  // ---- CO2 ----
+  computeCO2({kmYear,years,totalKm,consIce,consEv,fuel:ICE[state.iceIdx].fuel,battEv:EV[state.evIdx].batt});
 }
 
 function signed(n){ return (n>=0?"+":"−")+EUR(Math.abs(n)); }
@@ -968,26 +1248,76 @@ function renderTable(d){
   if(d.depOn){
     html+=row("Nakup − subvencija − iztržek", d.purchaseIce, d.purchaseEv);
     html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ vklj. subvencija</td><td>–</td><td style="color:var(--ev-ink)">−${NUM(d.subsidy)} €</td><td></td></tr>`;
+    if(d.biz && d.vatEv>0) html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ odbitek DDV</td><td>–</td><td style="color:var(--ev-ink)">−${NUM(d.vatEv)} €</td><td></td></tr>`;
     html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ preostala vrednost</td><td style="color:var(--muted)">−${NUM(d.resIceEur)} €</td><td style="color:var(--muted)">−${NUM(d.resEvEur)} €</td><td></td></tr>`;
   } else {
-    html+=row("Nakup − subvencija", d.purchaseIce, d.purchaseEv);
+    html+=row("Nakup − subvencija"+(d.biz&&d.vatEv>0?" − DDV":""), d.purchaseIce, d.purchaseEv);
   }
   html+=row("Energija (gorivo / elektrika)", d.energyIce, d.energyEv);
   html+=row("Servis", d.servIce, d.servEv, true);
   html+=row("Zavarovanje", d.insIce, d.insEv, true);
   html+=row("Registracija", d.regIce, d.regEv, true);
-  html+=row("Gume", d.tyreIce, d.tyreEv, true);
+  html+=row("Gume (obraba na km)", d.tyreIce, d.tyreEv, true);
+  if(d.biz) html+=row("Boniteta (dohodnina voznika)", d.bonTotal, 0, true);
   const save=d.totIce-d.totEv;
   html+=`<tr class="sum"><td>Skupni strošek lastništva</td><td>${EUR(d.totIce)}</td><td>${EUR(d.totEv)}</td>
     <td class="cell-save ${save>=0?'pos':'neg'}">${(save>=0?"+":"−")+EUR(Math.abs(save))}</td></tr>`;
   $("tcoBody").innerHTML=html;
 }
 
+/* ============ CO2 lifecycle ============ */
+const KG = n => n>=1000 ? (Math.round(n/100)/10).toLocaleString("sl-SI",{minimumFractionDigits:1,maximumFractionDigits:1})+" t" : Math.round(n).toLocaleString("sl-SI")+" kg";
+function computeCO2(p){
+  const battKg = val("co2Batt");                 // kg CO2/kWh
+  const petrol = val("co2Petrol"), diesel = val("co2Diesel");
+  const fuelCO2 = p.fuel==="dizel" ? diesel : petrol;   // kg CO2/l
+  const gridG = val("co2Grid");                  // g CO2/kWh
+  const loss = 1 + val("co2Loss")/100;
+  const gridKg = gridG/1000 * loss;              // kg CO2/kWh (z izgubami)
+
+  // upfront ogljični dolg baterije (dodatna proizvodnja EV)
+  const debt = p.battEv * battKg;                // kg
+  // operativni CO2 na km
+  const perKmIce = p.consIce/100 * fuelCO2;      // kg/km
+  const perKmEv  = p.consEv/100 * gridKg;        // kg/km
+  // življenjska doba
+  const opIce = p.totalKm * perKmIce;
+  const opEv  = p.totalKm * perKmEv;
+  const totIce = opIce;                          // baza proizvodnje se izniči v razliki
+  const totEv  = debt + opEv;
+  const saveKg = totIce - totEv;
+  const pct = totIce>0 ? saveKg/totIce*100 : 0;
+
+  // CO2 break-even km: debt = km*(perKmIce - perKmEv)
+  const dPerKm = perKmIce - perKmEv;
+  const beKm = dPerKm>0 ? debt/dPerKm : null;
+
+  // izpisi
+  $("co2DebtTxt").textContent = KG(debt);
+  $("co2BeTxt").textContent   = beKm===null ? "nikoli (umazan vir)" : NUM(beKm)+" km";
+  $("co2KmTxt").textContent   = NUM(p.totalKm)+" km";
+  $("co2SaveTxt").textContent = KG(Math.abs(saveKg));
+  $("co2PctTxt").textContent  = (pct>=0?"":"−")+Math.abs(Math.round(pct))+" %";
+
+  const maxC=Math.max(totIce,totEv,1);
+  $("co2BarIce").style.width=(totIce/maxC*100)+"%";
+  $("co2BarEv").style.width=(totEv/maxC*100)+"%";
+  $("co2ValIce").textContent=KG(totIce);
+  $("co2ValEv").textContent=KG(totEv);
+
+  $("cCo2").textContent=(saveKg>=0?"−":"+")+KG(Math.abs(saveKg));
+  $("cCo2").style.color = saveKg>=0?"var(--ev-ink)":"var(--ice-ink)";
+
+  // barve za primer, ko je EV slabši (premog)
+  $("co2ValEv").style.color = totEv>totIce ? "var(--ice-ink)" : "";
+}
+
 /* ============ generic input listeners ============ */
 ["kmYear","years","homeShare","consIce","fuelPrice","consEv","priceHome","pricePublic",
  "priceIce","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
- "resIce","resEv","depOn"].forEach(id=>{
-  $(id).addEventListener("input",recompute);
+ "resIce","resEv","depOn","bizShare","bonRate",
+ "co2Batt","co2Petrol","co2Diesel","co2Loss"].forEach(id=>{
+  const el=$(id); if(el) el.addEventListener("input",recompute);
 });
 
 /* ============ section collapse ============ */
@@ -1008,15 +1338,14 @@ $("themeToggle").onclick=()=>{
 };
 
 /* ============ share link (URL params) ============ */
-const SHARE_KEYS=["seg","iceIdx","evIdx","kmYear","years","homeShare","priceIce","priceEv","subsidy",
-  "consIce","fuelPrice","consEv","priceHome","pricePublic","servIce","insIce","regIce","tyreIce",
-  "servEv","insEv","regEv","tyreEv","resIce","resEv","depOn"];
+const FIELD_KEYS=["kmYear","years","homeShare","priceIce","priceEv","subsidy","consIce","fuelPrice","consEv",
+  "priceHome","pricePublic","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
+  "resIce","resEv","bizShare","bonRate","co2Batt","co2Petrol","co2Diesel","co2Loss"];
 $("btnShare").onclick=()=>{
   const p=new URLSearchParams();
   p.set("seg",state.seg); p.set("iceIdx",state.iceIdx); p.set("evIdx",state.evIdx);
-  ["kmYear","years","homeShare","priceIce","priceEv","subsidy","consIce","fuelPrice","consEv",
-   "priceHome","pricePublic","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
-   "resIce","resEv"].forEach(k=>p.set(k,$(k).value));
+  p.set("owner",state.owner); p.set("grid",state.grid);
+  FIELD_KEYS.forEach(k=>p.set(k,$(k).value));
   p.set("depOn",$("depOn").checked?1:0);
   const url=location.origin+location.pathname+"#"+p.toString();
   navigator.clipboard?.writeText(url).then(()=>{
@@ -1033,10 +1362,10 @@ function loadFromHash(){
   state.iceIdx=+p.get("iceIdx"); state.evIdx=+p.get("evIdx");
   $("selIce").value=state.iceIdx; $("selEv").value=state.evIdx;
   loadVehicleDefaults();
-  ["kmYear","years","homeShare","priceIce","priceEv","subsidy","consIce","fuelPrice","consEv",
-   "priceHome","pricePublic","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
-   "resIce","resEv"].forEach(k=>{ if(p.has(k)) $(k).value=p.get(k); });
+  FIELD_KEYS.forEach(k=>{ if(p.has(k)) $(k).value=p.get(k); });
   if(p.has("depOn")) $("depOn").checked=p.get("depOn")==="1";
+  if(p.has("owner")){ state.owner=p.get("owner"); syncOwner(); }
+  if(p.has("grid")){ state.grid=p.get("grid"); syncGrid(); }
   if(p.get("subsidy")!==String(autoSubsidy(+$("priceEv").value))){ state.subsidyAuto=false; $("subHint").textContent="ročno"; }
   return true;
 }
@@ -1045,10 +1374,13 @@ $("btnReset").onclick=()=>{ history.replaceState(null,"","#"); init(true); };
 
 /* ============ init ============ */
 function init(reset){
-  state={seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true};
-  syncSegButtons(); refreshSegment(); loadVehicleDefaults();
+  state={seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, owner:"private", grid:"si"};
+  syncSegButtons(); syncOwner(); refreshSegment(); loadVehicleDefaults();
   $("kmYear").value=DEF.kmYear; $("years").value=DEF.years; $("homeShare").value=DEF.homeShare;
   $("priceHome").value=DEF.priceHome; $("pricePublic").value=DEF.pricePublic;
+  $("bizShare").value=100; $("bonRate").value=DEF.bonRate;
+  $("co2Batt").value=72.8; $("co2Petrol").value=2.9; $("co2Diesel").value=3.25; $("co2Loss").value=10;
+  syncGrid();
   if(!reset) loadFromHash();
   recompute();
 }

@@ -13,14 +13,28 @@ tudi brez interneta).
 - **Baza vozil** za slovenski trg 2026: 10 klasičnih (3–4 na razred) + komplementarni električni,
   razvrščeni po razredih (mestni, kompaktni, SUV). Vse WLTP porabe in cene so **urejljive**.
 - **Subvencija Eko sklada** se samodejno nastavi po cenovnem razredu vozila (7.200 / 6.500 / 4.500 €).
-- **Sekcije po korakih**: nakup + subvencija · uporaba (km, doba, delitev polnjenja) ·
-  gorivo/elektrika · vzdrževanje in dajatve · amortizacija (neobvezno).
+- **Sekcije po korakih**: nakup + subvencija · uporaba · gorivo/elektrika · vzdrževanje in dajatve ·
+  amortizacija · poslovni scenarij · ogljični odtis.
 - **Energetska ekvivalenca**: koliko kWh nosi „en liter" goriva in koliko manj energije
   porabi električni za enako pot.
-- **Graf točke preloma** (break-even) — kdaj nižji stroški vožnje poravnajo višjo nabavno ceno.
-- **Strošek na kilometer** in razčlemba po postavkah v tabeli.
+- **Poslovni scenarij (podjetje)** — preklopnik zasebno/poslovno:
+  - **boniteta 0 %** za električna vozila (klasični 1,5 % nabavne vrednosti mesečno, do 2029),
+  - **odbitek DDV** sorazmerno z deležem poslovne rabe (poln pri izključno poslovni rabi, BEV do 80.000 €).
+- **Ogljični odtis (CO₂)** — dokaz skozi življenjsko dobo: dodatni ogljični dolg baterije, točka
+  preloma v km in koliko manj CO₂ izpusti električni. Preklopnik za **vir elektrike**
+  (jedrska/OVE · slovensko omrežje · premog TEŠ) pošteno pokaže tudi slabši scenarij.
+- **Obraba gum** se računa iz stroška na kilometer × tvoja letna kilometrina.
+- **Graf točke preloma** (break-even), **strošek na kilometer** in razčlemba po postavkah.
 - **Deljiva povezava** — gumb skopira URL z vsemi tvojimi številkami (vgrajene v `#` naslova).
+- **SEO + Open Graph** oznake za lep predogled ob deljenju na družbenih omrežjih.
 - Tema za dan in noč, odziven prikaz na telefonu.
+
+## Slike za deljenje
+
+V mapi `share/` so pripravljene „clickbait" slike v vseh formatih (2× ločljivost):
+`prihranek-1080x1080` (Instagram), `1080x1920` (Story/Reels), `1200x630` (Facebook/OG),
+`1600x900` (Twitter/široko). Predloga `share-cards.html` + skripta `render-cards.mjs` (Playwright)
+omogočata ponovno generiranje z drugimi številkami.
 
 ## Kako računa
 
@@ -47,8 +61,25 @@ izbrani delež. „Točka preloma" primerja denar iz žepa **brez** upoštevanja
 > Cene vozil so okvirne za slovenski trg 2026 in jih je treba preveriti pri prodajalcu.
 > Orodje je pripomoček za lasten izračun, ne uradna ponudba.
 
+## Objava & Open Graph
+
+Za pravilen predogled ob deljenju (og:image) morajo biti oznake absolutne. V `index.html` so
+privzeto nastavljene na GitHub Pages domeno `https://janmacarolvrabec.github.io/ice-vs-ev/` —
+**če gostuješ drugje, zamenjaj domeno** v `<link rel="canonical">` in vseh `og:`/`twitter:` oznakah.
+Na GitHub Pages: Settings → Pages → deploy iz te veje; stran bo na zgornjem naslovu, slika pa na
+`…/share/prihranek-1200x630-facebook-og.png`.
+
 ## Tehnično
 
 Ena sama datoteka `index.html` — čisti HTML/CSS/JavaScript, brez zunanjih knjižnic in brez
 gradnje. Graf je izrisan kot vgrajen SVG. Za gostovanje datoteko preprosto naloži na kateri koli
 spletni strežnik (npr. GitHub Pages).
+
+## Opombe glede pravilnosti podatkov
+
+- **Cene vozil, zavarovanje in registracija** so okvirne vrednosti — preveri jih pri prodajalcu
+  oz. zavarovalnici; vse so v kalkulatorju urejljive.
+- **Davčni del** (boniteta, DDV) je poenostavljen pripomoček, ne davčni nasvet — za konkreten
+  primer se posvetuj z računovodjo.
+- **CO₂** temelji na javnih študijah (ICCT 2025 — 72,8 kg CO₂e/kWh baterije, ~73 % nižje emisije
+  v življenjski dobi; ElectricityMaps — 173 g CO₂/kWh za slovensko omrežje 2025).
