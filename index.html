@@ -420,6 +420,9 @@ svg .line-ice{stroke:var(--ice);stroke-width:2.5;fill:none}
 svg .line-ev{stroke:var(--ev);stroke-width:2.5;fill:none}
 svg .area-ev{fill:var(--ev);opacity:.08}
 svg .cross{fill:var(--ink)}
+.be-graphhelp{margin-top:14px;font-size:13px;color:var(--ink-2);line-height:1.55;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px}
+.be-graphhelp b{color:var(--ink)} .be-graphhelp .o{color:var(--ice-ink);font-weight:700}
 .be-summary{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .be-line{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
   background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 14px}
@@ -971,8 +974,9 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
 
     <div class="panel">
       <h3>Točka preloma</h3>
-      <div class="psub">Skupni denar iz žepa skozi leta — kje krivulja električnega prehiti klasičnega.</div>
+      <div class="psub">Koliko denarja skupaj odšteješ skozi leta (nakup + vožnja + vzdrževanje) — in kje krivulja električnega prehiti klasičnega.</div>
       <div class="chart-wrap"><div id="chart"></div></div>
+      <div class="be-graphhelp" id="beGraph"></div>
       <div class="be-summary" id="beSummary"></div>
       <div class="be-note" id="beNote">–</div>
     </div>
@@ -1425,6 +1429,20 @@ function recompute(){
 
   // ---- break-even chart ----
   renderChart(upIce, upEv, yrIce, yrEv, years, be);
+
+  // razlaga grafa: kaj krivulji pomenita + zakaj se razlikujeta od skupnega stroška (TCO)
+  const iceNameG = ICE[state.iceIdx].name, evNameG = EV[state.evIdx].name;
+  const grossIce = upIce + yrIce*years, grossEv = upEv + yrEv*years;
+  let g = '📈 Krivulji kažeta <b>ves denar, ki ga do posameznega leta odšteješ</b> (nakup − subvencija, gorivo/elektrika, servis, zavarovanje, registracija, gume'+(biz?', boniteta':'')+'). Zato <span class="o">'+iceNameG+'</span> do '+years+'. leta doseže ≈ <b>'+EUR(grossIce)+'</b>, električni pa ≈ <b>'+EUR(grossEv)+'</b>.';
+  if(depOn && (resIceEur>0 || resEvEur>0)){
+    g += ' <b>Skupni strošek lastništva</b> ('+EUR(totIce)+' oz. '+EUR(totEv)+', spodaj) je nižji, ker ob prodaji dobiš nazaj <b>preostalo vrednost</b> avta (klasični ≈ '+EUR(resIceEur)+', električni ≈ '+EUR(resEvEur)+').';
+  }
+  g += (be!==null && be>0 && be<=years)
+      ? ' Kjer se krivulji <b>križata</b> (≈ '+NUM(be,1)+' leta), je točka preloma.'
+      : (be!==null && be<=0)
+        ? ' Krivulja električnega je <b>ves čas nižja</b> — cenejši je že od začetka.'
+        : ' Krivulji se v tej dobi <b>ne križata</b> — klasični ostane spodaj.';
+  $("beGraph").innerHTML = g;
 
   // povzetek A/B: skupni strošek v dobi + mesečni strošek lastništva
   const months = years*12;
