@@ -108,6 +108,9 @@ spletni strežnik (npr. GitHub Pages).
   obračunana od polne nabavne vrednosti vsa leta.
 - **CO₂** temelji na javnih študijah (ICCT 2025 — 72,8 kg CO₂e/kWh baterije, ~73 % nižje emisije
   v življenjski dobi; ElectricityMaps — 173 g CO₂/kWh za slovensko omrežje 2025).
+- **Porabe** so preverjene: pri klasičnih kombinirana **WLTP** poraba (l/100 km), pri električnih
+  **deklarirana WLTP** poraba (kWh/100 km, uradne vrednosti proizvajalcev / ceniki). Realna poraba
+  je pri obeh običajno nekoliko višja od WLTP — vse vrednosti so urejljive.
 
 ## Sorodni eksperimenti Jana Macarola
 
