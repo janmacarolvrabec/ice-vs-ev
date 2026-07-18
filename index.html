@@ -272,6 +272,7 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .col-head .chip{width:10px;height:10px;border-radius:3px}
 .col-head.ice{color:var(--ice-ink)} .col-head.ice .chip{background:var(--ice)}
 .col-head.ev{color:var(--ev-ink)} .col-head.ev .chip{background:var(--ev)}
+.col-model{font-size:13.5px;font-weight:700;color:var(--ink);margin:-1px 0 10px;letter-spacing:-.01em}
 .field{margin-bottom:14px}
 .field:last-child{margin-bottom:0}
 label.fl{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
@@ -680,6 +681,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <div class="grid2">
         <div>
           <div class="col-head ice"><span class="chip"></span>Klasični</div>
+          <div class="col-model" id="enNameIce">—</div>
           <div class="field">
             <label class="fl" for="consIce">Poraba <span class="hint">WLTP</span></label>
             <div class="inp unit"><input id="consIce" type="number" min="0" step="0.1"><span class="unit-tag">l/100</span></div>
@@ -695,6 +697,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
         </div>
         <div>
           <div class="col-head ev"><span class="chip"></span>Električni</div>
+          <div class="col-model" id="enNameEv">—</div>
           <div class="field">
             <label class="fl" for="consEv">Poraba <span class="hint">WLTP</span></label>
             <div class="inp unit"><input id="consEv" type="number" min="0" step="0.1"><span class="unit-tag">kWh/100</span></div>
@@ -1327,6 +1330,8 @@ function recompute(){
   // ---- scoreboard ----
   $("sbCarIce").textContent=ICE[state.iceIdx].name;
   $("sbCarEv").textContent=EV[state.evIdx].name;
+  $("enNameIce").textContent=ICE[state.iceIdx].name;
+  $("enNameEv").textContent=EV[state.evIdx].name;
   $("sbTotalIce").innerHTML=EUR(totIce);
   $("sbTotalEv").innerHTML=EUR(totEv);
   const hero=$("sbHero");
