@@ -420,8 +420,16 @@ svg .line-ice{stroke:var(--ice);stroke-width:2.5;fill:none}
 svg .line-ev{stroke:var(--ev);stroke-width:2.5;fill:none}
 svg .area-ev{fill:var(--ev);opacity:.08}
 svg .cross{fill:var(--ink)}
-.be-note{margin-top:12px;font-size:13px;color:var(--ink-2)}
-.be-note b{color:var(--ink)}
+.be-summary{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.be-line{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 14px}
+.be-line .be-nm{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.be-line.ice .be-nm{color:var(--ice-ink)} .be-line.ev .be-nm{color:var(--ev-ink)}
+.be-line .be-fig{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.be-line .be-fig b{color:var(--ink);font-weight:700}
+.be-line .be-fig .mo{color:var(--ink);font-weight:800}
+.be-note{margin-top:14px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.be-note b{color:var(--ink)} .be-note b.g{color:var(--ev-ink)} .be-note b.o{color:var(--ice-ink)}
 
 /* table */
 .tbl-wrap{overflow-x:auto;margin-top:4px}
@@ -965,6 +973,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <h3>Točka preloma</h3>
       <div class="psub">Skupni denar iz žepa skozi leta — kje krivulja električnega prehiti klasičnega.</div>
       <div class="chart-wrap"><div id="chart"></div></div>
+      <div class="be-summary" id="beSummary"></div>
       <div class="be-note" id="beNote">–</div>
     </div>
 
@@ -1416,11 +1425,27 @@ function recompute(){
 
   // ---- break-even chart ----
   renderChart(upIce, upEv, yrIce, yrEv, years, be);
+
+  // povzetek A/B: skupni strošek v dobi + mesečni strošek lastništva
+  const months = years*12;
+  const monthIce = totIce/months, monthEv = totEv/months;
+  const iceName = ICE[state.iceIdx].name, evName = EV[state.evIdx].name;
+  $("beSummary").innerHTML =
+    '<div class="be-line ice"><span class="be-nm">🟠 '+iceName+'</span><span class="be-fig"><b>'+EUR(totIce)+'</b> v '+letihTxt+' &nbsp;·&nbsp; <span class="mo">≈ '+EUR(monthIce)+'/mesec</span></span></div>'+
+    '<div class="be-line ev"><span class="be-nm">🟢 '+evName+'</span><span class="be-fig"><b>'+EUR(totEv)+'</b> v '+letihTxt+' &nbsp;·&nbsp; <span class="mo">≈ '+EUR(monthEv)+'/mesec</span></span></div>';
+
+  // pojasnilo točke preloma
+  const beKm = NUM(Math.round(be*kmYear/1000)*1000);
+  const endTxt = evWins
+    ? 'do konca '+years+'. leta z električnim <b class="g">prihraniš skupaj '+EUR(Math.abs(save))+'</b>'
+    : 'do konca '+years+'. leta je klasični <b class="o">skupaj '+EUR(Math.abs(save))+' cenejši</b>';
   $("beNote").innerHTML = be===null
-    ? "V teh pogojih se višja cena električnega <b>ne povrne</b> v smiselni dobi — klasični ostaja cenejši iz žepa."
+    ? 'Skupaj v '+letihTxt+' te <b class="o">'+iceName+'</b> stane <b>'+EUR(totIce)+'</b> (≈ '+EUR(monthIce)+'/mesec), <b class="g">'+evName+'</b> pa <b>'+EUR(totEv)+'</b> (≈ '+EUR(monthEv)+'/mesec). V teh pogojih se višja nabavna cena električnega <b>ne povrne</b> v tej dobi — klasični ostane cenejši iz žepa.'
     : be<=0
-      ? "Električni je cenejši <b>že ob nakupu</b>"+(biz?" (po subvenciji in odbitku DDV)":" (po subvenciji)")+" in razlika z leti le raste."
-      : "Električni na začetku stane več, a nižji stroški vožnje razliko poravnajo po <b>"+NUM(be,1)+" letih</b>. Po tem vsak kilometer dela plus.";
+      ? '<b class="g">'+evName+'</b> je cenejši <b>že od prvega dne</b>'+(biz?' (po subvenciji in odbitku DDV)':' (po subvenciji)')+' in razlika z vsakim kilometrom le raste. '+endTxt.charAt(0).toUpperCase()+endTxt.slice(1)+' — to je ≈ '+EUR(perMonth)+' na mesec.'
+      : be<=years
+        ? '<b class="g">'+evName+'</b> na začetku stane več (višja nabavna cena), a nižji stroški vožnje in vzdrževanja razliko izničijo po <b>'+NUM(be,1)+' letih</b> (pribl. '+beKm+' km) — to je <b>točka preloma</b>. Od tu naprej vsak prevožen kilometer dela plus, '+endTxt+' (≈ '+EUR(perMonth)+'/mesec).'
+        : 'Skupaj v '+letihTxt+' te <b class="o">'+iceName+'</b> stane <b>'+EUR(totIce)+'</b> (≈ '+EUR(monthIce)+'/mesec), <b class="g">'+evName+'</b> pa <b>'+EUR(totEv)+'</b> (≈ '+EUR(monthEv)+'/mesec). Višja nabavna cena električnega bi se povrnila šele po <b>'+NUM(be,1)+' letih</b> (pribl. '+beKm+' km) — <b>po tvoji dobi</b> '+years+' let. V tej dobi '+endTxt.replace('do konca '+years+'. leta ','')+' (≈ '+EUR(perMonth)+'/mesec).';
 
   // ---- table ----
   renderTable({purchaseIce,purchaseEv,energyIce,energyEv,maintIce,maintEv,totIce,totEv,depOn,biz,
