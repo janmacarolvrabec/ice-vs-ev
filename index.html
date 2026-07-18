@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elektro vs. Bencin — Kalkulator stroškov lastništva</title>
+<meta name="description" content="Primerjaj resnične stroške lastništva električnega in klasičnega avtomobila na slovenskem trgu. Vse številke lahko prilagodiš sam.">
+<style>
+:root{
+  --bg:#EBEEF2; --surface:#FFFFFF; --surface-2:#F4F7F9; --surface-3:#EDF1F4;
+  --ink:#0E1826; --ink-2:#33414F; --muted:#677686; --line:#DCE3EA; --line-2:#CBD5DE;
+  --ice:#D66A24; --ice-soft:#FBEADD; --ice-ink:#9A4A15;
+  --ev:#0E9F63; --ev-soft:#DBF3E8; --ev-ink:#0A6E45;
+  --accent:#0E9F63;
+  --good:#0E9F63; --bad:#D66A24;
+  --shadow:0 1px 2px rgba(16,32,48,.06),0 8px 24px rgba(16,32,48,.06);
+  --shadow-lg:0 12px 40px rgba(16,32,48,.14);
+  --r:14px; --r-sm:10px;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0B0F14; --surface:#141B22; --surface-2:#1A222B; --surface-3:#202A34;
+    --ink:#EAF0F5; --ink-2:#B6C2CD; --muted:#7E8C99; --line:#26313B; --line-2:#334049;
+    --ice:#E9853F; --ice-soft:#2B1D12; --ice-ink:#F0A768;
+    --ev:#24C186; --ev-soft:#0E241B; --ev-ink:#57D6A5;
+    --accent:#24C186;
+    --good:#24C186; --bad:#E9853F;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --shadow-lg:0 16px 50px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#EBEEF2; --surface:#FFFFFF; --surface-2:#F4F7F9; --surface-3:#EDF1F4;
+  --ink:#0E1826; --ink-2:#33414F; --muted:#677686; --line:#DCE3EA; --line-2:#CBD5DE;
+  --ice:#D66A24; --ice-soft:#FBEADD; --ice-ink:#9A4A15;
+  --ev:#0E9F63; --ev-soft:#DBF3E8; --ev-ink:#0A6E45;
+  --accent:#0E9F63; --good:#0E9F63; --bad:#D66A24;
+  --shadow:0 1px 2px rgba(16,32,48,.06),0 8px 24px rgba(16,32,48,.06);
+  --shadow-lg:0 12px 40px rgba(16,32,48,.14);
+}
+:root[data-theme="dark"]{
+  --bg:#0B0F14; --surface:#141B22; --surface-2:#1A222B; --surface-3:#202A34;
+  --ink:#EAF0F5; --ink-2:#B6C2CD; --muted:#7E8C99; --line:#26313B; --line-2:#334049;
+  --ice:#E9853F; --ice-soft:#2B1D12; --ice-ink:#F0A768;
+  --ev:#24C186; --ev-soft:#0E241B; --ev-ink:#57D6A5;
+  --accent:#24C186; --good:#24C186; --bad:#E9853F;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg:0 16px 50px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+.tnum{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+/* ---------- Intro / masthead ---------- */
+.masthead{padding:44px 0 20px;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ev-ink);
+  background:var(--ev-soft);padding:6px 12px;border-radius:100px;margin-bottom:18px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--ev)}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.06;margin:0 0 12px;font-weight:800;
+  letter-spacing:-.02em;text-wrap:balance}
+h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
+.lede{max-width:60ch;margin:0 auto;color:var(--ink-2);font-size:17px;text-wrap:pretty}
+.theme-toggle{position:fixed;top:14px;right:14px;z-index:60;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);width:40px;height:40px;border-radius:11px;
+  cursor:pointer;font-size:17px;display:grid;place-items:center;box-shadow:var(--shadow)}
+.theme-toggle:hover{color:var(--ink);border-color:var(--line-2)}
+
+/* ---------- Sticky scoreboard ---------- */
+.scoreboard{position:sticky;top:0;z-index:50;background:var(--surface);
+  border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);
+  margin-top:26px;overflow:hidden}
+.sb-grid{display:grid;grid-template-columns:1fr 1.25fr 1fr;align-items:stretch}
+.sb-side{padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.sb-side.ice{background:linear-gradient(180deg,var(--ice-soft),transparent 120%)}
+.sb-side.ev{background:linear-gradient(180deg,var(--ev-soft),transparent 120%);text-align:right}
+.sb-label{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  display:flex;align-items:center;gap:7px}
+.sb-side.ev .sb-label{justify-content:flex-end}
+.sb-label.ice{color:var(--ice-ink)} .sb-label.ev{color:var(--ev-ink)}
+.sb-car{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-total{font-size:clamp(18px,3.4vw,26px);font-weight:800;letter-spacing:-.01em}
+.sb-total .u{font-size:.62em;font-weight:600;color:var(--muted);margin-left:2px}
+.sb-center{background:var(--ink);color:#fff;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:12px;text-align:center;position:relative}
+:root[data-theme="light"] .sb-center{background:#0E1826}
+.sb-center .cap{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.66)}
+.sb-hero{font-size:clamp(24px,5.4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.05;
+  transition:color .25s}
+.sb-hero.win{color:#4ADE9B} .sb-hero.lose{color:#F0A768}
+.sb-sub{font-size:12.5px;color:rgba(255,255,255,.75);margin-top:2px}
+.sb-sub b{color:#fff}
+@media(max-width:640px){
+  .sb-grid{grid-template-columns:1fr 1fr;grid-template-areas:"ice ev" "center center"}
+  .sb-side.ice{grid-area:ice} .sb-side.ev{grid-area:ev} .sb-center{grid-area:center}
+  .sb-side.ev{text-align:right}
+}
+
+/* ---------- Sections ---------- */
+.section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-top:18px;overflow:hidden}
+.sec-head{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;
+  user-select:none}
+.sec-num{flex:none;width:30px;height:30px;border-radius:9px;background:var(--surface-3);
+  color:var(--ink-2);font-weight:800;font-size:14px;display:grid;place-items:center}
+.sec-titles{flex:1;min-width:0}
+.sec-title{font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+.sec-desc{font-size:13px;color:var(--muted)}
+.sec-contrib{flex:none;text-align:right;font-weight:800;font-size:15px;white-space:nowrap}
+.sec-contrib .cl{display:block;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted)}
+.sec-chevron{flex:none;color:var(--muted);transition:transform .2s;font-size:13px}
+.section.collapsed .sec-chevron{transform:rotate(-90deg)}
+.sec-body{padding:2px 20px 22px;border-top:1px solid var(--line)}
+.section.collapsed .sec-body{display:none}
+
+/* ---------- Form grid ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px 26px;padding-top:18px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr;gap:18px}}
+.col-head{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.col-head .chip{width:10px;height:10px;border-radius:3px}
+.col-head.ice{color:var(--ice-ink)} .col-head.ice .chip{background:var(--ice)}
+.col-head.ev{color:var(--ev-ink)} .col-head.ev .chip{background:var(--ev)}
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+label.fl{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  font-size:13px;color:var(--ink-2);margin-bottom:5px;font-weight:500}
+label.fl .hint{color:var(--muted);font-size:11.5px;font-weight:400}
+.inp{position:relative;display:flex;align-items:center}
+.inp input,.inp select{width:100%;font:inherit;font-size:15px;color:var(--ink);
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:10px 12px;outline:none;font-variant-numeric:tabular-nums}
+.inp.unit input{padding-right:44px}
+.inp select{cursor:pointer;appearance:none;-webkit-appearance:none;background-image:none}
+.inp input:focus,.inp select:focus{border-color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.inp .unit-tag{position:absolute;right:12px;color:var(--muted);font-size:13px;
+  pointer-events:none;font-variant-numeric:tabular-nums}
+.inp .selarrow{position:absolute;right:12px;pointer-events:none;color:var(--muted);font-size:11px}
+
+/* full width shared inputs */
+.shared{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px 22px;
+  padding-top:18px}
+
+/* segment picker */
+.segbar{display:flex;flex-wrap:wrap;gap:8px;padding-top:16px}
+.segbtn{border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);
+  padding:9px 15px;border-radius:100px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.segbtn[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+:root[data-theme="light"] .segbtn[aria-pressed="true"]{background:#0E1826}
+.segbtn:hover:not([aria-pressed="true"]){border-color:var(--line-2);color:var(--ink)}
+
+/* range with output */
+.rangewrap{display:flex;align-items:center;gap:12px}
+.rangewrap input[type=range]{flex:1;accent-color:var(--accent);height:4px}
+.rangewrap .rout{font-variant-numeric:tabular-nums;font-weight:700;min-width:64px;text-align:right}
+
+/* split slider */
+.splitrow{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:4px}
+.splitrow b{color:var(--ink-2)}
+
+/* toggle */
+.toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:var(--ink-2)}
+.toggle input{position:absolute;opacity:0;pointer-events:none}
+.toggle .track{width:42px;height:24px;border-radius:100px;background:var(--line-2);
+  position:relative;transition:background .2s;flex:none}
+.toggle .knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+  background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.toggle input:checked+.track{background:var(--accent)}
+.toggle input:checked+.track .knob{transform:translateX(18px)}
+
+/* energy equivalence callout */
+.energy-note{margin-top:20px;background:var(--surface-2);border:1px dashed var(--line-2);
+  border-radius:var(--r-sm);padding:16px 18px;display:flex;gap:16px;align-items:flex-start}
+.energy-note .ico{flex:none;font-size:22px;line-height:1.2}
+.energy-note .txt{font-size:13.5px;color:var(--ink-2)}
+.energy-note .txt b{color:var(--ink)}
+.eq-bars{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.eq-row{display:flex;align-items:center;gap:10px;font-size:12.5px}
+.eq-row .nm{width:150px;flex:none;color:var(--ink-2)}
+.eq-row .bar{height:16px;border-radius:5px;min-width:3px;transition:width .35s}
+.eq-row.ice .bar{background:var(--ice)} .eq-row.ev .bar{background:var(--ev)}
+.eq-row .vl{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+@media(max-width:520px){.eq-row .nm{width:110px}}
+
+/* ---------- Results ---------- */
+.results{margin-top:26px}
+.verdict{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.verdict .vbadge{flex:none;width:64px;height:64px;border-radius:16px;display:grid;place-items:center;
+  font-size:30px}
+.verdict.win .vbadge{background:var(--ev-soft)} .verdict.lose .vbadge{background:var(--ice-soft)}
+.verdict .vmain{flex:1;min-width:240px}
+.verdict .vtitle{font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:3px}
+.verdict .vtext{font-size:14.5px;color:var(--ink-2)}
+.verdict .vtext b.g{color:var(--ev-ink)} .verdict .vtext b.o{color:var(--ice-ink)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:16px 16px 14px;box-shadow:var(--shadow)}
+.kpi .kl{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:7px}
+.kpi .kv{font-size:23px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.kpi .ks{font-size:12.5px;color:var(--muted);margin-top:2px}
+.kpi.accent .kv{color:var(--accent)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-top:16px;padding:22px}
+.panel h3{margin:0 0 4px;font-size:16px;font-weight:700}
+.panel .psub{font-size:13px;color:var(--muted);margin-bottom:16px}
+
+/* breakdown bars */
+.bd{display:flex;flex-direction:column;gap:14px}
+.bd-row{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center}
+.bd-row .bl{font-size:13px;color:var(--ink-2);font-weight:500}
+.bd-track{display:flex;flex-direction:column;gap:6px}
+.bd-bar{display:flex;align-items:center;height:26px;border-radius:6px;position:relative}
+.bd-bar .fill{height:100%;border-radius:6px;min-width:2px;transition:width .4s}
+.bd-bar.ice .fill{background:var(--ice)} .bd-bar.ev .fill{background:var(--ev)}
+.bd-bar .bv{position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.bd-bar .bv.out{right:auto;left:calc(100% + 8px);color:var(--ink-2);text-shadow:none}
+.bd-legend{display:flex;gap:18px;margin-bottom:16px;font-size:12.5px;color:var(--ink-2)}
+.bd-legend span{display:inline-flex;align-items:center;gap:7px}
+.bd-legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.bd-legend .i-ice{background:var(--ice)} .bd-legend .i-ev{background:var(--ev)}
+
+/* break-even chart */
+.chart-wrap{width:100%;overflow-x:auto}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .axis{stroke:var(--line-2);stroke-width:1}
+svg text{fill:var(--muted);font-size:11px;font-family:var(--sans)}
+svg .lbl-ice{fill:var(--ice-ink)} svg .lbl-ev{fill:var(--ev-ink)}
+svg .line-ice{stroke:var(--ice);stroke-width:2.5;fill:none}
+svg .line-ev{stroke:var(--ev);stroke-width:2.5;fill:none}
+svg .area-ev{fill:var(--ev);opacity:.08}
+svg .cross{fill:var(--ink)}
+.be-note{margin-top:12px;font-size:13px;color:var(--ink-2)}
+.be-note b{color:var(--ink)}
+
+/* table */
+.tbl-wrap{overflow-x:auto;margin-top:4px}
+table.tco{width:100%;border-collapse:collapse;font-size:13.5px;min-width:460px}
+table.tco th,table.tco td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);
+  font-variant-numeric:tabular-nums}
+table.tco th:first-child,table.tco td:first-child{text-align:left;font-variant-numeric:normal}
+table.tco thead th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+  font-weight:700}
+table.tco thead th.ice{color:var(--ice-ink)} table.tco thead th.ev{color:var(--ev-ink)}
+table.tco tr.sum td{font-weight:800;border-top:2px solid var(--line-2);border-bottom:none;font-size:14.5px}
+table.tco tbody tr:hover{background:var(--surface-2)}
+.cell-save{font-weight:700}
+.cell-save.pos{color:var(--ev-ink)} .cell-save.neg{color:var(--ice-ink)}
+
+/* footer */
+footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--muted)}
+footer h4{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-2);margin:0 0 8px}
+footer a{color:var(--ev-ink)}
+footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:26px}
+@media(max-width:640px){.foot-grid{grid-template-columns:1fr}}
+.disclaimer{margin-top:20px;font-style:italic}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;
+  font-size:13.5px;font-weight:600;padding:10px 16px;border-radius:var(--r-sm);cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#04180F}
+:root[data-theme="dark"] .btn.primary{color:#04180F}
+.btn.primary:hover{filter:brightness(1.05);background:var(--accent)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" aria-label="Preklopi temo">◐</button>
+
+<div class="wrap">
+  <header class="masthead">
+    <span class="kicker"><span class="dot"></span>Kalkulator stroškov lastništva · Slovenija · 2026</span>
+    <h1>Se ti bolj splača <span class="ice-w">bencin</span><br>ali <span class="ev-w">elektrika</span>?</h1>
+    <p class="lede">Vpiši svoj scenarij — kilometre, cene, subvencijo — in v realnem času poglej,
+      kateri avto te v resnici stane manj. Vsaka številka je tvoja: prilagodi jo svojemu primeru.</p>
+  </header>
+
+  <!-- ===== Sticky scoreboard ===== -->
+  <div class="scoreboard" id="scoreboard">
+    <div class="sb-grid">
+      <div class="sb-side ice">
+        <div class="sb-label ice">🟠 Klasični</div>
+        <div class="sb-car" id="sbCarIce">—</div>
+        <div class="sb-total tnum" id="sbTotalIce">–</div>
+      </div>
+      <div class="sb-center">
+        <div class="cap" id="sbHeroCap">Skupni prihranek</div>
+        <div class="sb-hero tnum" id="sbHero">–</div>
+        <div class="sb-sub" id="sbSub">nastavi scenarij spodaj</div>
+      </div>
+      <div class="sb-side ev">
+        <div class="sb-label ev">Električni 🟢</div>
+        <div class="sb-car" id="sbCarEv">—</div>
+        <div class="sb-total tnum" id="sbTotalEv">–</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Section: vehicles ===== -->
+  <section class="section" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div class="sec-titles">
+        <div class="sec-title">Izberi avtomobila</div>
+        <div class="sec-desc">Razred, klasični in električni model — ali povsem svoje številke.</div>
+      </div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <div class="segbar" id="segbar" role="group" aria-label="Razred vozila"></div>
+      <div class="grid2">
+        <div>
+          <div class="col-head ice"><span class="chip"></span>Klasični (ICE)</div>
+          <div class="field">
+            <label class="fl" for="selIce">Model</label>
+            <div class="inp"><select id="selIce"></select><span class="selarrow">▼</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="col-head ev"><span class="chip"></span>Električni (EV)</div>
+          <div class="field">
+            <label class="fl" for="selEv">Model</label>
+            <div class="inp"><select id="selEv"></select><span class="selarrow">▼</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: purchase & subsidy ===== -->
+  <section class="section" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div class="sec-titles">
+        <div class="sec-title">Nakup in subvencija</div>
+        <div class="sec-desc">Nabavna cena in spodbuda Eko sklada (samodejno po cenovnem razredu).</div>
+      </div>
+      <div class="sec-contrib"><span class="cl">Razlika ob nakupu</span><span id="cPurchase">–</span></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <div class="grid2">
+        <div>
+          <div class="col-head ice"><span class="chip"></span>Klasični</div>
+          <div class="field">
+            <label class="fl" for="priceIce">Nabavna cena <span class="hint">z DDV</span></label>
+            <div class="inp unit"><input id="priceIce" type="number" min="0" step="100"><span class="unit-tag">€</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="col-head ev"><span class="chip"></span>Električni</div>
+          <div class="field">
+            <label class="fl" for="priceEv">Nabavna cena <span class="hint">z DDV</span></label>
+            <div class="inp unit"><input id="priceEv" type="number" min="0" step="100"><span class="unit-tag">€</span></div>
+          </div>
+          <div class="field">
+            <label class="fl" for="subsidy">Subvencija Eko sklad <span class="hint" id="subHint">auto</span></label>
+            <div class="inp unit"><input id="subsidy" type="number" min="0" step="100"><span class="unit-tag">€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: usage ===== -->
+  <section class="section" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div class="sec-titles">
+        <div class="sec-title">Kako in koliko voziš</div>
+        <div class="sec-desc">Kilometri, doba lastništva in kje polniš električnega.</div>
+      </div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <div class="shared">
+        <div class="field">
+          <label class="fl" for="kmYear">Prevoženih km na leto</label>
+          <div class="rangewrap">
+            <input id="kmYear" type="range" min="5000" max="40000" step="500">
+            <span class="rout tnum" id="kmYearOut"></span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="fl" for="years">Doba lastništva</label>
+          <div class="rangewrap">
+            <input id="years" type="range" min="1" max="15" step="1">
+            <span class="rout tnum" id="yearsOut"></span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="fl" for="homeShare">Delež domačega polnjenja</label>
+          <div class="rangewrap">
+            <input id="homeShare" type="range" min="0" max="100" step="5">
+            <span class="rout tnum" id="homeShareOut"></span>
+          </div>
+          <div class="splitrow"><span>Doma <b id="homePct"></b></span><span>Javno <b id="pubPct"></b></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: energy ===== -->
+  <section class="section" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div class="sec-titles">
+        <div class="sec-title">Gorivo in elektrika</div>
+        <div class="sec-desc">Poraba po WLTP in cene energentov (jul. 2026).</div>
+      </div>
+      <div class="sec-contrib"><span class="cl">Prihranek/leto</span><span id="cEnergy">–</span></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <div class="grid2">
+        <div>
+          <div class="col-head ice"><span class="chip"></span>Klasični</div>
+          <div class="field">
+            <label class="fl" for="consIce">Poraba <span class="hint">WLTP</span></label>
+            <div class="inp unit"><input id="consIce" type="number" min="0" step="0.1"><span class="unit-tag">l/100</span></div>
+          </div>
+          <div class="field">
+            <label class="fl" for="fuelPrice">Cena goriva <span class="hint" id="fuelKind">bencin</span></label>
+            <div class="inp unit"><input id="fuelPrice" type="number" min="0" step="0.001"><span class="unit-tag">€/l</span></div>
+          </div>
+          <div class="field">
+            <label class="fl">Strošek energije na 100 km</label>
+            <div class="inp unit"><input id="cost100Ice" type="text" readonly tabindex="-1"><span class="unit-tag">€</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="col-head ev"><span class="chip"></span>Električni</div>
+          <div class="field">
+            <label class="fl" for="consEv">Poraba <span class="hint">WLTP</span></label>
+            <div class="inp unit"><input id="consEv" type="number" min="0" step="0.1"><span class="unit-tag">kWh/100</span></div>
+          </div>
+          <div class="field">
+            <label class="fl" for="priceHome">Cena doma / <span class="hint">javno</span></label>
+            <div style="display:flex;gap:10px">
+              <div class="inp unit"><input id="priceHome" type="number" min="0" step="0.01"><span class="unit-tag">€/kWh</span></div>
+              <div class="inp unit"><input id="pricePublic" type="number" min="0" step="0.01"><span class="unit-tag">€/kWh</span></div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="fl">Strošek energije na 100 km</label>
+            <div class="inp unit"><input id="cost100Ev" type="text" readonly tabindex="-1"><span class="unit-tag">€</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="energy-note">
+        <div class="ico">⚡</div>
+        <div class="txt">
+          <b>Koliko kWh je „en liter"?</b> En liter bencina nosi ≈ <b>9,5 kWh</b> energije, liter dizla ≈ <b>10,6 kWh</b>.
+          Klasičen motor večino te energije odda kot toploto, zato za enako pot porabi
+          <b id="eqFactor">–</b>× več energije kot električni.
+          <div class="eq-bars">
+            <div class="eq-row ice"><span class="nm">Klasični — energija</span><span class="bar" id="eqBarIce"></span><span class="vl" id="eqValIce">–</span></div>
+            <div class="eq-row ev"><span class="nm">Električni — energija</span><span class="bar" id="eqBarEv"></span><span class="vl" id="eqValEv">–</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: maintenance ===== -->
+  <section class="section" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div class="sec-titles">
+        <div class="sec-title">Vzdrževanje in dajatve</div>
+        <div class="sec-desc">Servis, zavarovanje, registracija in gume — na leto.</div>
+      </div>
+      <div class="sec-contrib"><span class="cl">Prihranek/leto</span><span id="cMaint">–</span></div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <div class="grid2">
+        <div>
+          <div class="col-head ice"><span class="chip"></span>Klasični — €/leto</div>
+          <div class="field"><label class="fl" for="servIce">Servis in olje</label><div class="inp unit"><input id="servIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="insIce">Zavarovanje</label><div class="inp unit"><input id="insIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="regIce">Registracija</label><div class="inp unit"><input id="regIce" type="number" min="0" step="5"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="tyreIce">Gume (letni delež)</label><div class="inp unit"><input id="tyreIce" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+        </div>
+        <div>
+          <div class="col-head ev"><span class="chip"></span>Električni — €/leto</div>
+          <div class="field"><label class="fl" for="servEv">Servis</label><div class="inp unit"><input id="servEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="insEv">Zavarovanje</label><div class="inp unit"><input id="insEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="regEv">Registracija</label><div class="inp unit"><input id="regEv" type="number" min="0" step="5"><span class="unit-tag">€</span></div></div>
+          <div class="field"><label class="fl" for="tyreEv">Gume (letni delež)</label><div class="inp unit"><input id="tyreEv" type="number" min="0" step="10"><span class="unit-tag">€</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: depreciation ===== -->
+  <section class="section collapsed" data-sec>
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div class="sec-titles">
+        <div class="sec-title">Amortizacija <span style="font-weight:500;color:var(--muted)">(neobvezno)</span></div>
+        <div class="sec-desc">Koliko avta je vreden ob koncu dobe — največji skriti strošek.</div>
+      </div>
+      <div class="sec-chevron">▾</div>
+    </div>
+    <div class="sec-body">
+      <label class="toggle" style="margin-top:16px">
+        <input type="checkbox" id="depOn" checked>
+        <span class="track"><span class="knob"></span></span>
+        <span>Vključi izgubo vrednosti v skupni izračun (TCO)</span>
+      </label>
+      <div class="grid2">
+        <div>
+          <div class="col-head ice"><span class="chip"></span>Klasični</div>
+          <div class="field">
+            <label class="fl" for="resIce">Preostala vrednost ob koncu dobe</label>
+            <div class="rangewrap"><input id="resIce" type="range" min="0" max="80" step="1"><span class="rout tnum" id="resIceOut"></span></div>
+            <div class="splitrow"><span>Iztržek ob prodaji: <b id="resIceEur"></b></span></div>
+          </div>
+        </div>
+        <div>
+          <div class="col-head ev"><span class="chip"></span>Električni</div>
+          <div class="field">
+            <label class="fl" for="resEv">Preostala vrednost ob koncu dobe</label>
+            <div class="rangewrap"><input id="resEv" type="range" min="0" max="80" step="1"><span class="rout tnum" id="resEvOut"></span></div>
+            <div class="splitrow"><span>Iztržek ob prodaji: <b id="resEvEur"></b></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Results ===== -->
+  <div class="results">
+    <div class="verdict" id="verdict">
+      <div class="vbadge" id="vBadge">⚖️</div>
+      <div class="vmain">
+        <div class="vtitle" id="vTitle">Nastavi scenarij</div>
+        <div class="vtext" id="vText">Izberi vozila in vpiši svoje številke zgoraj.</div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi accent"><div class="kl">Skupni prihranek</div><div class="kv tnum" id="kSave">–</div><div class="ks" id="kSaveSub">v celotni dobi</div></div>
+      <div class="kpi"><div class="kl">Doba povrnitve</div><div class="kv tnum" id="kBreak">–</div><div class="ks">ko se višja cena EV povrne</div></div>
+      <div class="kpi"><div class="kl">Strošek na km — klasični</div><div class="kv tnum" id="kKmIce">–</div><div class="ks">vključno z vsem</div></div>
+      <div class="kpi"><div class="kl">Strošek na km — električni</div><div class="kv tnum" id="kKmEv">–</div><div class="ks">vključno z vsem</div></div>
+    </div>
+
+    <div class="panel">
+      <h3>Razčlemba stroškov v celotni dobi</h3>
+      <div class="psub" id="bdSub">–</div>
+      <div class="bd-legend">
+        <span><i class="i-ice"></i>Klasični</span>
+        <span><i class="i-ev"></i>Električni</span>
+      </div>
+      <div class="bd" id="breakdown"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Točka preloma</h3>
+      <div class="psub">Skupni denar iz žepa skozi leta — kje krivulja električnega prehiti klasičnega.</div>
+      <div class="chart-wrap"><div id="chart"></div></div>
+      <div class="be-note" id="beNote">–</div>
+    </div>
+
+    <div class="panel">
+      <h3>Tabela stroškov</h3>
+      <div class="psub" id="tblSub">Vse postavke za celotno dobo lastništva.</div>
+      <div class="tbl-wrap">
+        <table class="tco">
+          <thead><tr><th>Postavka</th><th class="ice">Klasični</th><th class="ev">Električni</th><th>Prihranek EV</th></tr></thead>
+          <tbody id="tcoBody"></tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="btnShare">🔗 Kopiraj povezavo z mojim scenarijem</button>
+        <button class="btn" id="btnReset">↺ Ponastavi</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <h4>Kako računa</h4>
+        <p>Skupni strošek lastništva (TCO) = (nabavna cena − subvencija − preostala vrednost) + vsota letnih stroškov
+        (energija, servis, zavarovanje, registracija, gume) čez izbrano dobo. Strošek na km deli TCO s prevoženimi kilometri.
+        „Točka preloma" primerja denar iz žepa brez upoštevanja preostale vrednosti.</p>
+        <p class="disclaimer">Privzete cene vozil so okvirne za slovenski trg 2026 in jih je treba preveriti pri prodajalcu.
+        Vse vrednosti lahko urediš — orodje je pripomoček za lasten izračun, ne uradna ponudba.</p>
+      </div>
+      <div>
+        <h4>Viri podatkov (jul. 2026)</h4>
+        <ul>
+          <li>Cene goriv: regulirane cene, <a href="https://www.energetika-portal.si/podrocja/energetika/cene-naftnih-derivatov/regulirane-cene-naftnih-derivatov/" target="_blank" rel="noopener">Portal Energetika</a></li>
+          <li>Subvencije: <a href="https://www.ekosklad.si/prebivalstvo/pridobite-spodbudo/seznam-spodbud/elektricna-vozila-3" target="_blank" rel="noopener">Eko sklad</a> / <a href="https://borzen.si/sl-si/podpore-za-mobilnost/subvencije-za-nakup-elektricnih-vozil/subvencije-za-e-vozila-fizicnih-oseb" target="_blank" rel="noopener">Borzen</a></li>
+          <li>Cene polnjenja: <a href="https://www.petrol.si/mobilnost/zasebni-uporabniki/javne-elektricne-polnilnice/cenik-polnjenje" target="_blank" rel="noopener">Petrol</a></li>
+          <li>Energija goriv: spodnja kurilna vrednost (bencin ≈ 9,5 kWh/l, dizel ≈ 10,6 kWh/l)</li>
+        </ul>
+        <p style="margin-top:12px">Za skupino <b>Električna vozila Slovenije</b>. Deli povezavo — vsak si lahko izračuna svoj scenarij.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ============ Podatkovna baza vozil (slovenski trg, okvirne cene 2026) ============ */
+/* poraba: ICE l/100km (WLTP), EV kWh/100km (WLTP). Cene v EUR z DDV. */
+const SEGMENTS = [
+  {id:"b", name:"Mestni / mali (B)"},
+  {id:"c", name:"Kompaktni (C)"},
+  {id:"suv", name:"SUV / križanci"}
+];
+
+const ICE = [
+  // B
+  {seg:"b", name:"Renault Clio TCe 90", price:19900, fuel:"bencin", cons:5.4, serv:340, ins:420, reg:120, tyre:130, res:46},
+  {seg:"b", name:"Volkswagen Polo 1.0 TSI", price:21500, fuel:"bencin", cons:5.3, serv:360, ins:430, reg:120, tyre:130, res:48},
+  {seg:"b", name:"Peugeot 208 PureTech 100", price:20900, fuel:"bencin", cons:5.5, serv:350, ins:420, reg:120, tyre:130, res:44},
+  // C
+  {seg:"c", name:"Volkswagen Golf 1.5 TSI", price:29900, fuel:"bencin", cons:5.4, serv:420, ins:480, reg:150, tyre:170, res:47},
+  {seg:"c", name:"Škoda Octavia 1.5 TSI", price:27500, fuel:"bencin", cons:5.3, serv:410, ins:470, reg:150, tyre:170, res:48},
+  {seg:"c", name:"Toyota Corolla 1.8 Hybrid", price:28900, fuel:"bencin", cons:4.6, serv:360, ins:470, reg:145, tyre:160, res:50},
+  // SUV
+  {seg:"suv", name:"Hyundai Tucson 1.6 T-GDI", price:33900, fuel:"bencin", cons:6.9, serv:470, ins:520, reg:180, tyre:200, res:46},
+  {seg:"suv", name:"Kia Sportage 1.6 T-GDI", price:34900, fuel:"bencin", cons:7.0, serv:470, ins:520, reg:180, tyre:200, res:47},
+  {seg:"suv", name:"Dacia Duster TCe 130", price:22500, fuel:"bencin", cons:6.3, serv:380, ins:450, reg:150, tyre:180, res:47},
+  {seg:"suv", name:"Toyota RAV4 2.5 Hybrid", price:39900, fuel:"bencin", cons:5.8, serv:430, ins:560, reg:175, tyre:210, res:52}
+];
+
+const EV = [
+  // B
+  {seg:"b", name:"Renault 5 E-Tech 40 kWh", price:24900, cons:14.7, batt:40, serv:190, ins:430, reg:60, tyre:130, res:44},
+  {seg:"b", name:"Citroën ë-C3 44 kWh", price:23300, cons:16.0, batt:44, serv:180, ins:420, reg:60, tyre:130, res:42},
+  {seg:"b", name:"Peugeot e-208 51 kWh", price:29900, cons:15.0, batt:51, serv:200, ins:440, reg:60, tyre:130, res:43},
+  // C
+  {seg:"c", name:"Volkswagen ID.3 Pro 59 kWh", price:39900, cons:15.5, batt:59, serv:220, ins:500, reg:70, tyre:180, res:44},
+  {seg:"c", name:"Tesla Model 3 RWD 60 kWh", price:41990, cons:14.0, batt:60, serv:180, ins:560, reg:70, tyre:190, res:48},
+  {seg:"c", name:"MG4 Electric 64 kWh", price:32900, cons:16.5, batt:64, serv:210, ins:480, reg:70, tyre:170, res:41},
+  // SUV
+  {seg:"suv", name:"Hyundai Kona Electric 65 kWh", price:37900, cons:15.8, batt:65, serv:220, ins:540, reg:75, tyre:210, res:45},
+  {seg:"suv", name:"Kia EV3 Long Range 81 kWh", price:39900, cons:15.6, batt:81, serv:220, ins:540, reg:75, tyre:210, res:46},
+  {seg:"suv", name:"Tesla Model Y RWD 60 kWh", price:44990, cons:16.0, batt:60, serv:190, ins:600, reg:75, tyre:220, res:48},
+  {seg:"suv", name:"Škoda Elroq 55 kWh", price:35900, cons:16.2, batt:55, serv:220, ins:520, reg:75, tyre:200, res:45}
+];
+
+/* energetska ekvivalenca goriv (kWh na liter, spodnja kurilna vrednost) */
+const KWH_PER_L = {bencin:9.5, dizel:10.6};
+
+/* privzete cene energentov (jul. 2026) */
+const DEF = {
+  fuelBencin:1.588, fuelDizel:1.723,
+  priceHome:0.17, pricePublic:0.42, // javno = mešanica AC 0.35 / DC 0.69 -> ~0.42
+  kmYear:15000, years:5, homeShare:80
+};
+
+const EUR = n => Math.round(n).toLocaleString("sl-SI") + " €";
+const EUR1 = n => (Math.round(n*10)/10).toLocaleString("sl-SI",{minimumFractionDigits:1,maximumFractionDigits:1}) + " €";
+const NUM = (n,d=0) => Number(n).toLocaleString("sl-SI",{minimumFractionDigits:d,maximumFractionDigits:d});
+const $ = id => document.getElementById(id);
+
+/* subvencija po cenovnem razredu Eko sklad 2026 (novo M1) */
+function autoSubsidy(price){
+  if(price<=35000) return 7200;
+  if(price<=45000) return 6500;
+  if(price<=65000) return 4500;
+  return 0;
+}
+
+/* ============ state ============ */
+let state = {seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true};
+
+/* populate segment buttons */
+const segbar = $("segbar");
+SEGMENTS.forEach(s=>{
+  const b=document.createElement("button");
+  b.className="segbtn"; b.textContent=s.name; b.dataset.seg=s.id;
+  b.setAttribute("aria-pressed", s.id===state.seg);
+  b.onclick=()=>{ state.seg=s.id; refreshSegment(); syncSegButtons(); loadVehicleDefaults(); recompute(); };
+  segbar.appendChild(b);
+});
+function syncSegButtons(){ [...segbar.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.seg===state.seg)); }
+
+function refreshSegment(){
+  const selIce=$("selIce"), selEv=$("selEv");
+  selIce.innerHTML=""; selEv.innerHTML="";
+  ICE.forEach((v,i)=>{ if(v.seg===state.seg){ const o=document.createElement("option"); o.value=i; o.textContent=v.name; selIce.appendChild(o);} });
+  EV.forEach((v,i)=>{ if(v.seg===state.seg){ const o=document.createElement("option"); o.value=i; o.textContent=v.name; selEv.appendChild(o);} });
+  state.iceIdx=Number(selIce.value); state.evIdx=Number(selEv.value);
+}
+
+function loadVehicleDefaults(){
+  const ice=ICE[state.iceIdx], ev=EV[state.evIdx];
+  $("priceIce").value=ice.price; $("priceEv").value=ev.price;
+  $("consIce").value=ice.cons; $("consEv").value=ev.cons;
+  $("fuelPrice").value = ice.fuel==="dizel"?DEF.fuelDizel:DEF.fuelBencin;
+  $("fuelKind").textContent=ice.fuel;
+  $("servIce").value=ice.serv; $("insIce").value=ice.ins; $("regIce").value=ice.reg; $("tyreIce").value=ice.tyre;
+  $("servEv").value=ev.serv; $("insEv").value=ev.ins; $("regEv").value=ev.reg; $("tyreEv").value=ev.tyre;
+  $("resIce").value=ice.res; $("resEv").value=ev.res;
+  state.subsidyAuto=true;
+  $("subsidy").value=autoSubsidy(ev.price);
+  $("subHint").textContent="samodejno";
+}
+
+/* selects change */
+$("selIce").onchange=e=>{ state.iceIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
+$("selEv").onchange=e=>{ state.evIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
+
+/* subsidy manual override detection */
+$("priceEv").addEventListener("input",()=>{ if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value); } recompute(); });
+$("subsidy").addEventListener("input",()=>{ state.subsidyAuto=false; $("subHint").textContent="ročno"; recompute(); });
+
+/* ============ compute ============ */
+function val(id){ return parseFloat($(id).value)||0; }
+
+function recompute(){
+  const kmYear=val("kmYear"), years=val("years"), homeShare=val("homeShare")/100;
+  const consIce=val("consIce"), fuelPrice=val("fuelPrice");
+  const consEv=val("consEv"), pHome=val("priceHome"), pPub=val("pricePublic");
+  const priceIce=val("priceIce"), priceEv=val("priceEv"), subsidy=val("subsidy");
+  const depOn=$("depOn").checked;
+
+  // range outputs
+  $("kmYearOut").textContent=NUM(kmYear)+" km";
+  $("yearsOut").textContent=years+(years===1?" leto":years===2?" leti":years<5?" leta":" let");
+  $("homeShareOut").textContent=Math.round(homeShare*100)+"%";
+  $("homePct").textContent=Math.round(homeShare*100)+"%";
+  $("pubPct").textContent=Math.round((1-homeShare)*100)+"%";
+
+  // energy cost per 100 km
+  const evPricePerKwh = homeShare*pHome + (1-homeShare)*pPub;
+  const cost100Ice = consIce/100*fuelPrice*100;      // = consIce*fuelPrice
+  const cost100Ev  = consEv/100*evPricePerKwh*100;   // = consEv*evPricePerKwh
+  $("cost100Ice").value=EUR1(cost100Ice);
+  $("cost100Ev").value=EUR1(cost100Ev);
+
+  // yearly energy
+  const eIce = kmYear/100*consIce*fuelPrice;
+  const eEv  = kmYear/100*consEv*evPricePerKwh;
+
+  // yearly running (non-energy)
+  const runIce = val("servIce")+val("insIce")+val("regIce")+val("tyreIce");
+  const runEv  = val("servEv")+val("insEv")+val("regEv")+val("tyreEv");
+
+  // residual
+  const resIcePct=val("resIce"), resEvPct=val("resEv");
+  const resIceEur = priceIce*resIcePct/100;
+  const resEvEur  = priceEv*resEvPct/100;
+  $("resIceOut").textContent=resIcePct+"%"; $("resEvOut").textContent=resEvPct+"%";
+  $("resIceEur").textContent=EUR(resIceEur); $("resEvEur").textContent=EUR(resEvEur);
+
+  // upfront (out of pocket)
+  const upIce = priceIce;
+  const upEv  = priceEv - subsidy;
+
+  // depreciation cost (only if toggle)
+  const depIce = depOn ? (priceIce - resIceEur) : 0;
+  const depEv  = depOn ? (priceEv - subsidy - resEvEur) : 0;
+
+  // totals over period
+  const energyIce=eIce*years, energyEv=eEv*years;
+  const maintIce=runIce*years, maintEv=runEv*years;
+  const purchaseIce = depOn ? depIce : upIce;
+  const purchaseEv  = depOn ? depEv  : upEv;
+
+  const totIce = purchaseIce + energyIce + maintIce;
+  const totEv  = purchaseEv  + energyEv  + maintEv;
+  const save = totIce - totEv; // >0 => EV cheaper
+
+  // km per period
+  const totalKm = kmYear*years;
+  const kmIce = totIce/totalKm, kmEv = totEv/totalKm;
+
+  // ---- section contribution figures ----
+  $("cPurchase").textContent = signed(upIce-upEv); // razlika ob nakupu (out of pocket)
+  $("cPurchase").style.color = (upIce-upEv)>=0? "var(--ev-ink)":"var(--ice-ink)";
+  const energySavePerYear = eIce-eEv;
+  $("cEnergy").textContent = signed(energySavePerYear);
+  $("cEnergy").style.color = energySavePerYear>=0?"var(--ev-ink)":"var(--ice-ink)";
+  const maintSavePerYear = runIce-runEv;
+  $("cMaint").textContent = signed(maintSavePerYear);
+  $("cMaint").style.color = maintSavePerYear>=0?"var(--ev-ink)":"var(--ice-ink)";
+
+  // ---- scoreboard ----
+  $("sbCarIce").textContent=ICE[state.iceIdx].name;
+  $("sbCarEv").textContent=EV[state.evIdx].name;
+  $("sbTotalIce").innerHTML=EUR(totIce);
+  $("sbTotalEv").innerHTML=EUR(totEv);
+  const hero=$("sbHero");
+  const evWins=save>=0;
+  hero.textContent=(evWins?"":"+")+EUR(save);
+  hero.className="sb-hero tnum "+(evWins?"win":"lose");
+  $("sbHeroCap").textContent = evWins? "Prihraniš z električnim" : "Doplačaš za električni";
+  $("sbSub").innerHTML = "v "+years+(years<5&&years>1?" letih":years===1?" letu":" letih")+" · <b>"+EUR1(Math.abs(save)/totalKm*100).replace(" €"," €/100km")+"</b>";
+
+  // ---- energy equivalence panel ----
+  const kwhL = KWH_PER_L[ICE[state.iceIdx].fuel] || 9.5;
+  const iceEnergy100 = consIce*kwhL;   // kWh/100km energijske vsebnosti goriva
+  const evEnergy100  = consEv;         // kWh/100km
+  const factor = iceEnergy100/evEnergy100;
+  $("eqFactor").textContent = NUM(factor,1);
+  const maxE=Math.max(iceEnergy100,evEnergy100);
+  $("eqBarIce").style.width=(iceEnergy100/maxE*100)+"%";
+  $("eqBarEv").style.width=(evEnergy100/maxE*100)+"%";
+  $("eqValIce").textContent=NUM(iceEnergy100,0)+" kWh/100km";
+  $("eqValEv").textContent=NUM(evEnergy100,0)+" kWh/100km";
+
+  // ---- verdict ----
+  const v=$("verdict"), vt=$("vTitle"), vx=$("vText"), vb=$("vBadge");
+  v.className="verdict "+(evWins?"win":"lose");
+  vb.textContent=evWins?"🟢":"🟠";
+  if(evWins){
+    vt.textContent="Električni je cenejši";
+    vx.innerHTML="V tvojem scenariju te <b class='g'>"+EV[state.evIdx].name+"</b> v "+years+" letih stane <b class='g'>"+EUR(Math.abs(save))+" manj</b> kot "+ICE[state.iceIdx].name+".";
+  } else {
+    vt.textContent="Klasični je cenejši";
+    vx.innerHTML="V tvojem scenariju te <b class='o'>"+ICE[state.iceIdx].name+"</b> v "+years+" letih stane <b class='o'>"+EUR(Math.abs(save))+" manj</b> kot električni.";
+  }
+
+  // ---- KPIs ----
+  $("kSave").textContent=(evWins?"":"−")+EUR(Math.abs(save));
+  $("kSave").parentElement.querySelector(".kv").style.color=evWins?"var(--good)":"var(--bad)";
+  $("kSaveSub").textContent=evWins?"prihranek z EV v dobi":"doplačilo za EV v dobi";
+
+  // break-even (out of pocket, ignoring residual)
+  const be = breakEven(upIce, upEv, eIce+runIce, eEv+runEv);
+  $("kBreak").textContent = be===null? "nikoli" : be<=0? "takoj" : NUM(be,1)+" let";
+  $("kKmIce").textContent=EUR1(kmIce*100)+"/100km";
+  $("kKmEv").textContent=EUR1(kmEv*100)+"/100km";
+  // show also per 1 km small
+  $("kKmIce").nextElementSibling.textContent=NUM(kmIce,2).replace(",",",")+" €/km · vse vključeno";
+  $("kKmEv").nextElementSibling.textContent=NUM(kmEv,2)+" €/km · vse vključeno";
+
+  // ---- breakdown bars ----
+  renderBreakdown([
+    {label: depOn?"Nakup (amortizacija)":"Nakup − subvencija", ice:purchaseIce, ev:purchaseEv},
+    {label:"Energija", ice:energyIce, ev:energyEv},
+    {label:"Servis + gume", ice:(val("servIce")+val("tyreIce"))*years, ev:(val("servEv")+val("tyreEv"))*years},
+    {label:"Zavarovanje", ice:val("insIce")*years, ev:val("insEv")*years},
+    {label:"Registracija", ice:val("regIce")*years, ev:val("regEv")*years},
+    {label:"SKUPAJ", ice:totIce, ev:totEv, sum:true}
+  ]);
+  $("bdSub").textContent = NUM(kmYear)+" km/leto × "+years+" let = "+NUM(totalKm)+" km"+(depOn?" · z upoštevano preostalo vrednostjo":" · brez amortizacije");
+
+  // ---- break-even chart ----
+  renderChart(upIce, upEv, eIce+runIce, eEv+runEv, years, be);
+  $("beNote").innerHTML = be===null
+    ? "V teh pogojih se višja cena električnega <b>ne povrne</b> v smiselni dobi — klasični ostaja cenejši iz žepa."
+    : be<=0
+      ? "Električni je cenejši <b>že ob nakupu</b> (po subvenciji) in razlika z leti le raste."
+      : "Električni na začetku stane več, a nižji stroški vožnje razliko poravnajo po <b>"+NUM(be,1)+" letih</b>. Po tem vsak kilometer dela plus.";
+
+  // ---- table ----
+  renderTable({purchaseIce,purchaseEv,energyIce,energyEv,maintIce,maintEv,totIce,totEv,depOn,
+    servIce:val("servIce")*years,servEv:val("servEv")*years,
+    insIce:val("insIce")*years,insEv:val("insEv")*years,
+    regIce:val("regIce")*years,regEv:val("regEv")*years,
+    tyreIce:val("tyreIce")*years,tyreEv:val("tyreEv")*years,
+    subsidy, resIceEur, resEvEur});
+  $("tblSub").textContent="Za celotno dobo "+years+" let · "+NUM(totalKm)+" km.";
+}
+
+function signed(n){ return (n>=0?"+":"−")+EUR(Math.abs(n)); }
+
+function breakEven(upIce, upEv, yrIce, yrEv){
+  // upEv + t*yrEv = upIce + t*yrIce  => t = (upEv-upIce)/(yrIce-yrEv)
+  const dUp=upEv-upIce, dYr=yrIce-yrEv;
+  if(dUp<=0) return 0;               // EV already cheaper upfront
+  if(dYr<=0) return null;            // EV never catches up
+  return dUp/dYr;
+}
+
+function renderBreakdown(rows){
+  const max=Math.max(...rows.map(r=>Math.max(r.ice,r.ev)),1);
+  const el=$("breakdown"); el.innerHTML="";
+  rows.forEach(r=>{
+    const wrap=document.createElement("div"); wrap.className="bd-row";
+    wrap.innerHTML=`<div class="bl">${r.label}</div>
+      <div class="bd-track">
+        <div class="bd-bar ice"><div class="fill" style="width:${Math.max(r.ice/max*100,0)}%"></div>${barVal(r.ice,r.ice/max)}</div>
+        <div class="bd-bar ev"><div class="fill" style="width:${Math.max(r.ev/max*100,0)}%"></div>${barVal(r.ev,r.ev/max)}</div>
+      </div>`;
+    if(r.sum) wrap.querySelectorAll(".bl")[0].style.fontWeight="800";
+    el.appendChild(wrap);
+  });
+}
+function barVal(v,frac){ const out=frac<0.16; return `<span class="bv ${out?"out":""}">${EUR(v)}</span>`; }
+
+function renderChart(upIce, upEv, yrIce, yrEv, years, be){
+  const W=680,H=300,padL=54,padR=24,padT=18,padB=34;
+  const xmax=years;
+  const ymax=Math.max(upIce+yrIce*years, upEv+yrEv*years)*1.05;
+  const X=t=>padL+(t/xmax)*(W-padL-padR);
+  const Y=v=>H-padB-(v/ymax)*(H-padT-padB);
+  const ptsIce=[], ptsEv=[];
+  for(let t=0;t<=years;t++){ ptsIce.push([X(t),Y(upIce+yrIce*t)]); ptsEv.push([X(t),Y(upEv+yrEv*t)]); }
+  const path=p=>p.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");
+  // y gridlines
+  let grid="";
+  const steps=4;
+  for(let i=0;i<=steps;i++){ const v=ymax*i/steps, y=Y(v);
+    grid+=`<line class="grid" x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}"/>`;
+    grid+=`<text x="${padL-8}" y="${y+4}" text-anchor="end">${NUM(v/1000,0)}k</text>`;
+  }
+  // x labels
+  let xl="";
+  const xstep = years>10?2:1;
+  for(let t=0;t<=years;t+=xstep){ xl+=`<text x="${X(t)}" y="${H-padB+18}" text-anchor="middle">${t}</text>`; }
+  // crossover marker
+  let cross="";
+  if(be!==null && be>0 && be<=years){
+    const cx=X(be), cy=Y(upEv+yrEv*be);
+    cross=`<line class="grid" x1="${cx}" y1="${padT}" x2="${cx}" y2="${H-padB}" stroke-dasharray="4 4"/>
+      <circle class="cross" cx="${cx}" cy="${cy}" r="5"/>
+      <text x="${cx}" y="${padT+12}" text-anchor="middle" style="font-weight:700">prelom ${NUM(be,1)} l.</text>`;
+  }
+  // end labels
+  const endIce=ptsIce[ptsIce.length-1], endEv=ptsEv[ptsEv.length-1];
+  const svg=`<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Graf preloma stroškov">
+    ${grid}
+    <line class="axis" x1="${padL}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}"/>
+    <path class="area-ev" d="${path(ptsEv)} L ${endEv[0]} ${H-padB} L ${padL} ${H-padB} Z"/>
+    <path class="line-ice" d="${path(ptsIce)}"/>
+    <path class="line-ev" d="${path(ptsEv)}"/>
+    ${cross}
+    <text class="lbl-ice" x="${endIce[0]-4}" y="${endIce[1]-8}" text-anchor="end" style="font-weight:700">Klasični</text>
+    <text class="lbl-ev" x="${endEv[0]-4}" y="${endEv[1]+16}" text-anchor="end" style="font-weight:700">Električni</text>
+    ${xl}
+    <text x="${padL}" y="${H-4}" text-anchor="start">leta lastništva →</text>
+  </svg>`;
+  $("chart").innerHTML=svg;
+}
+
+function renderTable(d){
+  const row=(label,ice,ev,indent=false)=>{
+    const save=ice-ev;
+    const cls=save>=0?"pos":"neg";
+    return `<tr><td style="${indent?'padding-left:24px;color:var(--ink-2)':''}">${label}</td>
+      <td>${EUR(ice)}</td><td>${EUR(ev)}</td>
+      <td class="cell-save ${cls}">${(save>=0?"+":"−")+EUR(Math.abs(save))}</td></tr>`;
+  };
+  let html="";
+  if(d.depOn){
+    html+=row("Nakup − subvencija − iztržek", d.purchaseIce, d.purchaseEv);
+    html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ vklj. subvencija</td><td>–</td><td style="color:var(--ev-ink)">−${NUM(d.subsidy)} €</td><td></td></tr>`;
+    html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ preostala vrednost</td><td style="color:var(--muted)">−${NUM(d.resIceEur)} €</td><td style="color:var(--muted)">−${NUM(d.resEvEur)} €</td><td></td></tr>`;
+  } else {
+    html+=row("Nakup − subvencija", d.purchaseIce, d.purchaseEv);
+  }
+  html+=row("Energija (gorivo / elektrika)", d.energyIce, d.energyEv);
+  html+=row("Servis", d.servIce, d.servEv, true);
+  html+=row("Zavarovanje", d.insIce, d.insEv, true);
+  html+=row("Registracija", d.regIce, d.regEv, true);
+  html+=row("Gume", d.tyreIce, d.tyreEv, true);
+  const save=d.totIce-d.totEv;
+  html+=`<tr class="sum"><td>Skupni strošek lastništva</td><td>${EUR(d.totIce)}</td><td>${EUR(d.totEv)}</td>
+    <td class="cell-save ${save>=0?'pos':'neg'}">${(save>=0?"+":"−")+EUR(Math.abs(save))}</td></tr>`;
+  $("tcoBody").innerHTML=html;
+}
+
+/* ============ generic input listeners ============ */
+["kmYear","years","homeShare","consIce","fuelPrice","consEv","priceHome","pricePublic",
+ "priceIce","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
+ "resIce","resEv","depOn"].forEach(id=>{
+  $(id).addEventListener("input",recompute);
+});
+
+/* ============ section collapse ============ */
+document.querySelectorAll("[data-sec] .sec-head").forEach(h=>{
+  h.addEventListener("click",e=>{
+    if(e.target.closest("select,input")) return;
+    h.parentElement.classList.toggle("collapsed");
+  });
+});
+
+/* ============ theme toggle ============ */
+const root=document.documentElement;
+$("themeToggle").onclick=()=>{
+  const cur=root.getAttribute("data-theme")
+    || (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  const next=cur==="dark"?"light":"dark";
+  root.setAttribute("data-theme",next);
+};
+
+/* ============ share link (URL params) ============ */
+const SHARE_KEYS=["seg","iceIdx","evIdx","kmYear","years","homeShare","priceIce","priceEv","subsidy",
+  "consIce","fuelPrice","consEv","priceHome","pricePublic","servIce","insIce","regIce","tyreIce",
+  "servEv","insEv","regEv","tyreEv","resIce","resEv","depOn"];
+$("btnShare").onclick=()=>{
+  const p=new URLSearchParams();
+  p.set("seg",state.seg); p.set("iceIdx",state.iceIdx); p.set("evIdx",state.evIdx);
+  ["kmYear","years","homeShare","priceIce","priceEv","subsidy","consIce","fuelPrice","consEv",
+   "priceHome","pricePublic","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
+   "resIce","resEv"].forEach(k=>p.set(k,$(k).value));
+  p.set("depOn",$("depOn").checked?1:0);
+  const url=location.origin+location.pathname+"#"+p.toString();
+  navigator.clipboard?.writeText(url).then(()=>{
+    const b=$("btnShare"); const t=b.textContent; b.textContent="✓ Povezava kopirana!";
+    setTimeout(()=>b.textContent=t,1800);
+  }).catch(()=>{ location.hash=p.toString(); });
+};
+
+function loadFromHash(){
+  if(!location.hash) return false;
+  const p=new URLSearchParams(location.hash.slice(1));
+  if(!p.has("seg")) return false;
+  state.seg=p.get("seg"); syncSegButtons(); refreshSegment();
+  state.iceIdx=+p.get("iceIdx"); state.evIdx=+p.get("evIdx");
+  $("selIce").value=state.iceIdx; $("selEv").value=state.evIdx;
+  loadVehicleDefaults();
+  ["kmYear","years","homeShare","priceIce","priceEv","subsidy","consIce","fuelPrice","consEv",
+   "priceHome","pricePublic","servIce","insIce","regIce","tyreIce","servEv","insEv","regEv","tyreEv",
+   "resIce","resEv"].forEach(k=>{ if(p.has(k)) $(k).value=p.get(k); });
+  if(p.has("depOn")) $("depOn").checked=p.get("depOn")==="1";
+  if(p.get("subsidy")!==String(autoSubsidy(+$("priceEv").value))){ state.subsidyAuto=false; $("subHint").textContent="ročno"; }
+  return true;
+}
+
+$("btnReset").onclick=()=>{ history.replaceState(null,"","#"); init(true); };
+
+/* ============ init ============ */
+function init(reset){
+  state={seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true};
+  syncSegButtons(); refreshSegment(); loadVehicleDefaults();
+  $("kmYear").value=DEF.kmYear; $("years").value=DEF.years; $("homeShare").value=DEF.homeShare;
+  $("priceHome").value=DEF.priceHome; $("pricePublic").value=DEF.pricePublic;
+  if(!reset) loadFromHash();
+  recompute();
+}
+init(false);
+</script>
+</body>
+</html>
