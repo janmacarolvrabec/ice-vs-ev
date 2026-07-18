@@ -83,3 +83,23 @@ spletni strežnik (npr. GitHub Pages).
   primer se posvetuj z računovodjo.
 - **CO₂** temelji na javnih študijah (ICCT 2025 — 72,8 kg CO₂e/kWh baterije, ~73 % nižje emisije
   v življenjski dobi; ElectricityMaps — 173 g CO₂/kWh za slovensko omrežje 2025).
+
+## Sorodni eksperimenti Jana Macarola
+
+- [Simulator fantomskih zastojev](https://janmacarolvrabec.github.io/Traffic-Jam-Simulator/)
+- [Vpliv samovozečih vozil (FSD) na promet](https://janmacarolvrabec.github.io/Full-Self-Driving-traffic-impact/)
+- [Upravljanje hitrosti na avtocestah](https://janmacarolvrabec.github.io/highway-speed-management/)
+
+## Avtor
+
+**Jan Macarol** — administrator skupine [Elektro vozila v Sloveniji](https://www.facebook.com/groups/ev.slovenije/).
+[Instagram](https://instagram.com/janmacarol) ·
+[Facebook](https://facebook.com/janmacarol) ·
+[LinkedIn](https://www.linkedin.com/in/janmacarol) ·
+[X](https://x.com/jmacarolv)
+
+## Licenca
+
+Za **neprofitno (nekomercialno)** uporabo je koda prosto dovoljena — smeš jo uporabiti, prilagoditi
+in deliti z navedbo avtorja (Jan Macarol) in vira. Za **komercialno** uporabo se predhodno dogovori
+z avtorjem.

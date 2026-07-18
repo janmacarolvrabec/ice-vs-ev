@@ -156,6 +156,30 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .foot-brand a{color:var(--ev-ink);text-decoration:none;font-weight:700}
 .foot-brand a:hover{text-decoration:underline}
 
+.foot-sep{border-top:1px solid var(--line);margin-top:26px;padding-top:24px}
+.proj-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:10px}
+.proj-links a{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink-2);
+  background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+  font-weight:600;font-size:13.5px}
+.proj-links a:hover{border-color:var(--ev);color:var(--ink)}
+.proj-links a .pj-ic{font-size:18px;flex:none}
+.proj-links a .pj-ar{margin-left:auto;color:var(--muted)}
+.proj-links a:hover .pj-ar{color:var(--ev-ink)}
+
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:24px}
+.socials{display:flex;gap:8px}
+.socials a{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line)}
+.socials a:hover{color:#fff;background:var(--ev);border-color:var(--ev)}
+.socials svg{width:19px;height:19px;fill:currentColor}
+.foot-repo{font-size:13px;color:var(--muted)}
+.foot-repo a{color:var(--ev-ink);font-weight:700;text-decoration:none}
+.foot-repo a:hover{text-decoration:underline}
+
+.foot-license{margin-top:18px;font-size:12.5px;color:var(--ink-2);background:var(--ev-soft);
+  border:1px solid var(--line);border-radius:10px;padding:13px 15px;line-height:1.5}
+.foot-license b{color:var(--ev-ink)}
+
 /* ---------- Sticky scoreboard ---------- */
 .scoreboard{position:sticky;top:0;z-index:50;background:var(--surface);
   border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);
@@ -927,8 +951,40 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           <li>CO₂ življenjski cikel in baterija (72,8 kg/kWh, −73 %): <a href="https://theicct.org/publication/electric-cars-life-cycle-analysis-emissions-europe-jul25/" target="_blank" rel="noopener">ICCT 2025</a></li>
           <li>Ogljičnost omrežja (173 g/kWh): <a href="https://www.electricitymaps.com/grid-in-review-2025/slovenia" target="_blank" rel="noopener">Electricity Maps</a></li>
         </ul>
-        <p style="margin-top:12px">Za skupino <b>Električna vozila Slovenije</b>. Deli povezavo — vsak si lahko izračuna svoj scenarij.</p>
+        <p style="margin-top:12px">Za skupino <b>Elektro vozila v Sloveniji</b>. Deli povezavo — vsak si lahko izračuna svoj scenarij.</p>
       </div>
+    </div>
+
+    <!-- Povezani projekti -->
+    <div class="foot-sep">
+      <h4>Sorodni eksperimenti Jana Macarola</h4>
+      <div class="proj-links">
+        <a href="https://janmacarolvrabec.github.io/Traffic-Jam-Simulator/" target="_blank" rel="noopener">
+          <span class="pj-ic">🚗</span>Simulator fantomskih zastojev<span class="pj-ar">→</span></a>
+        <a href="https://janmacarolvrabec.github.io/Full-Self-Driving-traffic-impact/" target="_blank" rel="noopener">
+          <span class="pj-ic">🤖</span>Vpliv samovozečih vozil (FSD) na promet<span class="pj-ar">→</span></a>
+        <a href="https://janmacarolvrabec.github.io/highway-speed-management/" target="_blank" rel="noopener">
+          <span class="pj-ic">🛣️</span>Upravljanje hitrosti na avtocestah<span class="pj-ar">→</span></a>
+      </div>
+    </div>
+
+    <!-- Socialne povezave + repozitorij -->
+    <div class="foot-bottom">
+      <div class="socials" aria-label="Jan Macarol na družbenih omrežjih">
+        <a href="https://instagram.com/janmacarol" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c2.7 0 3 0 4.1.1 1 0 1.7.2 2.3.5.6.2 1.1.5 1.6 1s.8 1 1 1.6c.3.6.5 1.3.5 2.3.1 1.1.1 1.4.1 4.1s0 3-.1 4.1c0 1-.2 1.7-.5 2.3-.2.6-.5 1.1-1 1.6s-1 .8-1.6 1c-.6.3-1.3.5-2.3.5-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1 0-1.7-.2-2.3-.5-.6-.2-1.1-.5-1.6-1s-.8-1-1-1.6c-.3-.6-.5-1.3-.5-2.3C2 15 2 14.7 2 12s0-3 .1-4.1c0-1 .2-1.7.5-2.3.2-.6.5-1.1 1-1.6s1-.8 1.6-1c.6-.3 1.3-.5 2.3-.5C9 2 9.3 2 12 2Zm0 1.8c-2.7 0-3 0-4 .1-.8 0-1.2.2-1.5.3-.4.1-.6.3-.9.6-.3.3-.5.5-.6.9-.1.3-.3.7-.3 1.5-.1 1-.1 1.3-.1 4s0 3 .1 4c0 .8.2 1.2.3 1.5.1.4.3.6.6.9.3.3.5.5.9.6.3.1.7.3 1.5.3 1 .1 1.3.1 4 .1s3 0 4-.1c.8 0 1.2-.2 1.5-.3.4-.1.6-.3.9-.6.3-.3.5-.5.6-.9.1-.3.3-.7.3-1.5.1-1 .1-1.3.1-4s0-3-.1-4c0-.8-.2-1.2-.3-1.5-.1-.4-.3-.6-.6-.9-.3-.3-.5-.5-.9-.6-.3-.1-.7-.3-1.5-.3-1-.1-1.3-.1-4-.1Zm0 3.1a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 1.8a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6Zm5.3-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg></a>
+        <a href="https://facebook.com/janmacarol" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg></a>
+        <a href="https://www.linkedin.com/in/janmacarol" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3H3.6A.6.6 0 0 0 3 3.6v16.8a.6.6 0 0 0 .6.6h16.8a.6.6 0 0 0 .6-.6V3.6a.6.6 0 0 0-.6-.6ZM8.3 18.3H5.6V9.7h2.7v8.6ZM7 8.5a1.6 1.6 0 1 1 0-3.1 1.6 1.6 0 0 1 0 3.1Zm11.3 9.8h-2.7v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2v4.3h-2.7V9.7h2.6v1.2h.1a2.9 2.9 0 0 1 2.6-1.4c2.8 0 3.3 1.8 3.3 4.2v4.6Z"/></svg></a>
+        <a href="https://x.com/jmacarolv" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.1l7.6-8.7L1.7 2h6.8l4.7 6.2L18.9 2Zm-1.2 18h1.8L7.1 3.9H5.2L17.7 20Z"/></svg></a>
+      </div>
+      <div class="foot-repo">
+        Odprta koda: <a href="https://github.com/janmacarolvrabec/ice-vs-ev" target="_blank" rel="noopener">GitHub repozitorij</a>
+        · <a href="https://github.com/janmacarolvrabec/ice-vs-ev#readme" target="_blank" rel="noopener">opis delovanja (README)</a>
+      </div>
+    </div>
+
+    <div class="foot-license">
+      <b>Licenca:</b> Za <b>neprofitno (nekomercialno)</b> uporabo je koda prosto dovoljena — smeš jo uporabiti,
+      prilagoditi in deliti z navedbo avtorja (Jan Macarol) in vira. Za komercialno uporabo se predhodno dogovori z avtorjem.
     </div>
   </footer>
 </div>
