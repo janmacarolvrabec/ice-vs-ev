@@ -103,7 +103,9 @@ spletni strežnik (npr. GitHub Pages).
 - **Cene vozil, zavarovanje in registracija** so okvirne vrednosti — preveri jih pri prodajalcu
   oz. zavarovalnici; vse so v kalkulatorju urejljive.
 - **Davčni del** (boniteta, DDV) je poenostavljen pripomoček, ne davčni nasvet — za konkreten
-  primer se posvetuj z računovodjo.
+  primer se posvetuj z računovodjo. Boniteta upošteva **letno znižanje osnove** po ZDoh-2, 43. členu
+  (osnova po letih uporabe: 100/85/70/55/45/35/25/15/10 %), zato boniteta z leti pada in ni
+  obračunana od polne nabavne vrednosti vsa leta.
 - **CO₂** temelji na javnih študijah (ICCT 2025 — 72,8 kg CO₂e/kWh baterije, ~73 % nižje emisije
   v življenjski dobi; ElectricityMaps — 173 g CO₂/kWh za slovensko omrežje 2025).
 

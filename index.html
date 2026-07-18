@@ -813,9 +813,9 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       </div>
       <div class="biz-cards">
         <div class="biz-card muted">
-          <div class="bt">🟠 Klasični — boniteta</div>
+          <div class="bt">🟠 Klasični — boniteta <span style="font-weight:600;color:var(--muted)">(skupaj v dobi)</span></div>
           <div class="bv" id="bonIce">–</div>
-          <div class="bd2"><b id="bonBaseIce">–</b> osnove/leto (1,5 % vrednosti mesečno) × obdavčitev — <b>strošek voznika</b>.</div>
+          <div class="bd2">1. leto <b id="bonBaseIce">–</b> osnove (1,5 %/mes). Osnova se z leti <b>znižuje</b> (100 → 85 → 70 → 55 → 45 %… ZDoh-2), zato boniteta pada — <b>strošek voznika</b>.</div>
         </div>
         <div class="biz-card">
           <div class="bt">🟢 Električni — boniteta</div>
@@ -823,7 +823,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           <div class="bd2">Za povsem električna vozila je boniteta <b>0 %</b>, brez omejitve vrednosti, do konca <b>2029</b>.</div>
         </div>
       </div>
-      <div class="fnote"><span class="i">ℹ️</span><span><b>Kako je vključeno:</b> boniteta klasičnega je v poslovnem načinu dodana kot letni strošek (davek, ki ga plača voznik), odbitek DDV pa zniža nabavno vrednost električnega. Oboje se pozna v skupnem izračunu zgoraj. Za natančno davčno obravnavo se posvetuj z računovodjo.</span></div>
+      <div class="fnote"><span class="i">ℹ️</span><span><b>Kako je vključeno:</b> boniteta klasičnega je dodana kot strošek voznika v celotni dobi, pri čemer se <b>osnova vsako leto zniža</b> po lestvici ZDoh-2 (100/85/70/55/45/35/25/15/10 %). Odbitek DDV zniža nabavno vrednost električnega. Oboje se pozna v skupnem izračunu zgoraj. Za natančno davčno obravnavo se posvetuj z računovodjo.</span></div>
     </div>
   </section>
 
@@ -1078,6 +1078,9 @@ const DEF = {
 const VAT = 0.22;                 // splošna stopnja DDV
 const VAT_EV_CAP = 80000;         // meja vrednosti za odbitek DDV pri BEV (66.b člen ZDDV-1)
 const BONITETA_M = 0.015;         // mesečna boniteta = 1,5 % nabavne vrednosti (klasični); EV = 0
+// ZDoh-2 43. člen: osnova (nabavna vrednost) za boniteto se z leti uporabe znižuje
+const BON_FACTOR = [1, 0.85, 0.70, 0.55, 0.45, 0.35, 0.25, 0.15, 0.10]; // leto 1..9; nato 0.10
+const bonFactor = y => y<=9 ? BON_FACTOR[y-1] : 0.10;
 
 const EUR = n => Math.round(n).toLocaleString("sl-SI") + " €";
 const EUR1 = n => (Math.round(n*10)/10).toLocaleString("sl-SI",{minimumFractionDigits:1,maximumFractionDigits:1}) + " €";
@@ -1205,14 +1208,18 @@ function recompute(){
   // odbitek DDV: le pri BEV do 80.000 €, sorazmerno z deležem poslovne rabe; osebni klasični avto nima odbitka
   const vatEvFull = (priceEv>0 && priceEv<=VAT_EV_CAP) ? priceEv*VAT/(1+VAT) : 0;
   const vatEv = biz ? vatEvFull*bizShare : 0;
-  // boniteta: klasični 1,5 % vrednosti mesečno; električni 0
-  const bonBaseIce = biz ? priceIce*BONITETA_M*12 : 0;   // letna osnova bonitete
-  const bonTaxIce  = bonBaseIce*bonRate;                 // dejanski letni strošek voznika
+  // boniteta: klasični 1,5 % vrednosti mesečno; osnova se z leti znižuje (ZDoh-2); električni 0
+  const bonBaseYr1 = biz ? priceIce*BONITETA_M*12 : 0;   // letna osnova bonitete v 1. letu
+  // vsota bonitete (davka) čez dobo, z upoštevanjem letnega znižanja osnove
+  let bonBaseSum = 0;
+  if(biz){ for(let y=1;y<=years;y++){ bonBaseSum += priceIce*bonFactor(y)*BONITETA_M*12; } }
+  const bonTotal   = bonBaseSum*bonRate;                 // skupni davek bonitete v dobi (strošek voznika)
+  const bonTaxAvg  = years>0 ? bonTotal/years : 0;       // povprečni letni davek (za točko preloma)
   // poslovne kartice
   $("vatEv").textContent  = biz ? (vatEvFull>0 ? "−"+EUR(vatEv) : "0 € (nad 80.000 €)") : "—";
   $("vatIce").textContent = biz ? "0 €" : "—";
-  $("bonBaseIce").textContent = EUR(bonBaseIce);
-  $("bonIce").textContent = biz ? "−"+EUR(bonTaxIce) : "—";
+  $("bonBaseIce").textContent = EUR(bonBaseYr1);
+  $("bonIce").textContent = biz ? "−"+EUR(bonTotal) : "—";
 
   // yearly running (non-energy) — vzdrževanje (brez bonitete)
   const runIce = val("servIce")+val("insIce")+val("regIce")+tyreIceYear;
@@ -1233,14 +1240,13 @@ function recompute(){
   const depIce = depOn ? (priceIce - resIceEur) : 0;
   const depEv  = depOn ? (priceEv - subsidy - vatEv - resEvEur) : 0;
 
-  // annual totals (boniteta le pri klasičnem v poslovnem načinu)
-  const yrIce = eIce + runIce + bonTaxIce;
+  // annual totals (boniteta le pri klasičnem v poslovnem načinu; povprečje zaradi letnega znižanja)
+  const yrIce = eIce + runIce + bonTaxAvg;
   const yrEv  = eEv + runEv;
 
   // totals over period
   const energyIce=eIce*years, energyEv=eEv*years;
   const maintIce=runIce*years, maintEv=runEv*years;
-  const bonTotal = bonTaxIce*years;
   const purchaseIce = depOn ? depIce : upIce;
   const purchaseEv  = depOn ? depEv  : upEv;
 
