@@ -227,6 +227,25 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
   font-size:12px;line-height:1.45;padding:8px 16px;text-align:center}
 .sb-bizbar b{color:var(--ice-ink);font-weight:800}
 
+/* razlaga pod semaforjem */
+.explain{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-top:14px;padding:20px 22px}
+.explain .ex-head{font-size:15.5px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+.explain .ex-lead{font-size:13.5px;color:var(--ink-2);margin:0 0 14px;line-height:1.55}
+.explain .ex-lead b{color:var(--ink)}
+.explain .ex-lead .yes{color:var(--ev-ink);font-weight:800}
+.ex-rows{display:flex;flex-direction:column;gap:10px}
+.ex-row{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px}
+.ex-row .ex-car{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;margin-bottom:6px}
+.ex-row.ice .ex-car{color:var(--ice-ink)} .ex-row.ev .ex-car{color:var(--ev-ink)}
+.ex-formula{font-size:13px;color:var(--muted);line-height:1.8;font-variant-numeric:tabular-nums}
+.ex-formula b{color:var(--ink);font-weight:700}
+.ex-formula .op{color:var(--line-2);font-weight:700;padding:0 2px}
+.ex-formula b.tot{font-size:15px}
+.ex-row.ice .ex-formula b.tot{color:var(--ice-ink)} .ex-row.ev .ex-formula b.tot{color:var(--ev-ink)}
+.ex-diff{font-size:13.5px;color:var(--ink-2);margin:14px 0 0;line-height:1.55}
+.ex-diff b.g{color:var(--ev-ink)} .ex-diff b.o{color:var(--ice-ink)}
+
 /* ---------- Sections ---------- */
 .section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   box-shadow:var(--shadow);margin-top:18px;overflow:hidden}
@@ -512,6 +531,25 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       🏢 <b>Poslovno lastništvo:</b> v strošku klasičnega je vključena plačana <b>boniteta</b>
       (strošek podjetja/voznika) <b id="sbBonIce">–</b> · pri električnem <b>0 €</b>.
     </div>
+  </div>
+
+  <!-- ===== Razlaga številk (dinamično) ===== -->
+  <div class="explain" id="explain">
+    <div class="ex-head">Kaj pomenita ti dve številki?</div>
+    <p class="ex-lead">Obe sta <b>skupni strošek lastništva (TCO)</b> — vse, kar te avto stane v
+      <b id="exYears">–</b> (<b id="exKm">–</b>). <span class="yes">Da</span>, vključujeta gorivo/elektriko,
+      servis, zavarovanje, registracijo in gume — ne le nabavne cene. Tako pridemo do teh dveh vrednosti:</p>
+    <div class="ex-rows">
+      <div class="ex-row ice">
+        <div class="ex-car">🟠 <span id="exNameIce">Klasični</span></div>
+        <div class="ex-formula" id="exFormulaIce">–</div>
+      </div>
+      <div class="ex-row ev">
+        <div class="ex-car">🟢 <span id="exNameEv">Električni</span></div>
+        <div class="ex-formula" id="exFormulaEv">–</div>
+      </div>
+    </div>
+    <p class="ex-diff" id="exDiff">–</p>
   </div>
 
   <!-- ===== Section: vehicles ===== -->
@@ -1290,6 +1328,26 @@ function recompute(){
   const perMonth = Math.abs(save)/(years*12);
   const letihTxt = years+(years===1?" letu":" letih");
   $("sbSub").innerHTML = "v "+letihTxt+" · <b>≈ "+EUR(perMonth)+"/mesec</b>";
+
+  // ---- razlaga številk pod semaforjem ----
+  $("exYears").textContent = letihTxt;
+  $("exKm").textContent = NUM(totalKm)+" km";
+  $("exNameIce").textContent = ICE[state.iceIdx].name;
+  $("exNameEv").textContent = EV[state.evIdx].name;
+  const pLabel = depOn ? "Nakup po amortizaciji" : "Nakup − subvencija";
+  const op = ' <span class="op">+</span> ';
+  const exF = (pur,en,enLbl,mnt,bon,tot) => {
+    let s = pLabel+' <b>'+EUR(pur)+'</b>'+op+enLbl+' <b>'+EUR(en)+'</b>'+op+
+            'servis, zavarovanje, registracija, gume <b>'+EUR(mnt)+'</b>';
+    if(bon>0) s += op+'boniteta <b>'+EUR(bon)+'</b>';
+    s += ' <span class="op">=</span> <b class="tot">'+EUR(tot)+'</b>';
+    return s;
+  };
+  $("exFormulaIce").innerHTML = exF(purchaseIce, energyIce, "gorivo", maintIce, biz?bonTotal:0, totIce);
+  $("exFormulaEv").innerHTML  = exF(purchaseEv, energyEv, "elektrika", maintEv, 0, totEv);
+  $("exDiff").innerHTML = evWins
+    ? 'Razlika = <b class="g">'+EUR(save)+' manj z električnim</b> (≈ '+EUR(perMonth)+'/mesec). Višjo nabavno ceno sčasoma premagata cenejša vožnja in nižje vzdrževanje.'
+    : 'Razlika = <b class="o">'+EUR(Math.abs(save))+' manj s klasičnim</b> (≈ '+EUR(perMonth)+'/mesec) v teh pogojih — nižja poraba EV še ne odtehta višje nabavne cene.';
 
   // ---- energy equivalence panel ----
   const kwhL = KWH_PER_L[ICE[state.iceIdx].fuel] || 9.5;
