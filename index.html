@@ -11,6 +11,7 @@
 <meta name="author" content="Jan Macarol — Elektro vozila v Sloveniji">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0E9F63">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBFOUY2MyIvPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTEyIDYuNXY0LjVNMjAgNi41djQuNSIvPjxwYXRoIGQ9Ik05IDExaDE0djMuMmE3IDcgMCAwIDEtMTQgMHoiLz48cGF0aCBkPSJNMTYgMjEuMlYyNiIvPjwvZz48L3N2Zz4K">
 <!-- Zamenjaj domeno spodaj s svojo (npr. GitHub Pages) pred objavo: -->
 <link rel="canonical" href="https://janmacarolvrabec.github.io/ice-vs-ev/">
 
@@ -207,9 +208,8 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .sb-car{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-total{font-size:clamp(18px,3.4vw,26px);font-weight:800;letter-spacing:-.01em}
 .sb-total .u{font-size:.62em;font-weight:600;color:var(--muted);margin-left:2px}
-.sb-center{background:var(--ink);color:#fff;display:flex;flex-direction:column;
+.sb-center{background:#0E1826;color:#fff;display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:12px;text-align:center;position:relative;min-width:0}
-:root[data-theme="light"] .sb-center{background:#0E1826}
 .sb-center .cap{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
   color:rgba(255,255,255,.66)}
 .sb-hero{font-size:clamp(24px,5.4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.05;
@@ -1279,7 +1279,9 @@ function recompute(){
   hero.textContent=(evWins?"":"+")+EUR(save);
   hero.className="sb-hero tnum "+(evWins?"win":"lose");
   $("sbHeroCap").textContent = evWins? "Prihraniš z električnim" : "Doplačaš za električni";
-  $("sbSub").innerHTML = "v "+years+(years<5&&years>1?" letih":years===1?" letu":" letih")+" · <b>"+EUR1(Math.abs(save)/totalKm*100).replace(" €"," €/100km")+"</b>";
+  const perMonth = Math.abs(save)/(years*12);
+  const letihTxt = years+(years===1?" letu":" letih");
+  $("sbSub").innerHTML = "v "+letihTxt+" · <b>≈ "+EUR(perMonth)+"/mesec</b>";
 
   // ---- energy equivalence panel ----
   const kwhL = KWH_PER_L[ICE[state.iceIdx].fuel] || 9.5;
@@ -1299,16 +1301,16 @@ function recompute(){
   vb.textContent=evWins?"🟢":"🟠";
   if(evWins){
     vt.textContent="Električni je cenejši";
-    vx.innerHTML="V tvojem scenariju te <b class='g'>"+EV[state.evIdx].name+"</b> v "+years+" letih stane <b class='g'>"+EUR(Math.abs(save))+" manj</b> kot "+ICE[state.iceIdx].name+".";
+    vx.innerHTML="V tvojem scenariju te <b class='g'>"+EV[state.evIdx].name+"</b> v "+years+" letih stane <b class='g'>"+EUR(Math.abs(save))+" manj</b> kot "+ICE[state.iceIdx].name+" — to je <b class='g'>≈ "+EUR(perMonth)+" na mesec</b>.";
   } else {
     vt.textContent="Klasični je cenejši";
-    vx.innerHTML="V tvojem scenariju te <b class='o'>"+ICE[state.iceIdx].name+"</b> v "+years+" letih stane <b class='o'>"+EUR(Math.abs(save))+" manj</b> kot električni.";
+    vx.innerHTML="V tvojem scenariju te <b class='o'>"+ICE[state.iceIdx].name+"</b> v "+years+" letih stane <b class='o'>"+EUR(Math.abs(save))+" manj</b> kot električni — to je <b class='o'>≈ "+EUR(perMonth)+" na mesec</b>.";
   }
 
   // ---- KPIs ----
   $("kSave").textContent=(evWins?"":"−")+EUR(Math.abs(save));
   $("kSave").parentElement.querySelector(".kv").style.color=evWins?"var(--good)":"var(--bad)";
-  $("kSaveSub").textContent=evWins?"prihranek z EV v dobi":"doplačilo za EV v dobi";
+  $("kSaveSub").innerHTML=(evWins?"prihranek z EV · ":"doplačilo za EV · ")+"<b>≈ "+EUR(perMonth)+"/mesec</b>";
 
   // break-even (out of pocket, ignoring residual; incl. boniteta & DDV v poslovnem načinu)
   const be = breakEven(upIce, upEv, yrIce, yrEv);
