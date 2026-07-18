@@ -147,6 +147,9 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
   .sb-side.ice{grid-area:ice} .sb-side.ev{grid-area:ev} .sb-center{grid-area:center}
   .sb-side.ev{text-align:right}
 }
+.sb-bizbar{border-top:1px solid var(--line);background:var(--ice-soft);color:var(--ice-ink);
+  font-size:12px;line-height:1.45;padding:8px 16px;text-align:center}
+.sb-bizbar b{color:var(--ice-ink);font-weight:800}
 
 /* ---------- Sections ---------- */
 .section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
@@ -388,6 +391,10 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
         <div class="sb-car" id="sbCarEv">—</div>
         <div class="sb-total tnum" id="sbTotalEv">–</div>
       </div>
+    </div>
+    <div class="sb-bizbar" data-biz-only>
+      🏢 <b>Poslovno lastništvo:</b> v strošku klasičnega je vključena plačana <b>boniteta</b>
+      (strošek podjetja/voznika) <b id="sbBonIce">–</b> · pri električnem <b>0 €</b>.
     </div>
   </div>
 
@@ -1069,6 +1076,7 @@ function recompute(){
   $("cBiz").style.color = "var(--ev-ink)";
   // opomba pri ceni klasičnega (poslovno lastništvo)
   $("iceBonNote").textContent = EUR(bonTotal)+" v "+years+(years===1?" letu":" letih");
+  $("sbBonIce").textContent = EUR(bonTotal);
 
   // km per period
   const totalKm = kmYear*years;
