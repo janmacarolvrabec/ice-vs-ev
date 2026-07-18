@@ -8,7 +8,7 @@
 <title>Koliko prihraniš z električnim avtomobilom? · Kalkulator stroškov lastništva</title>
 <meta name="description" content="Koliko prihraniš z električnim avtomobilom v primerjavi z bencinskim? Interaktiven kalkulator stroškov lastništva (TCO) za slovenski trg 2026: gorivo, subvencija Eko sklada, servis, boniteta in odbitek DDV za podjetja. Vse številke prilagodiš sam.">
 <meta name="keywords" content="električni avtomobil, prihranek, kalkulator, stroški lastništva, TCO, bencin, dizel, subvencija Eko sklad, boniteta, odbitek DDV, električno vozilo Slovenija, poraba, WLTP, polnjenje">
-<meta name="author" content="Električna vozila Slovenije">
+<meta name="author" content="Jan Macarol — Elektro vozila v Sloveniji">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0E9F63">
 <!-- Zamenjaj domeno spodaj s svojo (npr. GitHub Pages) pred objavo: -->
@@ -45,6 +45,8 @@
   "operatingSystem":"Web",
   "inLanguage":"sl",
   "description":"Koliko prihraniš z električnim avtomobilom v primerjavi z bencinskim? Kalkulator skupnih stroškov lastništva (TCO) za slovenski trg 2026, vključno z boniteto in odbitkom DDV za podjetja.",
+  "author":{"@type":"Person","name":"Jan Macarol"},
+  "publisher":{"@type":"Organization","name":"Elektro vozila v Sloveniji","url":"https://www.facebook.com/groups/ev.slovenije/"},
   "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}
 }
 </script>
@@ -116,6 +118,43 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
   background:var(--surface);color:var(--ink-2);width:40px;height:40px;border-radius:11px;
   cursor:pointer;font-size:17px;display:grid;place-items:center;box-shadow:var(--shadow)}
 .theme-toggle:hover{color:var(--ink);border-color:var(--line-2)}
+
+/* ---- EV Slovenije branding ---- */
+.topbar{display:flex;align-items:center;justify-content:center;gap:8px 12px;flex-wrap:wrap;
+  text-decoration:none;background:var(--ev-soft);color:var(--ev-ink);
+  font-size:13.5px;font-weight:600;padding:10px 52px 10px 18px;text-align:center;
+  border-bottom:1px solid var(--line)}
+.topbar b{font-weight:800}
+.topbar .tb-cta{font-weight:800;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+.topbar:hover .tb-cta{color:var(--ink)}
+.fbico{flex:none}
+
+.mast-actions{margin-top:22px;display:flex;justify-content:center}
+.fb-cta{display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  background:#1877F2;color:#fff;font-weight:700;font-size:15px;padding:12px 20px;border-radius:12px;
+  box-shadow:var(--shadow);text-wrap:balance}
+.fb-cta:hover{filter:brightness(1.07)}
+.mast-author{margin-top:14px;font-size:13px;color:var(--muted)}
+.mast-author b{color:var(--ink-2)}
+
+.ev-logo{color:var(--ev)}
+.ev-band{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:24px 28px;margin-top:26px}
+.ev-band .ev-logo{width:118px;height:auto;flex:none}
+.ev-band .eb-txt{min-width:0;text-align:left}
+.ev-band .eb-name{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.ev-band .eb-sub{font-size:13.5px;color:var(--muted);margin:3px 0 12px;text-wrap:pretty}
+.ev-band .eb-link{display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  color:#fff;background:#1877F2;font-weight:700;font-size:14px;padding:10px 17px;border-radius:10px}
+.ev-band .eb-link:hover{filter:brightness(1.07)}
+@media(max-width:520px){.ev-band{gap:16px;padding:22px}.ev-band .eb-txt{text-align:center}}
+
+.foot-brand{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.foot-brand .ev-logo{width:58px;height:auto;flex:none}
+.foot-brand .fb-name{font-weight:800;color:var(--ink-2);font-size:14px}
+.foot-brand a{color:var(--ev-ink);text-decoration:none;font-weight:700}
+.foot-brand a:hover{text-decoration:underline}
 
 /* ---------- Sticky scoreboard ---------- */
 .scoreboard{position:sticky;top:0;z-index:50;background:var(--surface);
@@ -368,12 +407,40 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
 <body>
 <button class="theme-toggle" id="themeToggle" aria-label="Preklopi temo">◐</button>
 
+<!-- EV Slovenije logotip (ponovno uporabna SVG definicija) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="evlogo" viewBox="0 0 264 152">
+    <g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M26 112 C16 108 16 96 24 90 L50 66 C58 55 72 47 90 46 L152 43 C174 42 191 51 203 67 L214 85 C232 87 248 95 252 106"/>
+      <path d="M26 112 C24 120 30 126 40 125 L56 125 M108 125 L172 125 M220 125 L232 125 C244 125 250 117 250 106"/>
+      <circle cx="82" cy="126" r="19"/>
+      <circle cx="194" cy="126" r="19"/>
+      <path d="M116 100 C122 90 130 86 139 82"/>
+      <path d="M137 64 l31 18 -13 22 -31 -18 z"/>
+      <path d="M164 68 l12 -7 M174 85 l12 -7"/>
+    </g>
+  </symbol>
+</svg>
+
+<a class="topbar" href="https://www.facebook.com/groups/ev.slovenije/" target="_blank" rel="noopener">
+  <svg class="fbico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+  <span>Postani član največje slovenske skupine <b>Elektro vozila v Sloveniji</b></span>
+  <span class="tb-cta">Pridruži se →</span>
+</a>
+
 <div class="wrap">
   <header class="masthead">
     <span class="kicker"><span class="dot"></span>Kalkulator stroškov lastništva · Slovenija · 2026</span>
     <h1>Se ti bolj splača <span class="ice-w">bencin</span><br>ali <span class="ev-w">elektrika</span>?</h1>
     <p class="lede">Vpiši svoj scenarij — kilometre, cene, subvencijo — in v realnem času poglej,
       kateri avto te v resnici stane manj. Vsaka številka je tvoja: prilagodi jo svojemu primeru.</p>
+    <div class="mast-actions">
+      <a class="fb-cta" href="https://www.facebook.com/groups/ev.slovenije/" target="_blank" rel="noopener">
+        <svg class="fbico" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+        Pridruži se skupini Elektro vozila v Sloveniji
+      </a>
+    </div>
+    <div class="mast-author">Avtor: <b>Jan Macarol</b> · administrator skupine Elektro vozila v Sloveniji</div>
   </header>
 
   <!-- ===== Sticky scoreboard ===== -->
@@ -767,6 +834,19 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
     </div>
   </section>
 
+  <!-- ===== EV Slovenije branding band (sredina) ===== -->
+  <div class="ev-band">
+    <svg class="ev-logo" viewBox="0 0 264 152" role="img" aria-label="Logotip Elektro vozila v Sloveniji"><use href="#evlogo"/></svg>
+    <div class="eb-txt">
+      <div class="eb-name">Elektro vozila v Sloveniji</div>
+      <div class="eb-sub">Največja slovenska skupnost lastnikov in navdušencev nad električnimi vozili.</div>
+      <a class="eb-link" href="https://www.facebook.com/groups/ev.slovenije/" target="_blank" rel="noopener">
+        <svg class="fbico" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+        Pridruži se skupini na Facebooku →
+      </a>
+    </div>
+  </div>
+
   <!-- ===== Results ===== -->
   <div class="results">
     <div class="verdict" id="verdict">
@@ -818,6 +898,13 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
   </div>
 
   <footer>
+    <div class="foot-brand">
+      <svg class="ev-logo" viewBox="0 0 264 152" role="img" aria-label="Logotip Elektro vozila v Sloveniji"><use href="#evlogo"/></svg>
+      <div>
+        <div class="fb-name">Elektro vozila v Sloveniji</div>
+        <div>Avtor kalkulatorja: <b>Jan Macarol</b> · administrator skupine · <a href="https://www.facebook.com/groups/ev.slovenije/" target="_blank" rel="noopener">Facebook skupina →</a></div>
+      </div>
+    </div>
     <div class="foot-grid">
       <div>
         <h4>Kako računa</h4>
