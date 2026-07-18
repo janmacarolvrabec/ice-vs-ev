@@ -1582,7 +1582,7 @@ init(false);
 (function(){
   const NS="ev-slovenije-kalkulator", KEY="izracuni-v1";
   const BASE="https://abacus.jasoncameron.dev";
-  const SEED=0; // po želji prištej zagonski zamik (npr. za predstavitev)
+  const SEED=2000; // zagonski zamik: števec teče od 2000 (že testiranih uporabnikov)
   const FLAG="evk_counted_v1";
   const already=localStorage.getItem(FLAG);
   const url=(already?BASE+"/get/":BASE+"/hit/")+NS+"/"+KEY;
