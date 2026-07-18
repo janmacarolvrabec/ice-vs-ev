@@ -71,6 +71,27 @@ privzeto nastavljene na GitHub Pages domeno `https://janmacarolvrabec.github.io/
 Na GitHub Pages: Settings → Pages → deploy iz te veje; stran bo na zgornjem naslovu, slika pa na
 `…/share/prihranek-1200x630-facebook-og.png`.
 
+## Živ števec uporabe (marketinški element)
+
+Pod uvodom je „živ" števec: **„Že N ljudi je izračunalo svoj scenarij."**
+
+- **Kako deluje:** skupni strežniški števec ([Abacus](https://abacus.jasoncameron.dev), brezplačen,
+  brez registracije). Proti-spam: poveča se **le enkrat na napravo** (localStorage `evk_counted_v1`),
+  zato osveževanje strani ali ponovni izračun števca ne napihujeta.
+- **Nastavljivo** (v `<script>` bloku `Živ števec uporabe`): `NS`/`KEY` (ime števca), `SEED`
+  (zagonski zamik, če želiš začeti pri višji številki za predstavitev).
+- **Peskovnik:** v predogledu na claude.ai (in povsod brez omrežja) se element **tiho skrije** —
+  deluje šele na živi strani (GitHub Pages).
+
+### Strožji IP-dedup (neobvezna nadgradnja: GoatCounter)
+
+Za pravo štetje po IP (ne le po napravi) uporabi [GoatCounter](https://www.goatcounter.com) —
+brezplačen, zasebnosti prijazen, dedup po zgoščenem IP na strežniku (brez piškotkov):
+1. Ustvari brezplačen račun (npr. `ev-kalkulator.goatcounter.com`).
+2. Dodaj njihovo `count.js` skripto.
+3. Število prikaži prek `https://ev-kalkulator.goatcounter.com/counter/TOTAL.json` in ga vpiši v
+   element `#useCountN` (namesto klica Abacus).
+
 ## Tehnično
 
 Ena sama datoteka `index.html` — čisti HTML/CSS/JavaScript, brez zunanjih knjižnic in brez

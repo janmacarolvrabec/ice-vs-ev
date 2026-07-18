@@ -138,6 +138,17 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .mast-author b{color:var(--ink-2)}
 .mast-socials{justify-content:center;margin-top:12px}
 
+.usecount{display:none;align-items:center;gap:10px;margin:22px auto 0;padding:9px 18px;
+  background:var(--surface);border:1px solid var(--line);border-radius:100px;
+  box-shadow:var(--shadow);font-size:14px;font-weight:600;color:var(--ink-2);
+  width:max-content;max-width:100%}
+.usecount.show{display:flex}
+.usecount .live{position:relative;width:9px;height:9px;border-radius:50%;background:var(--ev);flex:none}
+.usecount .live::after{content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid var(--ev);opacity:0;animation:livepulse 1.9s ease-out infinite}
+@keyframes livepulse{0%{transform:scale(.55);opacity:.7}100%{transform:scale(1.7);opacity:0}}
+.usecount b{color:var(--ev-ink);font-weight:800;font-variant-numeric:tabular-nums}
+
 .ev-logo{color:var(--ev)}
 .ev-band{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
@@ -459,6 +470,10 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
     <h1>Se ti bolj splača <span class="ice-w">bencin</span><br>ali <span class="ev-w">elektrika</span>?</h1>
     <p class="lede">Vpiši svoj scenarij — kilometre, cene, subvencijo — in v realnem času poglej,
       kateri avto te v resnici stane manj. Vsaka številka je tvoja: prilagodi jo svojemu primeru.</p>
+    <div class="usecount" id="useCount" aria-live="polite" title="Šteje se enkrat na napravo — brez podvajanja">
+      <span class="live"></span>
+      <span>Že <b id="useCountN">0</b> ljudi je izračunalo svoj scenarij</span>
+    </div>
     <div class="mast-actions">
       <a class="fb-cta" href="https://www.facebook.com/groups/ev.slovenije/" target="_blank" rel="noopener">
         <svg class="fbico" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
@@ -1558,6 +1573,43 @@ function init(reset){
   recompute();
 }
 init(false);
+
+/* ============ Živ števec uporabe ============
+   Strežniški skupek (skupen vsem obiskovalcem) prek brezplačnega števca Abacus.
+   Proti-spam: poveča se LE enkrat na napravo (localStorage) — osveževanje ali
+   ponovni izračun ga ne napihuje. Za strožji IP-dedup glej README (GoatCounter).
+   Če je stran v peskovniku / brez omrežja, se element tiho skrije. */
+(function(){
+  const NS="ev-slovenije-kalkulator", KEY="izracuni-v1";
+  const BASE="https://abacus.jasoncameron.dev";
+  const SEED=0; // po želji prištej zagonski zamik (npr. za predstavitev)
+  const FLAG="evk_counted_v1";
+  const already=localStorage.getItem(FLAG);
+  const url=(already?BASE+"/get/":BASE+"/hit/")+NS+"/"+KEY;
+  fetch(url,{cache:"no-store"})
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(d=>{
+      const n=(typeof d.value==="number")?d.value:(typeof d.count==="number"?d.count:null);
+      if(n===null) return;
+      if(!already) localStorage.setItem(FLAG,"1");
+      animateCount(n+SEED);
+    })
+    .catch(()=>{ /* tiho: element ostane skrit */ });
+
+  function animateCount(n){
+    const el=document.getElementById("useCount"), num=document.getElementById("useCountN");
+    if(!el||!num) return;
+    el.classList.add("show");
+    if(matchMedia("(prefers-reduced-motion:reduce)").matches){ num.textContent=n.toLocaleString("sl-SI"); return; }
+    const dur=1000, t0=performance.now();
+    (function tick(t){
+      const p=Math.min((t-t0)/dur,1);
+      const v=Math.round(n*(1-Math.pow(1-p,3)));
+      num.textContent=v.toLocaleString("sl-SI");
+      if(p<1) requestAnimationFrame(tick);
+    })(t0);
+  }
+})();
 </script>
 </body>
 </html>
