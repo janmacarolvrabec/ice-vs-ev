@@ -310,7 +310,10 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .sb-side.ev .sb-label{justify-content:flex-end}
 .sb-label.ice{color:var(--ice-ink)} .sb-label.ev{color:var(--ev-ink)}
 .sb-car{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-capt{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:3px}
 .sb-total{font-size:clamp(18px,3.4vw,26px);font-weight:800;letter-spacing:-.01em}
+.sb-month{font-size:12px;font-weight:600;color:var(--muted)}
+.sb-month b{color:var(--ink-2);font-weight:700}
 .sb-total .u{font-size:.62em;font-weight:600;color:var(--muted);margin-left:2px}
 .sb-center{background:#0E1826;color:#fff;display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:12px;text-align:center;position:relative;min-width:0}
@@ -632,7 +635,9 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <div class="sb-side ice">
         <div class="sb-label ice">🟠 Klasični</div>
         <div class="sb-car" id="sbCarIce">—</div>
+        <div class="sb-capt">strošek lastništva</div>
         <div class="sb-total tnum" id="sbTotalIce">–</div>
+        <div class="sb-month tnum" id="sbMonthIce">–</div>
       </div>
       <div class="sb-center">
         <div class="cap" id="sbHeroCap">Skupni prihranek</div>
@@ -642,7 +647,9 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <div class="sb-side ev">
         <div class="sb-label ev">Električni 🟢</div>
         <div class="sb-car" id="sbCarEv">—</div>
+        <div class="sb-capt">strošek lastništva</div>
         <div class="sb-total tnum" id="sbTotalEv">–</div>
+        <div class="sb-month tnum" id="sbMonthEv">–</div>
       </div>
     </div>
     <div class="sb-bizbar" data-biz-only>
@@ -1616,6 +1623,9 @@ function recompute(){
   $("enNameEv").textContent=EV[state.evIdx].name;
   $("sbTotalIce").innerHTML=EUR(totIce);
   $("sbTotalEv").innerHTML=EUR(totEv);
+  const monthIce = totIce/(years*12), monthEv = totEv/(years*12);
+  $("sbMonthIce").innerHTML="<b>"+EUR(monthIce)+"</b>/mesec";
+  $("sbMonthEv").innerHTML="<b>"+EUR(monthEv)+"</b>/mesec";
   const hero=$("sbHero");
   const evWins=save>=0;
   hero.textContent=(evWins?"":"+")+EUR(save);
@@ -1713,9 +1723,7 @@ function recompute(){
         : ' Krivulji se v tej dobi <b>ne križata</b> — klasični ostane spodaj.';
   $("beGraph").innerHTML = g;
 
-  // povzetek A/B: skupni strošek v dobi + mesečni strošek lastništva
-  const months = years*12;
-  const monthIce = totIce/months, monthEv = totEv/months;
+  // povzetek A/B: skupni strošek v dobi + mesečni strošek lastništva (monthIce/monthEv že izračunana zgoraj)
   const iceName = ICE[state.iceIdx].name, evName = EV[state.evIdx].name;
   $("beSummary").innerHTML =
     '<div class="be-line ice"><span class="be-nm">🟠 '+iceName+'</span><span class="be-fig"><b>'+EUR(totIce)+'</b> v '+letihTxt+' &nbsp;·&nbsp; <span class="mo">≈ '+EUR(monthIce)+'/mesec</span></span></div>'+
