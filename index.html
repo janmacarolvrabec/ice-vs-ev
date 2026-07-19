@@ -130,7 +130,7 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .topbar:hover .tb-cta{color:var(--ink)}
 .fbico{flex:none}
 
-.mast-actions{margin-top:22px;display:flex;justify-content:center}
+.mast-actions{margin-top:22px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .fb-cta{display:inline-flex;align-items:center;gap:10px;text-decoration:none;
   background:#1877F2;color:#fff;font-weight:700;font-size:15px;padding:12px 20px;border-radius:12px;
   box-shadow:var(--shadow);text-wrap:balance}
@@ -192,6 +192,63 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .foot-license{margin-top:18px;font-size:12.5px;color:var(--ink-2);background:var(--ev-soft);
   border:1px solid var(--line);border-radius:10px;padding:13px 15px;line-height:1.5}
 .foot-license b{color:var(--ev-ink)}
+
+/* metodologija — gumb + modal */
+.meth-launch{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:14px;
+  padding:11px 18px;border-radius:12px;cursor:pointer;box-shadow:var(--shadow)}
+.meth-launch:hover{border-color:var(--ev);color:var(--ev-ink)}
+.meth-launch .ic{font-size:16px}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(6,12,18,.62);z-index:100;
+  display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:16px;max-width:780px;width:100%;
+  box-shadow:var(--shadow-lg);margin:auto}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;
+  border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);border-radius:16px 16px 0 0;z-index:3}
+.modal-head h2{font-size:18px;font-weight:800;margin:0;letter-spacing:-.01em}
+.modal-close{border:1px solid var(--line);background:var(--surface-2);width:36px;height:36px;border-radius:10px;
+  cursor:pointer;font-size:17px;color:var(--ink-2);display:grid;place-items:center;flex:none}
+.modal-close:hover{color:var(--ink);border-color:var(--line-2)}
+.modal-tabs{display:flex;gap:4px;padding:0 22px;border-bottom:1px solid var(--line);
+  position:sticky;top:57px;background:var(--surface);z-index:2;overflow-x:auto}
+.modal-tab{border:none;background:none;padding:13px 8px;font:inherit;font-weight:700;font-size:13.5px;
+  color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.modal-tab.active{color:var(--ink);border-bottom-color:var(--ev)}
+.modal-body{padding:22px}
+.modal-pane{display:none} .modal-pane.active{display:block}
+.meth h4{font-size:14px;font-weight:800;margin:18px 0 6px;color:var(--ink)}
+.meth h4:first-child{margin-top:0}
+.meth p{font-size:13.5px;color:var(--ink-2);line-height:1.6;margin:0 0 8px}
+.meth ul{margin:0 0 8px;padding-left:18px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.meth li{margin-bottom:4px} .meth b{color:var(--ink)} .meth code{background:var(--surface-2);
+  border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px}
+.meth .formula{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;font-size:13px;color:var(--ink-2);line-height:1.7;margin:4px 0 10px}
+.meth a{color:var(--ev-ink)}
+
+/* test */
+.test-intro{font-size:13.5px;color:var(--ink-2);line-height:1.6;margin-bottom:14px}
+.test-intro b{color:var(--ink)}
+.test-list{display:flex;flex-direction:column;gap:0}
+.test-row{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--line)}
+.test-row .rk{font-weight:800;font-size:13px;color:var(--muted);text-align:center}
+.test-main{min-width:0}
+.test-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.test-nm{font-weight:700;font-size:13.5px;color:var(--ink)}
+.test-nm .pr{font-weight:500;color:var(--muted);font-size:12.5px}
+.test-save{font-weight:800;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.test-save.pos{color:var(--ev-ink)} .test-save.neg{color:var(--ice-ink)}
+.test-track{height:8px;border-radius:100px;background:var(--surface-3);margin-top:7px;overflow:hidden;position:relative}
+.test-fill{height:100%;border-radius:100px;position:absolute;top:0}
+.test-fill.pos{background:var(--ev);left:50%} .test-fill.neg{background:var(--ice);right:50%}
+.test-mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--line-2)}
+.test-concl{margin-top:16px;background:var(--ev-soft);border:1px solid var(--line);border-radius:12px;
+  padding:15px 17px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.test-concl b{color:var(--ev-ink)} .test-concl .big{font-weight:800;color:var(--ink)}
+.test-note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
 
 /* ---------- Sticky scoreboard ---------- */
 .scoreboard{position:sticky;top:0;z-index:50;background:var(--surface);
@@ -510,6 +567,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
         <svg class="fbico" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
         Pridruži se skupini Elektro vozila v Sloveniji
       </a>
+      <button class="meth-launch" type="button" id="methBtn"><span class="ic">📋</span>Metodologija in test</button>
     </div>
     <div class="mast-author">Avtor: <b>Jan Macarol</b> · administrator skupine Elektro vozila v Sloveniji</div>
     <div class="socials mast-socials" aria-label="Jan Macarol na družbenih omrežjih">
@@ -1063,6 +1121,82 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       prilagoditi in deliti z navedbo avtorja (Jan Macarol) in vira. Za komercialno uporabo se predhodno dogovori z avtorjem.
     </div>
   </footer>
+</div>
+
+<!-- ===== Modal: metodologija in test ===== -->
+<div class="modal-backdrop" id="methModal" role="dialog" aria-modal="true" aria-labelledby="methTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="methTitle">Metodologija in test</h2>
+      <button class="modal-close" id="methClose" aria-label="Zapri">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-pane="pMeth">Kako računamo</button>
+      <button class="modal-tab" data-pane="pTest">Test: kaj se najbolj splača</button>
+    </div>
+    <div class="modal-body">
+      <!-- Pane 1: metodologija -->
+      <div class="modal-pane meth active" id="pMeth">
+        <h4>Kaj je skupni strošek lastništva (TCO)</h4>
+        <p>Ne primerjamo le nabavne cene, ampak <b>vse stroške čez izbrano dobo</b>. Formula:</p>
+        <div class="formula">TCO = (nabavna cena − subvencija − odbitek DDV* − preostala vrednost)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;+ doba × (energija + servis + zavarovanje + registracija + gume + boniteta*)</div>
+        <p>Strošek na km = TCO ÷ (km na leto × doba). „Točka preloma" primerja <b>ves odšteti denar</b>
+          skozi leta (brez preostale vrednosti). <span style="color:var(--muted)">*Odbitek DDV in boniteta le pri poslovnem lastništvu.</span></p>
+
+        <h4>Energija in poraba</h4>
+        <p>Pri klasičnih upoštevamo kombinirano <b>WLTP</b> porabo (l/100 km), pri električnih
+          <b>deklarirano WLTP</b> porabo (kWh/100 km). Cena elektrike je tehtano povprečje domačega
+          in javnega polnjenja. Strošek gum se računa iz obrabe na kilometer × letna kilometrina.</p>
+
+        <h4>Subvencija (Eko sklad, 2026)</h4>
+        <ul>
+          <li>do 35.000 € → <b>7.200 €</b></li>
+          <li>35.000–45.000 € → <b>6.500 €</b></li>
+          <li>45.000–65.000 € → <b>4.500 €</b></li>
+          <li>nad 65.000 € → <b>0 €</b> (ni subvencije)</li>
+        </ul>
+
+        <h4>Boniteta (poslovno lastništvo)</h4>
+        <p>Za zasebno rabo službenega vozila: klasični <b>1,5 % nabavne vrednosti mesečno</b>, pri čemer
+          se osnova z leti znižuje po lestvici <b>ZDoh-2, 43. člen</b> (100/85/70/55/45/35/25/15/10 %).
+          Za povsem <b>električna vozila je boniteta 0 %</b>, brez omejitve vrednosti, do konca 2029.</p>
+
+        <h4>Odbitek DDV (poslovno lastništvo)</h4>
+        <p>Osebni bencinski/dizelski avto: vstopni DDV se <b>ne odbije</b>. Za <b>električna vozila</b>
+          (ničelne emisije, nabavna vrednost z DDV do <b>80.000 €</b>) je možen odbitek vstopnega DDV
+          sorazmerno z deležem poslovne rabe (<b>66.b člen ZDDV-1</b>).</p>
+
+        <h4>Ogljični odtis (CO₂)</h4>
+        <p>Upoštevan je dodatni ogljični dolg baterije ob izdelavi (<b>72,8 kg CO₂e/kWh</b>, ICCT 2025) in
+          operativne emisije čez dobo glede na izbrani vir elektrike. Emisije izdelave vozila (brez baterije)
+          so pri obeh podobne in se v razliki izničijo.</p>
+
+        <h4>Viri</h4>
+        <ul>
+          <li>Cene goriv: <a href="https://www.energetika-portal.si/podrocja/energetika/cene-naftnih-derivatov/regulirane-cene-naftnih-derivatov/" target="_blank" rel="noopener">Portal Energetika</a></li>
+          <li>Subvencije: <a href="https://www.ekosklad.si/prebivalstvo/pridobite-spodbudo/seznam-spodbud/elektricna-vozila-3" target="_blank" rel="noopener">Eko sklad</a></li>
+          <li>Boniteta / DDV: <a href="https://www.racunovodstvo.net/zakonodaja/zdoh/43-clen" target="_blank" rel="noopener">ZDoh-2 43. člen</a>, 66.b člen ZDDV-1</li>
+          <li>CO₂: <a href="https://theicct.org/publication/electric-cars-life-cycle-analysis-emissions-europe-jul25/" target="_blank" rel="noopener">ICCT 2025</a></li>
+        </ul>
+        <p class="test-note">Cene vozil, zavarovanje in registracija so okvirne vrednosti za slovenski trg 2026
+          in urejljive. Orodje je pripomoček za lasten izračun, ne uradna ponudba ali davčni nasvet.</p>
+      </div>
+
+      <!-- Pane 2: test -->
+      <div class="modal-pane" id="pTest">
+        <div class="test-intro">
+          <b>Metodološki test pri trenutni zakonodaji.</b> Vsak električni avto primerjamo s <b>povprečnim
+          klasičnim</b> v istem razredu, pod enakimi pogoji: <span id="testCond">15.000 km/leto · 5 let · zasebno · 80 % domače polnjenje</span>.
+          Prikazan je prihranek (skupni strošek lastništva) — koliko manj ali več te stane električni od tipičnega bencinskega/dizelskega v razredu.
+        </div>
+        <div class="test-list" id="testList"></div>
+        <div class="test-concl" id="testConcl"></div>
+        <p class="test-note">Merilo: povprečen TCO klasičnih v istem razredu je izhodišče (0). Zelena = električni je cenejši, oranžna = dražji.
+          Test uporablja iste privzete cene energentov in davčna pravila kot kalkulator; pri poslovnem lastništvu (boniteta 0 %, odbitek DDV) je prednost električnih še večja.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1687,6 +1821,78 @@ function loadFromHash(){
 }
 
 $("btnReset").onclick=()=>{ history.replaceState(null,"","#"); init(true); };
+
+/* ============ Metodologija + test (modal) ============ */
+function tcoFixed(v, isEv){
+  const km=DEF.kmYear, years=DEF.years, home=DEF.homeShare/100;
+  const fuelP = (!isEv && v.fuel==="dizel") ? DEF.fuelDizel : DEF.fuelBencin;
+  const evP = home*DEF.priceHome + (1-home)*DEF.pricePublic;
+  const energy = (isEv ? v.cons*evP : v.cons*fuelP) * km/100 * years;
+  const tyre = km/1000*v.tyre*years;
+  const maint = (v.serv+v.ins+v.reg)*years + tyre;
+  const subsidy = isEv ? autoSubsidy(v.price) : 0;
+  const residual = v.price*v.res/100;
+  return (v.price - subsidy - residual) + energy + maint;
+}
+function runTest(){
+  // povprečen TCO klasičnih po razredu = izhodišče
+  const segAvg={};
+  SEGMENTS.forEach(s=>{ const l=ICE.filter(v=>v.seg===s.id); segAvg[s.id]=l.reduce((a,v)=>a+tcoFixed(v,false),0)/l.length; });
+  const segName={}; SEGMENTS.forEach(s=>segName[s.id]=s.name);
+  const rows = EV.map(v=>({name:v.name, price:v.price, seg:v.seg,
+    saving: segAvg[v.seg]-tcoFixed(v,true)})).sort((a,b)=>b.saving-a.saving);
+  const maxAbs = Math.max(...rows.map(r=>Math.abs(r.saving)),1);
+  let html="";
+  rows.forEach((r,i)=>{
+    const pos=r.saving>=0, w=Math.abs(r.saving)/maxAbs*50;
+    html+='<div class="test-row"><div class="rk">'+(i+1)+'</div><div class="test-main">'+
+      '<div class="test-top"><span class="test-nm">'+r.name+' <span class="pr">· '+EUR(r.price)+' · '+segName[r.seg]+'</span></span>'+
+      '<span class="test-save '+(pos?"pos":"neg")+'">'+(pos?"+":"−")+EUR(Math.abs(r.saving))+'</span></div>'+
+      '<div class="test-track"><span class="test-mid"></span><span class="test-fill '+(pos?"pos":"neg")+'" style="width:'+w+'%"></span></div>'+
+      '</div></div>';
+  });
+  $("testList").innerHTML=html;
+
+  // korelacija cena <-> prihranek ZNOTRAJ razreda (izolira vpliv cene) + ilustrativni par
+  const corrOf = arr => { const nn=arr.length; if(nn<3) return null;
+    const xs=arr.map(r=>r.price), ys=arr.map(r=>r.saving);
+    const mx=xs.reduce((a,b)=>a+b,0)/nn, my=ys.reduce((a,b)=>a+b,0)/nn;
+    let num=0,dx=0,dy=0; for(let i=0;i<nn;i++){ num+=(xs[i]-mx)*(ys[i]-my); dx+=(xs[i]-mx)**2; dy+=(ys[i]-my)**2; }
+    return (dx&&dy)? num/Math.sqrt(dx*dy):null; };
+  const segCorrs=[]; let biggestSeg=null, biggestN=0;
+  SEGMENTS.forEach(s=>{ const arr=rows.filter(r=>r.seg===s.id); const c=corrOf(arr);
+    if(c!==null) segCorrs.push(c); if(arr.length>biggestN){biggestN=arr.length;biggestSeg=s;} });
+  const wCorr = segCorrs.length? segCorrs.reduce((a,b)=>a+b,0)/segCorrs.length : 0;
+  const worth = rows.filter(r=>r.saving>0).length, n=rows.length;
+  // primer iz razreda z največ variantami: najcenejši vs najdražji EV
+  const segArr = rows.filter(r=>r.seg===biggestSeg.id).slice().sort((a,b)=>a.price-b.price);
+  const cheap=segArr[0], pricey=segArr[segArr.length-1];
+  const short = nm => nm.replace(/ \d+ kWh$/,"").replace(/\(.*?\)/,"").trim();
+  $("testConcl").innerHTML =
+    'Od <b class="big">'+n+'</b> električnih se jih <b class="big">'+worth+'</b> pri teh pogojih splača bolj kot povprečen klasični v razredu. '+
+    '<b>Znotraj vsakega razreda</b> je povezava med ceno in prihrankom izrazito <b>negativna</b> (povprečen r = '+NUM(wCorr,2)+') — '+
+    '<span class="big">čim dražji je električni, tem manj se splača</span>.<br><br>'+
+    'Primer (razred „'+biggestSeg.name+'", isti klasični kot izhodišče): <b>'+short(cheap.name)+'</b> ('+EUR(cheap.price)+') prihrani '+
+    '<b class="'+(cheap.saving>=0?'':'')+'">'+(cheap.saving>=0?"+":"−")+EUR(Math.abs(cheap.saving))+'</b>, '+
+    'medtem ko <b>'+short(pricey.name)+'</b> ('+EUR(pricey.price)+') prinese le '+(pricey.saving>=0?"+":"−")+EUR(Math.abs(pricey.saving))+'. '+
+    'Ista velikost, razlikuje jih le cena.<br><br>'+
+    'Razlog je <b>zakonodaja</b>: subvencija je fiksni znesek, ki se z višjo ceno manjša in nad <b>65.000 €</b> povsem odpade, '+
+    'nad <b>80.000 €</b> pa odpade še možnost odbitka DDV (poslovno). Zato imajo <b>cenejši električni</b> daleč najboljše razmerje.';
+}
+const methModal=$("methModal");
+function openMeth(){ runTest(); methModal.classList.add("open"); document.body.style.overflow="hidden"; }
+function closeMeth(){ methModal.classList.remove("open"); document.body.style.overflow=""; }
+$("methBtn").onclick=openMeth;
+$("methClose").onclick=closeMeth;
+methModal.addEventListener("click",e=>{ if(e.target===methModal) closeMeth(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeMeth(); });
+document.querySelectorAll(".modal-tab").forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll(".modal-tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".modal-pane").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active"); $(t.dataset.pane).classList.add("active");
+  };
+});
 
 /* ============ init ============ */
 function init(reset){
