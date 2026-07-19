@@ -1,7 +1,7 @@
 # Elektro vs. Bencin — Kalkulator stroškov lastništva
 
 Interaktiven kalkulator, ki primerja **skupne stroške lastništva (TCO)** električnega in
-klasičnega avtomobila na slovenskem trgu. Namenjen skupini **Električna vozila Slovenije** —
+klasičnega avtomobila na slovenskem trgu. Namenjen skupini **Elektro vozila Slovenije** —
 vsak si lahko v realnem času izračuna svoj scenarij in vidi, kateri avto ga v resnici stane manj.
 
 👉 **Odpri:** `index.html` (samostojna datoteka, brez namestitve — deluje v vsakem brskalniku,
@@ -120,7 +120,7 @@ spletni strežnik (npr. GitHub Pages).
 
 ## Avtor
 
-**Jan Macarol** — administrator skupine [Elektro vozila v Sloveniji](https://www.facebook.com/groups/ev.slovenije/).
+**Jan Macarol** — administrator skupine [Elektro vozila Slovenije](https://www.facebook.com/groups/ev.slovenije/).
 [Instagram](https://instagram.com/janmacarol) ·
 [Facebook](https://facebook.com/janmacarol) ·
 [LinkedIn](https://www.linkedin.com/in/janmacarol) ·
