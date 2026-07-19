@@ -193,6 +193,26 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
   border:1px solid var(--line);border-radius:10px;padding:13px 15px;line-height:1.5}
 .foot-license b{color:var(--ev-ink)}
 
+.foot-legal{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+  display:flex;gap:8px 16px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--muted)}
+.foot-legal .links{display:flex;gap:14px;flex-wrap:wrap}
+.foot-legal a{color:var(--ev-ink);font-weight:700;text-decoration:none;cursor:pointer}
+.foot-legal a:hover{text-decoration:underline}
+
+.cookie-bar{position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--surface);
+  border-top:1px solid var(--line);box-shadow:0 -6px 26px rgba(16,32,48,.12);
+  padding:12px 18px;display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cookie-bar.show{display:flex}
+.cookie-bar .ck-txt{font-size:12.5px;color:var(--ink-2);max-width:660px;line-height:1.5}
+.cookie-bar .ck-txt b{color:var(--ink)}
+.cookie-bar .ck-actions{display:flex;gap:8px;flex-wrap:wrap}
+.cookie-bar .ck-btn{border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink);
+  font:inherit;font-weight:700;font-size:13px;padding:9px 17px;border-radius:9px;cursor:pointer}
+.cookie-bar .ck-btn.primary{background:var(--ev);border-color:var(--ev);color:#04180F}
+.cookie-bar .ck-btn:hover{filter:brightness(1.04)}
+.privacy .yes{color:var(--ev-ink);font-weight:800}
+
 /* metodologija — gumb + modal */
 .meth-launch{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-2);
   background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:14px;
@@ -1148,6 +1168,14 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <b>Licenca:</b> Za <b>neprofitno (nekomercialno)</b> uporabo je koda prosto dovoljena — smeš jo uporabiti,
       prilagoditi in deliti z navedbo avtorja (Jan Macarol) in vira. Za komercialno uporabo se predhodno dogovori z avtorjem.
     </div>
+
+    <div class="foot-legal">
+      <div class="links">
+        <a id="privacyLink" role="button" tabindex="0">Politika zasebnosti</a>
+        <a id="legalLink" role="button" tabindex="0">Pravno obvestilo</a>
+      </div>
+      <div>© 2026 Jan Macarol · Elektro vozila Slovenije · <b>brez piškotkov, brez osebnih podatkov</b></div>
+    </div>
   </footer>
 </div>
 
@@ -1239,7 +1267,65 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           pri poslovnem lastništvu (boniteta 0 %, odbitek DDV) je prednost električnih še večja.
           <br><br>🚧 <b>To je šele začetek raziskave</b> — stran bomo nadgrajevali z dodatnimi grafi in analizami.</p>
       </div>
+
+      <!-- Pane 3: politika zasebnosti + pravno obvestilo -->
+      <div class="modal-pane meth privacy" id="pPrivacy">
+        <p><span class="yes">Ta stran ne zbira, ne shranjuje in ne obdeluje osebnih podatkov obiskovalcev.</span>
+          Ni registracije, ni obrazcev, ni piškotkov za sledenje, ni oglaševalskih ali analitičnih sledilnikov, ni profiliranja.</p>
+
+        <h4>Piškotki (cookies)</h4>
+        <p>Stran <b>ne nastavlja piškotkov</b>.</p>
+
+        <h4>Lokalna shramba (localStorage)</h4>
+        <p>Za delovanje stran uporablja le nujno lokalno shrambo v tvojem brskalniku:</p>
+        <ul>
+          <li>zastavica, da se števec obiskov poveča <b>le enkrat na napravo</b> (<code>evk_counted_v1</code>);</li>
+          <li>zastavica, da se to obvestilo o zasebnosti ne prikazuje večkrat (<code>evk_privacy_ok</code>).</li>
+        </ul>
+        <p>Ti podatki ostanejo v tvojem brskalniku, se ne pošiljajo nikamor in ne omogočajo identifikacije.
+          Kadar koli jih lahko izbrišeš (počisti podatke brskalnika).</p>
+
+        <h4>Deljiva povezava</h4>
+        <p>Gumb „Kopiraj povezavo z mojim scenarijem" vpiše tvoje vnesene številke v naslov (URL). Te ostanejo pri tebi;
+          deliš jih le, če povezavo sam pošlješ naprej.</p>
+
+        <h4>Zunanje storitve</h4>
+        <ul>
+          <li><b>Anonimni števec obiskov</b> (Abacus): ob nalaganju se pošlje zahteva, ki poveča skupni števec. Zbrana je le
+            anonimna skupna številka; piškotkov ne nastavlja.</li>
+          <li><b>Povezave do družbenih omrežij</b> (Facebook, Instagram, LinkedIn, X): ob kliku te preusmerijo na zunanje
+            storitve z lastnimi pravili zasebnosti.</li>
+          <li><b>Gostovanje</b> (npr. GitHub Pages): ponudnik lahko za varnost vodi standardne strežniške dnevnike
+            (npr. IP-naslov), na kar avtor nima vpliva.</li>
+        </ul>
+
+        <h4>Tvoje pravice</h4>
+        <p>Ker se osebni podatki ne obdelujejo, ni podatkov za dostop, popravek ali izbris. Za vprašanja glede zasebnosti
+          se obrni na avtorja prek <a href="https://www.facebook.com/groups/ev.slovenije/" target="_blank" rel="noopener">Facebook skupine Elektro vozila Slovenije</a>.</p>
+
+        <h4>Pravno obvestilo in omejitev odgovornosti</h4>
+        <p>Kalkulator je <b>informativni pripomoček</b> za lasten izračun. Cene, porabe, subvencije in davčna pravila so
+          okvirni in se lahko spremenijo; niso uradna ponudba ter niso finančni ali davčni nasvet. Avtor ne jamči za
+          točnost in ne odgovarja za odločitve, sprejete na podlagi izračunov. Za konkretne primere se posvetuj s
+          prodajalcem, zavarovalnico oziroma računovodjo.</p>
+
+        <h4>Avtorske pravice in licenca</h4>
+        <p>© 2026 Jan Macarol. Za <b>neprofitno (nekomercialno)</b> uporabo je koda prosto dovoljena z navedbo avtorja in
+          vira; za komercialno uporabo po dogovoru.</p>
+
+        <p class="test-note">Zadnja posodobitev: julij 2026.</p>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- ===== Obvestilo o zasebnosti (banner) ===== -->
+<div class="cookie-bar" id="cookieBar" role="region" aria-label="Obvestilo o zasebnosti">
+  <div class="ck-txt">🔒 Ta stran <b>ne uporablja piškotkov za sledenje</b> in <b>ne zbira osebnih podatkov</b> —
+    uporablja le nujno lokalno shrambo za delovanje (npr. števec obiskov).</div>
+  <div class="ck-actions">
+    <button class="ck-btn" id="ckMore" type="button">Politika zasebnosti</button>
+    <button class="ck-btn primary" id="ckOk" type="button">V redu</button>
   </div>
 </div>
 
@@ -1990,6 +2076,21 @@ $("researchBtn").onclick=()=>{ runTest(); openModal("pTest","Raziskava"); };
 $("methClose").onclick=closeMeth;
 methModal.addEventListener("click",e=>{ if(e.target===methModal) closeMeth(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeMeth(); });
+
+/* politika zasebnosti / pravno obvestilo */
+function openPrivacy(){ openModal("pPrivacy","Politika zasebnosti in pravno obvestilo"); }
+["privacyLink","legalLink"].forEach(id=>{ const el=$(id); if(el){
+  el.onclick=openPrivacy; el.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openPrivacy(); } };
+}});
+
+/* obvestilo o zasebnosti (banner) */
+(function(){
+  const bar=$("cookieBar"); if(!bar) return;
+  let ok=false; try{ ok=localStorage.getItem("evk_privacy_ok")==="1"; }catch(e){}
+  if(!ok) bar.classList.add("show");
+  $("ckOk").onclick=()=>{ try{ localStorage.setItem("evk_privacy_ok","1"); }catch(e){} bar.classList.remove("show"); };
+  $("ckMore").onclick=openPrivacy;
+})();
 
 /* ============ init ============ */
 function init(reset){

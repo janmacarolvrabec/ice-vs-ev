@@ -126,6 +126,13 @@ spletni strežnik (npr. GitHub Pages).
 [LinkedIn](https://www.linkedin.com/in/janmacarol) ·
 [X](https://x.com/jmacarolv)
 
+## Zasebnost
+
+Stran **ne nastavlja piškotkov** in **ne zbira osebnih podatkov**. Uporablja le nujno lokalno shrambo
+(`localStorage`) za delovanje (zastavici za števec in za obvestilo o zasebnosti). Ob prvem obisku se
+prikaže nevsiljivo obvestilo; celotna **politika zasebnosti in pravno obvestilo** sta dostopna prek
+povezav v nogi. Zunanje zahteve: anonimni števec (Abacus) in — ob kliku — povezave do družbenih omrežij.
+
 ## Licenca
 
 Za **neprofitno (nekomercialno)** uporabo je koda prosto dovoljena — smeš jo uporabiti, prilagoditi
