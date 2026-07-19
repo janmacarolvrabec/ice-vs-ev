@@ -249,6 +249,33 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
   padding:15px 17px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
 .test-concl b{color:var(--ev-ink)} .test-concl .big{font-weight:800;color:var(--ink)}
 .test-note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
+/* raziskava — dodatni elementi */
+.rz-basis{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.rz-basis .seg{margin-bottom:8px} .rz-basis .seg:last-child{margin-bottom:0}
+.rz-basis .seg b{color:var(--ink)} .rz-basis .avg{color:var(--ice-ink);font-weight:700}
+.rz-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin:2px 0 8px}
+.rz-legend span{display:inline-flex;align-items:center;gap:6px}
+.rz-legend i.d{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rz-legend i.ev{background:var(--ev)} .rz-legend i.ice{background:var(--ice)}
+.rz-legend i.thr{border-radius:2px;width:14px;height:0;border-top:2px dashed var(--ice-ink)}
+#rzScatter svg text{fill:var(--muted);font-size:11px}
+#rzScatter .rz-grid{stroke:var(--line)} #rzScatter .rz-axis{stroke:var(--line-2)}
+#rzScatter .rz-zero{stroke:var(--ink-2);stroke-width:1.5}
+#rzScatter .rz-thr{stroke:var(--ice);stroke-width:1.5;stroke-dasharray:5 4;opacity:.75}
+#rzScatter .rz-trend{stroke:var(--ink-2);stroke-width:2;stroke-dasharray:6 5;opacity:.45}
+#rzScatter .pt{stroke:var(--surface);stroke-width:1.5}
+#rzScatter .pt.pos{fill:var(--ev)} #rzScatter .pt.neg{fill:var(--ice)}
+.rz-classbars{display:flex;flex-direction:column;gap:9px;margin-bottom:4px}
+.rz-cb{display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;font-size:12.5px}
+.rz-cb .nm{color:var(--ink-2);font-weight:600}
+.rz-cb .track{height:16px;background:var(--surface-3);border-radius:5px;overflow:hidden;position:relative}
+.rz-cb .fill{position:absolute;top:0;height:100%;border-radius:5px}
+.rz-cb .fill.pos{background:var(--ev);left:50%} .rz-cb .fill.neg{background:var(--ice);right:50%}
+.rz-cb .mid{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line-2)}
+.rz-cb .vl{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.rz-cb .vl.pos{color:var(--ev-ink)} .rz-cb .vl.neg{color:var(--ice-ink)}
+@media(max-width:520px){.rz-cb{grid-template-columns:88px 1fr auto;gap:8px;font-size:11.5px}}
 
 /* ---------- Sticky scoreboard ---------- */
 .scoreboard{position:sticky;top:0;z-index:50;background:var(--surface);
@@ -1181,16 +1208,35 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       </div>
 
       <!-- Pane 2: raziskava -->
-      <div class="modal-pane" id="pTest">
+      <div class="modal-pane meth" id="pTest">
         <div class="test-intro">
           <b>Kateri električni avto se pri trenutni zakonodaji najbolj splača?</b> Vsak električni primerjamo s <b>povprečnim
-          klasičnim</b> v istem razredu, pod enakimi pogoji: <span id="testCond">15.000 km/leto · 5 let · zasebno · 80 % domače polnjenje</span>.
-          Prikazan je prihranek (skupni strošek lastništva) — koliko manj ali več te stane električni od tipičnega bencinskega/dizelskega v razredu.
+          klasičnim v istem razredu</b>, pod enakimi pogoji: <span id="testCond">15.000 km/leto · 5 let · zasebno · 80 % domače polnjenje</span>.
+          Prihranek = koliko manj (ali več) te v 5 letih stane električni od tipičnega bencinskega/dizelskega v razredu.
         </div>
+
+        <h4>S čim primerjamo (izhodišče po razredih)</h4>
+        <div class="rz-basis" id="rzBasis"></div>
+
+        <h4>Cena vs prihranek — kje se električni preneha splačati</h4>
+        <div class="rz-legend">
+          <span><i class="d ev"></i>se splača (nad mejo)</span>
+          <span><i class="d ice"></i>ne splača (pod mejo)</span>
+          <span><i class="d thr"></i>zakonski pragovi</span>
+        </div>
+        <div class="chart-wrap"><div id="rzScatter"></div></div>
+        <p class="test-note" style="margin-top:2px">Vsaka pika je en električni model. Vodoravna črta = meja, kjer je enako drag kot povprečen klasični v razredu.
+          Nad njo se splača, pod njo ne. Navpični črti: <b>65.000 €</b> (konec subvencije) in <b>80.000 €</b> (konec odbitka DDV).</p>
+
+        <h4>Povprečen prihranek po razredu</h4>
+        <div class="rz-classbars" id="rzClassBars"></div>
+
+        <h4>Vsi modeli po prihranku</h4>
         <div class="test-list" id="testList"></div>
+
         <div class="test-concl" id="testConcl"></div>
-        <p class="test-note">Merilo: povprečen TCO klasičnih v istem razredu je izhodišče (0). Zelena = električni je cenejši, oranžna = dražji.
-          Uporabljene so iste privzete cene energentov in davčna pravila kot v kalkulatorju; pri poslovnem lastništvu (boniteta 0 %, odbitek DDV) je prednost električnih še večja.
+        <p class="test-note">Merilo: povprečen TCO klasičnih v istem razredu je izhodišče (0). Iste privzete cene energentov in davčna pravila kot v kalkulatorju;
+          pri poslovnem lastništvu (boniteta 0 %, odbitek DDV) je prednost električnih še večja.
           <br><br>🚧 <b>To je šele začetek raziskave</b> — stran bomo nadgrajevali z dodatnimi grafi in analizami.</p>
       </div>
     </div>
@@ -1832,50 +1878,103 @@ function tcoFixed(v, isEv){
   const residual = v.price*v.res/100;
   return (v.price - subsidy - residual) + energy + maint;
 }
+const short = nm => nm.replace(/ \d+(,\d+)? kWh.*$/,"").replace(/\(.*?\)/,"").trim();
 function runTest(){
-  // povprečen TCO klasičnih po razredu = izhodišče
-  const segAvg={};
-  SEGMENTS.forEach(s=>{ const l=ICE.filter(v=>v.seg===s.id); segAvg[s.id]=l.reduce((a,v)=>a+tcoFixed(v,false),0)/l.length; });
-  const segName={}; SEGMENTS.forEach(s=>segName[s.id]=s.name);
-  const rows = EV.map(v=>({name:v.name, price:v.price, seg:v.seg,
-    saving: segAvg[v.seg]-tcoFixed(v,true)})).sort((a,b)=>b.saving-a.saving);
-  const maxAbs = Math.max(...rows.map(r=>Math.abs(r.saving)),1);
-  let html="";
-  rows.forEach((r,i)=>{
+  const segAvg={}, segIce={}, segName={};
+  SEGMENTS.forEach(s=>{ const l=ICE.filter(v=>v.seg===s.id); segIce[s.id]=l; segName[s.id]=s.name;
+    segAvg[s.id]=l.reduce((a,v)=>a+tcoFixed(v,false),0)/l.length; });
+  const rows = EV.map(v=>({name:v.name, price:v.price, seg:v.seg, saving: segAvg[v.seg]-tcoFixed(v,true)}));
+  const ranked = rows.slice().sort((a,b)=>b.saving-a.saving);
+
+  rzBasis(segIce, segAvg, segName);
+  rzScatter(rows);
+  rzClassBars(rows, segName);
+
+  // rangiran seznam
+  const maxAbs=Math.max(...ranked.map(r=>Math.abs(r.saving)),1);
+  $("testList").innerHTML = ranked.map((r,i)=>{
     const pos=r.saving>=0, w=Math.abs(r.saving)/maxAbs*50;
-    html+='<div class="test-row"><div class="rk">'+(i+1)+'</div><div class="test-main">'+
+    return '<div class="test-row"><div class="rk">'+(i+1)+'</div><div class="test-main">'+
       '<div class="test-top"><span class="test-nm">'+r.name+' <span class="pr">· '+EUR(r.price)+' · '+segName[r.seg]+'</span></span>'+
       '<span class="test-save '+(pos?"pos":"neg")+'">'+(pos?"+":"−")+EUR(Math.abs(r.saving))+'</span></div>'+
       '<div class="test-track"><span class="test-mid"></span><span class="test-fill '+(pos?"pos":"neg")+'" style="width:'+w+'%"></span></div>'+
       '</div></div>';
-  });
-  $("testList").innerHTML=html;
+  }).join("");
 
-  // korelacija cena <-> prihranek ZNOTRAJ razreda (izolira vpliv cene) + ilustrativni par
+  // korelacija znotraj razreda + prihranek po razredu
   const corrOf = arr => { const nn=arr.length; if(nn<3) return null;
     const xs=arr.map(r=>r.price), ys=arr.map(r=>r.saving);
     const mx=xs.reduce((a,b)=>a+b,0)/nn, my=ys.reduce((a,b)=>a+b,0)/nn;
     let num=0,dx=0,dy=0; for(let i=0;i<nn;i++){ num+=(xs[i]-mx)*(ys[i]-my); dx+=(xs[i]-mx)**2; dy+=(ys[i]-my)**2; }
     return (dx&&dy)? num/Math.sqrt(dx*dy):null; };
-  const segCorrs=[]; let biggestSeg=null, biggestN=0;
-  SEGMENTS.forEach(s=>{ const arr=rows.filter(r=>r.seg===s.id); const c=corrOf(arr);
-    if(c!==null) segCorrs.push(c); if(arr.length>biggestN){biggestN=arr.length;biggestSeg=s;} });
+  const segCorrs=[]; SEGMENTS.forEach(s=>{ const c=corrOf(rows.filter(r=>r.seg===s.id)); if(c!==null) segCorrs.push(c); });
   const wCorr = segCorrs.length? segCorrs.reduce((a,b)=>a+b,0)/segCorrs.length : 0;
-  const worth = rows.filter(r=>r.saving>0).length, n=rows.length;
-  // primer iz razreda z največ variantami: najcenejši vs najdražji EV
-  const segArr = rows.filter(r=>r.seg===biggestSeg.id).slice().sort((a,b)=>a.price-b.price);
-  const cheap=segArr[0], pricey=segArr[segArr.length-1];
-  const short = nm => nm.replace(/ \d+ kWh$/,"").replace(/\(.*?\)/,"").trim();
+  const segSave={}; SEGMENTS.forEach(s=>{ const a=rows.filter(r=>r.seg===s.id); segSave[s.id]=a.length?a.reduce((x,r)=>x+r.saving,0)/a.length:0; });
+  const worth=rows.filter(r=>r.saving>0).length, n=rows.length;
+
   $("testConcl").innerHTML =
-    'Od <b class="big">'+n+'</b> električnih se jih <b class="big">'+worth+'</b> pri teh pogojih splača bolj kot povprečen klasični v razredu. '+
-    '<b>Znotraj vsakega razreda</b> je povezava med ceno in prihrankom izrazito <b>negativna</b> (povprečen r = '+NUM(wCorr,2)+') — '+
+    'Od <b class="big">'+n+'</b> električnih se jih <b class="big">'+worth+'</b> pri teh pogojih splača bolj kot povprečen klasični v razredu, '+
+    'a razlike so velike. <b>Znotraj vsakega razreda</b> je povezava cena↔prihranek izrazito <b>negativna</b> (povprečen r = '+NUM(wCorr,2)+'): '+
     '<span class="big">čim dražji je električni, tem manj se splača</span>.<br><br>'+
-    'Primer (razred „'+biggestSeg.name+'", isti klasični kot izhodišče): <b>'+short(cheap.name)+'</b> ('+EUR(cheap.price)+') prihrani '+
-    '<b class="'+(cheap.saving>=0?'':'')+'">'+(cheap.saving>=0?"+":"−")+EUR(Math.abs(cheap.saving))+'</b>, '+
-    'medtem ko <b>'+short(pricey.name)+'</b> ('+EUR(pricey.price)+') prinese le '+(pricey.saving>=0?"+":"−")+EUR(Math.abs(pricey.saving))+'. '+
-    'Ista velikost, razlikuje jih le cena.<br><br>'+
-    'Razlog je <b>zakonodaja</b>: subvencija je fiksni znesek, ki se z višjo ceno manjša in nad <b>65.000 €</b> povsem odpade, '+
-    'nad <b>80.000 €</b> pa odpade še možnost odbitka DDV (poslovno). Zato imajo <b>cenejši električni</b> daleč najboljše razmerje.';
+    'Povprečen prihranek strmo pada z velikostjo razreda — <b>'+segName.b+'</b> '+(segSave.b>=0?"+":"−")+EUR(Math.abs(segSave.b))+
+    ', <b>'+segName.c+'</b> '+(segSave.c>=0?"+":"−")+EUR(Math.abs(segSave.c))+
+    ', <b>SUV</b> '+(segSave.suv>=0?"+":"−")+EUR(Math.abs(segSave.suv))+
+    ', <b>Premium</b> '+(segSave.premium>=0?"+":"−")+EUR(Math.abs(segSave.premium))+'.<br><br>'+
+    '<span class="big">Ugotovitev:</span> subvencija je fiksni znesek, ki v odstotku cene strmo pada in nad <b>65.000 €</b> povsem odpade '+
+    '(nad <b>80.000 €</b> pa še odbitek DDV). Zato je sistem <b>socialno naravnan</b> — najbolj spodbuja <b>majhne, cenovno dostopne</b> avtomobile, '+
+    'bistveno manj <b>družinske</b> in praktično nič <b>večjih/„polnokrvnih"</b>, kjer se prava mobilnost šele začne. '+
+    'Kdor potrebuje večji avto, dobi občutno manjšo — ali nikakršno — podporo.';
+}
+
+/* razlaga izhodišča po razredih */
+function rzBasis(segIce, segAvg, segName){
+  $("rzBasis").innerHTML = SEGMENTS.map(s=>
+    '<div class="seg"><b>'+segName[s.id]+'</b> — izhodišče je <span class="avg">'+EUR(segAvg[s.id])+'</span> (povprečen 5-letni TCO klasičnih): '+
+    segIce[s.id].map(v=>short(v.name)).join(" · ")+'.</div>').join("");
+}
+
+/* pomožno: lepa velikost koraka */
+function niceStep(x){ const p=Math.pow(10,Math.floor(Math.log10(x))); const f=x/p; return (f<1.5?1:f<3?2:f<7?5:10)*p; }
+
+/* razsevni graf: cena vs prihranek */
+function rzScatter(rows){
+  const W=680,H=360,padL=54,padR=54,padT=18,padB=42;
+  const xmin=15000,xmax=86000;
+  const ys=rows.map(r=>r.saving);
+  let ymin=Math.min(0,...ys), ymax=Math.max(0,...ys); const pd=(ymax-ymin)*0.12; ymin-=pd; ymax+=pd;
+  const X=v=>padL+(v-xmin)/(xmax-xmin)*(W-padL-padR);
+  const Y=v=>H-padB-(v-ymin)/(ymax-ymin)*(H-padT-padB);
+  let g="", ystep=niceStep((ymax-ymin)/4);
+  for(let v=Math.ceil(ymin/ystep)*ystep; v<=ymax; v+=ystep){ const y=Y(v);
+    g+='<line class="rz-grid" x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'"/>'+
+       '<text x="'+(padL-8)+'" y="'+(y+4)+'" text-anchor="end">'+(v>0?"+":"")+Math.round(v/1000)+'k</text>'; }
+  let xl=""; for(let v=20000;v<=80000;v+=20000){ xl+='<text x="'+X(v)+'" y="'+(H-padB+18)+'" text-anchor="middle">'+Math.round(v/1000)+'k</text>'; }
+  const zy=Y(0);
+  const zero='<line class="rz-zero" x1="'+padL+'" y1="'+zy+'" x2="'+(W-padR)+'" y2="'+zy+'"/>';
+  let thr=""; [[65000,"subv. → 0"],[80000,"DDV → 0"]].forEach(t=>{ const x=X(t[0]);
+    thr+='<line class="rz-thr" x1="'+x+'" y1="'+padT+'" x2="'+x+'" y2="'+(H-padB)+'"/>'+
+         '<text x="'+x+'" y="'+(padT+10)+'" text-anchor="middle" style="fill:var(--ice-ink)">'+t[1]+'</text>'; });
+  // trend
+  const nn=rows.length, mx=rows.reduce((a,r)=>a+r.price,0)/nn, my=rows.reduce((a,r)=>a+r.saving,0)/nn;
+  let num=0,den=0; rows.forEach(r=>{num+=(r.price-mx)*(r.saving-my);den+=(r.price-mx)**2;});
+  const sl=num/den, ic=my-sl*mx;
+  const trend='<line class="rz-trend" x1="'+X(xmin)+'" y1="'+Y(ic+sl*xmin)+'" x2="'+X(xmax)+'" y2="'+Y(ic+sl*xmax)+'"/>';
+  const pts=rows.map(r=>'<circle class="pt '+(r.saving>=0?"pos":"neg")+'" cx="'+X(r.price).toFixed(1)+'" cy="'+Y(r.saving).toFixed(1)+'" r="6"><title>'+r.name+' · '+EUR(r.price)+' · '+(r.saving>=0?"+":"−")+EUR(Math.abs(r.saving))+'</title></circle>').join("");
+  const at='<text x="'+((padL+W-padR)/2)+'" y="'+(H-4)+'" text-anchor="middle">cena vozila (€) →</text>'+
+           '<text transform="translate(13,'+((padT+H-padB)/2)+') rotate(-90)" text-anchor="middle">prihranek v 5 letih (€)</text>';
+  $("rzScatter").innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cena vs prihranek">'+
+    g+xl+thr+trend+zero+pts+'<line class="rz-axis" x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'"/>'+at+'</svg>';
+}
+
+/* prihranek po razredu (diverging) */
+function rzClassBars(rows, segName){
+  const bySeg={}; SEGMENTS.forEach(s=>{ const a=rows.filter(r=>r.seg===s.id); bySeg[s.id]=a.length?a.reduce((x,r)=>x+r.saving,0)/a.length:0; });
+  const maxAbs=Math.max(...SEGMENTS.map(s=>Math.abs(bySeg[s.id])),1);
+  $("rzClassBars").innerHTML = SEGMENTS.map(s=>{ const v=bySeg[s.id], pos=v>=0, w=Math.abs(v)/maxAbs*50;
+    return '<div class="rz-cb"><span class="nm">'+segName[s.id]+'</span>'+
+      '<span class="track"><span class="mid"></span><span class="fill '+(pos?"pos":"neg")+'" style="width:'+w+'%"></span></span>'+
+      '<span class="vl '+(pos?"pos":"neg")+'">'+(pos?"+":"−")+EUR(Math.abs(v))+'</span></div>';
+  }).join("");
 }
 const methModal=$("methModal");
 function openModal(paneId, title){
