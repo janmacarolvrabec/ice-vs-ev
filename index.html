@@ -301,6 +301,9 @@ h1 .ice-w{color:var(--ice)} h1 .ev-w{color:var(--ev)}
 .scoreboard{position:sticky;top:0;z-index:50;background:var(--surface);
   border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);
   margin-top:26px;overflow:hidden}
+.sb-title{padding:9px 16px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-2);background:var(--surface-2);border-bottom:1px solid var(--line);text-align:center}
+.sb-title b{color:var(--ink)}
 .sb-grid{display:grid;grid-template-columns:1fr 1.25fr 1fr;align-items:stretch}
 .sb-side{padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0}
 .sb-side.ice{background:linear-gradient(180deg,var(--ice-soft),transparent 120%)}
@@ -631,6 +634,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
 
   <!-- ===== Sticky scoreboard ===== -->
   <div class="scoreboard" id="scoreboard">
+    <div class="sb-title">Stroški lastništva na <b id="sbTitleYears">5 let</b> · <b>TCO</b></div>
     <div class="sb-grid">
       <div class="sb-side ice">
         <div class="sb-label ice">🟠 Klasični</div>
@@ -1626,6 +1630,7 @@ function recompute(){
   const monthIce = totIce/(years*12), monthEv = totEv/(years*12);
   $("sbMonthIce").innerHTML="<b>"+EUR(monthIce)+"</b>/mesec";
   $("sbMonthEv").innerHTML="<b>"+EUR(monthEv)+"</b>/mesec";
+  $("sbTitleYears").textContent = years+(years===1?" leto":years===2?" leti":years<5?" leta":" let");
   const hero=$("sbHero");
   const evWins=save>=0;
   hero.textContent=(evWins?"":"+")+EUR(save);
