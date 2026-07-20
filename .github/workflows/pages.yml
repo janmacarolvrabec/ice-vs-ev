@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+# Objavi stran na GitHub Pages in samodejno vpiše različico iz Git commita.
+# V nastavitvah repozitorija: Settings → Pages → Source = "GitHub Actions".
+
+on:
+  push:
+    branches: ["main", "claude/car-ownership-cost-calculator-37r4os"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (polna zgodovina za štetje commitov)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ustvari version.json iz Git commita
+        run: |
+          COUNT=$(git rev-list --count HEAD)
+          SHA=$(git rev-parse --short HEAD)
+          DATE=$(TZ='Europe/Ljubljana' git log -1 --date=format-local:'%-d. %-m. %Y ob %H:%M' --format='%cd')
+          printf '{"version":"v1.%s","commit":"%s","date":"%s"}\n' "$COUNT" "$SHA" "$DATE" > version.json
+          echo "Generirano:"; cat version.json
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

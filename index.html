@@ -1191,7 +1191,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <div>© 2026 Jan Macarol · Elektro vozila Slovenije · <b>brez piškotkov, brez osebnih podatkov</b></div>
     </div>
 
-    <div class="foot-version">Različica <b>v1.0</b> · zadnja sprememba <b>20. 7. 2026 ob 10:59</b></div>
+    <div class="foot-version">Različica <b id="verNum">v1.0</b> · zadnja sprememba <b id="verDate">20. 7. 2026 ob 10:59</b><span id="verCommit"></span></div>
   </footer>
 </div>
 
@@ -2149,6 +2149,18 @@ function init(reset){
   recompute();
 }
 init(false);
+
+/* ============ Različica iz Git commita ============
+   version.json ustvari GitHub Action ob objavi (glej .github/workflows/pages.yml).
+   Če datoteke ni (predogled / drugo gostovanje), ostane privzeta vrednost. */
+fetch("version.json",{cache:"no-store"})
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(d=>{
+    if(d.version) $("verNum").textContent=d.version;
+    if(d.date) $("verDate").textContent=d.date;
+    if(d.commit) $("verCommit").textContent=" · "+d.commit;
+  })
+  .catch(()=>{});
 
 /* ============ Živ števec uporabe ============
    Strežniški skupek (skupen vsem obiskovalcem) prek brezplačnega števca Abacus.
