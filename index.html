@@ -6,8 +6,8 @@
 
 <!-- ============ SEO ============ -->
 <title>Koliko prihraniš z električnim avtomobilom? · Kalkulator stroškov lastništva</title>
-<meta name="description" content="Koliko prihraniš z električnim avtomobilom v primerjavi z bencinskim? Interaktiven kalkulator stroškov lastništva (TCO) za slovenski trg 2026: gorivo, subvencija Eko sklada, servis, boniteta in odbitek DDV za podjetja. Vse številke prilagodiš sam.">
-<meta name="keywords" content="električni avtomobil, prihranek, kalkulator, stroški lastništva, TCO, bencin, dizel, subvencija Eko sklad, boniteta, odbitek DDV, električno vozilo Slovenija, poraba, WLTP, polnjenje">
+<meta name="description" content="Koliko prihraniš z električnim avtomobilom v primerjavi z bencinskim? Interaktiven kalkulator stroškov lastništva (TCO) za slovenski trg 2026: gorivo, subvencija Borzen (JP SUB-EV26), servis, boniteta in odbitek DDV za podjetja. Vse številke prilagodiš sam.">
+<meta name="keywords" content="električni avtomobil, prihranek, kalkulator, stroški lastništva, TCO, bencin, dizel, subvencija Borzen, JP SUB-EV26, boniteta, odbitek DDV, električno vozilo Slovenija, poraba, WLTP, polnjenje">
 <meta name="author" content="Jan Macarol — Elektro vozila Slovenije">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0E9F63">
@@ -718,7 +718,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       <div class="sec-num">2</div>
       <div class="sec-titles">
         <div class="sec-title">Nakup in subvencija</div>
-        <div class="sec-desc">Nabavna cena in spodbuda Eko sklada (samodejno po cenovnem razredu).</div>
+        <div class="sec-desc">Nabavna cena in spodbuda Borzena (samodejno po cenovnem razredu in lastništvu).</div>
       </div>
       <div class="sec-contrib"><span class="cl">Razlika ob nakupu</span><span id="cPurchase">–</span></div>
       <div class="sec-chevron">▾</div>
@@ -748,8 +748,9 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
             <div class="inp unit"><input id="priceEv" type="number" min="0" step="100"><span class="unit-tag">€</span></div>
           </div>
           <div class="field">
-            <label class="fl" for="subsidy">Subvencija Eko sklad <span class="hint" id="subHint">auto</span></label>
+            <label class="fl" for="subsidy">Subvencija (Borzen) <span class="hint" id="subHint">auto</span></label>
             <div class="inp unit"><input id="subsidy" type="number" min="0" step="100"><span class="unit-tag">€</span></div>
+            <div class="fnote"><span class="i">ℹ️</span><span id="subNote">—</span></div>
           </div>
         </div>
       </div>
@@ -1138,7 +1139,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
         <h4>Viri podatkov (jul. 2026)</h4>
         <ul>
           <li>Cene goriv: regulirane cene, <a href="https://www.energetika-portal.si/podrocja/energetika/cene-naftnih-derivatov/regulirane-cene-naftnih-derivatov/" target="_blank" rel="noopener">Portal Energetika</a></li>
-          <li>Subvencije: <a href="https://www.ekosklad.si/prebivalstvo/pridobite-spodbudo/seznam-spodbud/elektricna-vozila-3" target="_blank" rel="noopener">Eko sklad</a> / <a href="https://borzen.si/sl-si/podpore-za-mobilnost/subvencije-za-nakup-elektricnih-vozil/subvencije-za-e-vozila-fizicnih-oseb" target="_blank" rel="noopener">Borzen</a></li>
+          <li>Subvencije (JP SUB-EV26): <a href="https://borzen.si/sl-si/podpore-za-mobilnost/subvencije-za-nakup-elektricnih-vozil/subvencije-za-e-vozila-fizicnih-in-pravnih-oseb-2026" target="_blank" rel="noopener">Borzen</a></li>
           <li>Cene polnjenja: <a href="https://www.petrol.si/mobilnost/zasebni-uporabniki/javne-elektricne-polnilnice/cenik-polnjenje" target="_blank" rel="noopener">Petrol</a></li>
           <li>Boniteta 0 % za EV (do 2029) in DDV odbitek (66.b člen ZDDV-1): <a href="https://data.si/blog/boniteta-za-elektricna-vozila/" target="_blank" rel="noopener">Data</a>, <a href="https://www.findinfo.si/medijsko-sredisce/v-srediscu/298788" target="_blank" rel="noopener">FinD-INFO</a></li>
           <li>CO₂ življenjski cikel in baterija (72,8 kg/kWh, −73 %): <a href="https://theicct.org/publication/electric-cars-life-cycle-analysis-emissions-europe-jul25/" target="_blank" rel="noopener">ICCT 2025</a></li>
@@ -1212,13 +1213,25 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           <b>deklarirano WLTP</b> porabo (kWh/100 km). Cena elektrike je tehtano povprečje domačega
           in javnega polnjenja. Strošek gum se računa iz obrabe na kilometer × letna kilometrina.</p>
 
-        <h4>Subvencija (Eko sklad, 2026)</h4>
+        <h4>Subvencija (Borzen, JP SUB-EV26, 2026)</h4>
+        <p>Subvencije za električna vozila vodi <b>Borzen</b> (ne več Eko sklad). Za nova osebna vozila M1
+          je lestvica <b>različna za fizične in pravne osebe</b> (upošteva se končna cena z DDV in popusti):</p>
+        <p><b>Fizične osebe:</b></p>
+        <ul>
+          <li>do 25.000 € → <b>7.800 €</b></li>
+          <li>25.000–35.000 € → <b>7.200 €</b></li>
+          <li>35.000–45.000 € → <b>6.500 €</b></li>
+          <li>45.000–65.000 € → <b>4.500 €</b> (vloga le do 31. 8. 2026)</li>
+          <li>nad 65.000 € → <b>0 €</b></li>
+        </ul>
+        <p><b>Pravne osebe, s. p. in osebe z dejavnostjo</b> (ni razreda do 25.000 €):</p>
         <ul>
           <li>do 35.000 € → <b>7.200 €</b></li>
           <li>35.000–45.000 € → <b>6.500 €</b></li>
           <li>45.000–65.000 € → <b>4.500 €</b></li>
-          <li>nad 65.000 € → <b>0 €</b> (ni subvencije)</li>
+          <li>nad 65.000 € → <b>0 €</b></li>
         </ul>
+        <p class="test-note">Pogoji: nakup od 1. 1. 2026, vozilo kupljeno in registrirano pred oddajo vloge; operativni lizing/poslovni najem ni upravičen (finančni lizing je pod pogoji razpisa). Rabljena vozila (do 3 leta): 3.000 € (do 45k) oz. 2.000 € (45–65k).</p>
 
         <h4>Boniteta (poslovno lastništvo)</h4>
         <p>Za zasebno rabo službenega vozila: klasični <b>1,5 % nabavne vrednosti mesečno</b>, pri čemer
@@ -1238,7 +1251,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
         <h4>Viri</h4>
         <ul>
           <li>Cene goriv: <a href="https://www.energetika-portal.si/podrocja/energetika/cene-naftnih-derivatov/regulirane-cene-naftnih-derivatov/" target="_blank" rel="noopener">Portal Energetika</a></li>
-          <li>Subvencije: <a href="https://www.ekosklad.si/prebivalstvo/pridobite-spodbudo/seznam-spodbud/elektricna-vozila-3" target="_blank" rel="noopener">Eko sklad</a></li>
+          <li>Subvencije (JP SUB-EV26): <a href="https://borzen.si/sl-si/podpore-za-mobilnost/subvencije-za-nakup-elektricnih-vozil/subvencije-za-e-vozila-fizicnih-in-pravnih-oseb-2026" target="_blank" rel="noopener">Borzen</a></li>
           <li>Boniteta / DDV: <a href="https://www.racunovodstvo.net/zakonodaja/zdoh/43-clen" target="_blank" rel="noopener">ZDoh-2 43. člen</a>, 66.b člen ZDDV-1</li>
           <li>CO₂: <a href="https://theicct.org/publication/electric-cars-life-cycle-analysis-emissions-europe-jul25/" target="_blank" rel="noopener">ICCT 2025</a></li>
         </ul>
@@ -1431,11 +1444,19 @@ const EUR1 = n => (Math.round(n*10)/10).toLocaleString("sl-SI",{minimumFractionD
 const NUM = (n,d=0) => Number(n).toLocaleString("sl-SI",{minimumFractionDigits:d,maximumFractionDigits:d});
 const $ = id => document.getElementById(id);
 
-/* subvencija po cenovnem razredu Eko sklad 2026 (novo M1) */
-function autoSubsidy(price){
+/* subvencija po cenovnem razredu (Borzen, JP SUB-EV26, novo M1) — loči fizične in pravne osebe */
+function autoSubsidy(price, owner){
+  if(owner==="biz"){          // pravne osebe, s.p., osebe z dejavnostjo
+    if(price<=35000) return 7200;
+    if(price<=45000) return 6500;
+    if(price<=65000) return 4500;
+    return 0;
+  }
+  // fizične osebe (privzeto) — dodaten višji razred do 25.000 €
+  if(price<=25000) return 7800;
   if(price<=35000) return 7200;
   if(price<=45000) return 6500;
-  if(price<=65000) return 4500;
+  if(price<=65000) return 4500;   // do 45k+ vloga le do 31. 8. 2026
   return 0;
 }
 
@@ -1471,7 +1492,7 @@ function loadVehicleDefaults(){
   $("servEv").value=ev.serv; $("insEv").value=ev.ins; $("regEv").value=ev.reg; $("tyreEv").value=ev.tyre;
   $("resIce").value=ice.res; $("resEv").value=ev.res;
   state.subsidyAuto=true;
-  $("subsidy").value=autoSubsidy(ev.price);
+  $("subsidy").value=autoSubsidy(ev.price, state.owner);
   $("subHint").textContent="samodejno";
 }
 
@@ -1486,7 +1507,9 @@ function syncOwner(){
   document.body.classList.toggle("biz", state.owner==="biz");
 }
 [...ownerSeg.children].forEach(b=>{
-  b.onclick=()=>{ state.owner=b.dataset.owner; syncOwner(); recompute(); };
+  b.onclick=()=>{ state.owner=b.dataset.owner; syncOwner();
+    if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value, state.owner); }
+    recompute(); };
 });
 
 /* electricity source for CO2 (g CO2/kWh) */
@@ -1506,7 +1529,7 @@ function syncGrid(){
 });
 
 /* subsidy manual override detection */
-$("priceEv").addEventListener("input",()=>{ if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value); } recompute(); });
+$("priceEv").addEventListener("input",()=>{ if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value, state.owner); } recompute(); });
 $("subsidy").addEventListener("input",()=>{ state.subsidyAuto=false; $("subHint").textContent="ročno"; recompute(); });
 
 /* ============ compute ============ */
@@ -1545,6 +1568,9 @@ function recompute(){
 
   // ---- business scenario: DDV odbitek + boniteta ----
   const biz = state.owner==="biz";
+  $("subNote").innerHTML = biz
+    ? '<b>Pravne osebe / s. p.:</b> do 35.000 € → 7.200 €, do 45k → 6.500 €, do 65k → 4.500 € (nad 65.000 € ni subvencije). Posebnega razreda do 25.000 € <b>ni</b>.'
+    : '<b>Fizične osebe:</b> do 25.000 € → 7.800 €, do 35k → 7.200 €, do 45k → 6.500 €, do 65k → 4.500 €* (nad 65.000 € ni subvencije). <span style="color:var(--muted)">*45–65k: vloga le do 31. 8. 2026.</span>';
   const bizShare = val("bizShare")/100;      // delež poslovne rabe
   const bonRate = val("bonRate")/100;
   $("bizShareOut").textContent = Math.round(bizShare*100)+"%";
@@ -1961,7 +1987,7 @@ function loadFromHash(){
   if(p.has("depOn")) $("depOn").checked=p.get("depOn")==="1";
   if(p.has("owner")){ state.owner=p.get("owner"); syncOwner(); }
   if(p.has("grid")){ state.grid=p.get("grid"); syncGrid(); }
-  if(p.get("subsidy")!==String(autoSubsidy(+$("priceEv").value))){ state.subsidyAuto=false; $("subHint").textContent="ročno"; }
+  if(p.get("subsidy")!==String(autoSubsidy(+$("priceEv").value, state.owner))){ state.subsidyAuto=false; $("subHint").textContent="ročno"; }
   return true;
 }
 
@@ -1975,7 +2001,7 @@ function tcoFixed(v, isEv){
   const energy = (isEv ? v.cons*evP : v.cons*fuelP) * km/100 * years;
   const tyre = km/1000*v.tyre*years;
   const maint = (v.serv+v.ins+v.reg)*years + tyre;
-  const subsidy = isEv ? autoSubsidy(v.price) : 0;
+  const subsidy = isEv ? autoSubsidy(v.price, "private") : 0;
   const residual = v.price*v.res/100;
   return (v.price - subsidy - residual) + energy + maint;
 }

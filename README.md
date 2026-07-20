@@ -12,9 +12,9 @@ tudi brez interneta).
 - **Živ „semafor" prihrankov** v lepljivi glavi — skupni prihranek se preračunava sproti.
 - **Baza vozil** za slovenski trg 2026: klasični + komplementarni električni po štirih razredih
   (mestni, kompaktni, SUV, **premium / luksuzni E/F**). Vse WLTP porabe in cene so **urejljive**.
-- **Subvencija Eko sklada** se samodejno nastavi po cenovnem razredu (7.200 / 6.500 / 4.500 €;
-  nad 65.000 € **0 €**). Odbitek DDV velja le za BEV **do 80.000 €** — oboje samodejno upoštevano
-  (npr. premium vozila nad tema mejama pravilno dobijo 0).
+- **Subvencija (Borzen, JP SUB-EV26)** se samodejno nastavi po cenovnem razredu **in lastništvu**:
+  fizične osebe do 25.000 € → 7.800 €, nato 7.200 / 6.500 / 4.500 €; pravne osebe (s. p.) nimajo
+  razreda do 25.000 € (max 7.200 €). Nad 65.000 € → 0 €. Odbitek DDV velja le za BEV **do 80.000 €**.
 - **Sekcije po korakih**: nakup + subvencija · uporaba · gorivo/elektrika · vzdrževanje in dajatve ·
   amortizacija · poslovni scenarij · ogljični odtis.
 - **Energetska ekvivalenca**: koliko kWh nosi „en liter" goriva in koliko manj energije
@@ -57,7 +57,8 @@ izbrani delež. „Točka preloma" primerja denar iz žepa **brez** upoštevanja
 | Dizel | 1,723 €/l | regulirane cene, Portal Energetika |
 | Domače polnjenje | 0,17 €/kWh | povprečje gospodinjskega odjema |
 | Javno polnjenje (mešano AC/DC) | 0,42 €/kWh | cenik Petrol (AC 0,35 / DC 0,69) |
-| Subvencija Eko sklad (novo M1) | 7.200 € (<35k) · 6.500 € (35–45k) · 4.500 € (45–65k) | Eko sklad / Borzen |
+| Subvencija — fizične osebe (novo M1) | 7.800 € (≤25k) · 7.200 € (≤35k) · 6.500 € (≤45k) · 4.500 € (≤65k) | Borzen, JP SUB-EV26 |
+| Subvencija — pravne osebe / s. p. | 7.200 € (≤35k) · 6.500 € (≤45k) · 4.500 € (≤65k) | Borzen, JP SUB-EV26 |
 | Energija goriva | bencin ≈ 9,5 kWh/l · dizel ≈ 10,6 kWh/l | spodnja kurilna vrednost |
 
 > Cene vozil so okvirne za slovenski trg 2026 in jih je treba preveriti pri prodajalcu.
