@@ -1695,7 +1695,7 @@ function recompute(){
   $("sbTitleYears").textContent = years+(years===1?" leto":years===2?" leti":years<5?" leta":" let");
   const hero=$("sbHero");
   const evWins=save>=0;
-  hero.textContent=(evWins?"":"+")+EUR(save);
+  hero.textContent=EUR(Math.abs(save));
   hero.className="sb-hero tnum "+(evWins?"win":"lose");
   $("sbHeroCap").textContent = evWins? "Prihraniš z električnim" : "Doplačaš za električni";
   const perMonth = Math.abs(save)/(years*12);
@@ -1747,7 +1747,8 @@ function recompute(){
   }
 
   // ---- KPIs ----
-  $("kSave").textContent=(evWins?"":"−")+EUR(Math.abs(save));
+  $("kSave").textContent=EUR(Math.abs(save));
+  $("kSave").parentElement.querySelector(".kl").textContent=evWins?"Skupni prihranek":"Skupno doplačilo";
   $("kSave").parentElement.querySelector(".kv").style.color=evWins?"var(--good)":"var(--bad)";
   $("kSaveSub").innerHTML=(evWins?"prihranek z EV · ":"doplačilo za EV · ")+"<b>≈ "+EUR(perMonth)+"/mesec</b>";
 
