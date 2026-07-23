@@ -72,6 +72,14 @@ privzeto nastavljene na GitHub Pages domeno `https://janmacarolvrabec.github.io/
 Na GitHub Pages: Settings → Pages → deploy iz te veje; stran bo na zgornjem naslovu, slika pa na
 `…/share/prihranek-1200x630-facebook-og.png`.
 
+### SEO
+
+Stran je optimizirana za iskalnike okoli poizvedbe **„se ti bolj splača bencin ali elektrika 2026"**:
+naslov `<title>` in `<h1>` sta usklajena s ključno besedo, urejeni so `meta description`, `canonical`,
+`hreflang`, Open Graph in Twitter oznake ter strukturirani podatki (`WebApplication` + **`FAQPage`** za
+Google rich results). Priložena sta tudi `robots.txt` in `sitemap.xml` — **ob menjavi domene posodobi
+absolutne naslove** v obeh datotekah in v `og:`/`canonical` oznakah v `index.html`.
+
 ## Živ števec uporabe (marketinški element)
 
 Pod uvodom je „živ" števec: **„Že N ljudi je izračunalo svoj scenarij."**

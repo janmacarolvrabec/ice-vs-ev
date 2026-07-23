@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://janmacarolvrabec.github.io/ice-vs-ev/sitemap.xml
