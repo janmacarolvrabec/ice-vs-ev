@@ -1499,22 +1499,46 @@ function autoSubsidy(price, owner){
 /* ============ state ============ */
 let state = {seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, owner:"private", grid:"si"};
 
-/* populate segment buttons */
+/* populate segment buttons — razredi + "Vsi razredi" za primerjavo med razredi */
 const segbar = $("segbar");
-SEGMENTS.forEach(s=>{
+const SEG_CHIPS = [...SEGMENTS, {id:"all", name:"Vsi razredi"}];
+SEG_CHIPS.forEach(s=>{
   const b=document.createElement("button");
   b.className="segbtn"; b.textContent=s.name; b.dataset.seg=s.id;
   b.setAttribute("aria-pressed", s.id===state.seg);
-  b.onclick=()=>{ state.seg=s.id; refreshSegment(); syncSegButtons(); loadVehicleDefaults(); recompute(); };
+  b.onclick=()=>{
+    state.seg=s.id; refreshSegment(); syncSegButtons();
+    // izbira razreda skoči na privzeta vozila razreda; "Vsi razredi" ohrani trenutni izbor
+    if(s.id!=="all") loadVehicleDefaults();
+    recompute();
+  };
   segbar.appendChild(b);
 });
 function syncSegButtons(){ [...segbar.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.seg===state.seg)); }
 
+/* napolni spustni meni z vozili razreda ali (pri "Vsi razredi") z vsemi, združenimi po skupinah */
+function fillModels(sel, list){
+  if(state.seg==="all"){
+    SEGMENTS.forEach(s=>{
+      const og=document.createElement("optgroup"); og.label=s.name;
+      list.forEach((v,i)=>{ if(v.seg===s.id){ const o=document.createElement("option"); o.value=i; o.textContent=v.name; og.appendChild(o);} });
+      sel.appendChild(og);
+    });
+  } else {
+    list.forEach((v,i)=>{ if(v.seg===state.seg){ const o=document.createElement("option"); o.value=i; o.textContent=v.name; sel.appendChild(o);} });
+  }
+}
 function refreshSegment(){
   const selIce=$("selIce"), selEv=$("selEv");
+  const prevIce=state.iceIdx, prevEv=state.evIdx;
   selIce.innerHTML=""; selEv.innerHTML="";
-  ICE.forEach((v,i)=>{ if(v.seg===state.seg){ const o=document.createElement("option"); o.value=i; o.textContent=v.name; selIce.appendChild(o);} });
-  EV.forEach((v,i)=>{ if(v.seg===state.seg){ const o=document.createElement("option"); o.value=i; o.textContent=v.name; selEv.appendChild(o);} });
+  fillModels(selIce, ICE);
+  fillModels(selEv, EV);
+  // pri "Vsi razredi" ohrani trenutno izbrana vozila (vsa so na voljo)
+  if(state.seg==="all"){
+    if(ICE[prevIce]) selIce.value=prevIce;
+    if(EV[prevEv]) selEv.value=prevEv;
+  }
   state.iceIdx=Number(selIce.value); state.evIdx=Number(selEv.value);
 }
 
