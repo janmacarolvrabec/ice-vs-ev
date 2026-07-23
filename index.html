@@ -1518,23 +1518,33 @@ function refreshSegment(){
   state.iceIdx=Number(selIce.value); state.evIdx=Number(selEv.value);
 }
 
-function loadVehicleDefaults(){
-  const ice=ICE[state.iceIdx], ev=EV[state.evIdx];
-  $("priceIce").value=ice.price; $("priceEv").value=ev.price;
-  $("consIce").value=ice.cons; $("consEv").value=ev.cons;
+/* naloži privzetke SAMO za klasičnega — ob menjavi klasičnega ne posega v električnega */
+function loadIceDefaults(){
+  const ice=ICE[state.iceIdx];
+  $("priceIce").value=ice.price;
+  $("consIce").value=ice.cons;
   $("fuelPrice").value = ice.fuel==="dizel"?DEF.fuelDizel:DEF.fuelBencin;
   $("fuelKind").textContent=ice.fuel;
   $("servIce").value=ice.serv; $("insIce").value=ice.ins; $("regIce").value=ice.reg; $("tyreIce").value=ice.tyre;
+  $("resIce").value=ice.res;
+}
+/* naloži privzetke SAMO za električnega (vključno s subvencijo, ki je odvisna od cene EV) */
+function loadEvDefaults(){
+  const ev=EV[state.evIdx];
+  $("priceEv").value=ev.price;
+  $("consEv").value=ev.cons;
   $("servEv").value=ev.serv; $("insEv").value=ev.ins; $("regEv").value=ev.reg; $("tyreEv").value=ev.tyre;
-  $("resIce").value=ice.res; $("resEv").value=ev.res;
+  $("resEv").value=ev.res;
   state.subsidyAuto=true;
   $("subsidy").value=autoSubsidy(ev.price, state.owner);
   $("subHint").textContent="samodejno";
 }
+/* oboje hkrati — za zagon, menjavo razreda in nalaganje deljene povezave */
+function loadVehicleDefaults(){ loadIceDefaults(); loadEvDefaults(); }
 
-/* selects change */
-$("selIce").onchange=e=>{ state.iceIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
-$("selEv").onchange=e=>{ state.evIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
+/* selects change — menjava enega vozila ne resetira drugega */
+$("selIce").onchange=e=>{ state.iceIdx=Number(e.target.value); loadIceDefaults(); recompute(); };
+$("selEv").onchange=e=>{ state.evIdx=Number(e.target.value); loadEvDefaults(); recompute(); };
 
 /* ownership segmented control */
 const ownerSeg=$("ownerSeg");
