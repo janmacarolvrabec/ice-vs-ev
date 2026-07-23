@@ -463,6 +463,12 @@ label.fl .hint{color:var(--muted);font-size:11.5px;font-weight:400}
 /* ownership segmented control */
 .owner{display:flex;flex-direction:column;gap:10px;padding:18px 0 4px}
 .owner .oc-lab{font-size:13px;font-weight:600;color:var(--ink-2)}
+.owner-rows{display:flex;flex-direction:column;gap:10px}
+.owner-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.owner-row .segbig{flex:1}
+.owner-side{font-size:13px;font-weight:700;min-width:82px}
+.owner-side.ice{color:var(--ice-ink)}
+.owner-side.ev{color:var(--ev-ink)}
 .segbig{display:flex;gap:6px;background:var(--surface-3);border-radius:12px;padding:5px;
   max-width:440px}
 .segbig button{flex:1;min-width:0;border:none;background:transparent;color:var(--ink-2);font:inherit;
@@ -472,8 +478,10 @@ label.fl .hint{color:var(--muted);font-size:11.5px;font-weight:400}
 .segbig button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
 .segbig button .ic{font-size:16px}
 
-/* business-only reveal */
-body:not(.biz) [data-biz-only]{display:none}
+/* business-only reveal (po straneh: klasični / električni) */
+body:not(.biz-ice):not(.biz-ev) [data-biz-only]{display:none}
+body:not(.biz-ice) [data-biz-ice-only]{display:none}
+body:not(.biz-ev) [data-biz-ev-only]{display:none}
 .biz-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;
   letter-spacing:.08em;text-transform:uppercase;color:#04180F;background:var(--accent);
   padding:3px 9px;border-radius:100px;vertical-align:middle;margin-left:8px}
@@ -759,19 +767,31 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
     <div class="sec-body">
       <div class="owner">
         <div class="oc-lab">Kdo je lastnik vozila?</div>
-        <div class="segbig" id="ownerSeg" role="group" aria-label="Lastništvo vozila">
-          <button data-owner="private" aria-pressed="true"><span class="ic">🏠</span>Zasebnik</button>
-          <button data-owner="biz" aria-pressed="false"><span class="ic">🏢</span>Podjetje</button>
+        <div class="owner-rows">
+          <div class="owner-row">
+            <span class="owner-side ice">Klasični</span>
+            <div class="segbig" id="ownerSegIce" role="group" aria-label="Lastništvo klasičnega vozila">
+              <button data-owner="private" aria-pressed="true"><span class="ic">🏠</span>Zasebnik</button>
+              <button data-owner="biz" aria-pressed="false"><span class="ic">🏢</span>Podjetje</button>
+            </div>
+          </div>
+          <div class="owner-row">
+            <span class="owner-side ev">Električni</span>
+            <div class="segbig" id="ownerSegEv" role="group" aria-label="Lastništvo električnega vozila">
+              <button data-owner="private" aria-pressed="true"><span class="ic">🏠</span>Zasebnik</button>
+              <button data-owner="biz" aria-pressed="false"><span class="ic">🏢</span>Podjetje</button>
+            </div>
+          </div>
         </div>
-        <div class="fnote"><span class="i">ℹ️</span><span>Pri poslovnem lastništvu se odpre dodaten scenarij: <b>boniteta</b> (za električnega 0 %) in <b>odbitek DDV</b> — glej sekcijo 7.</span></div>
+        <div class="fnote"><span class="i">ℹ️</span><span>Vsako vozilo lahko nastaviš <b>zasebno</b> ali <b>na podjetje</b>. Pri poslovnem lastništvu se odpre dodaten scenarij: <b>boniteta</b> (za klasičnega; električni 0 %) in <b>odbitek DDV</b> (za električnega) — glej sekcijo 7.</span></div>
       </div>
       <div class="grid2">
         <div>
           <div class="col-head ice"><span class="chip"></span>Klasični</div>
           <div class="field">
-            <label class="fl" for="priceIce">Nabavna cena <span class="hint">z DDV</span><span data-biz-only style="color:var(--ice-ink);font-weight:800">&nbsp;*</span></label>
+            <label class="fl" for="priceIce">Nabavna cena <span class="hint">z DDV</span><span data-biz-ice-only style="color:var(--ice-ink);font-weight:800">&nbsp;*</span></label>
             <div class="inp unit"><input id="priceIce" type="number" min="0" step="100"><span class="unit-tag">€</span></div>
-            <div class="fnote" data-biz-only><span class="i">*</span><span>Podjetje je lastnik — za klasični se v dobi <b>obračuna boniteta</b> (dohodnina voznika): <b id="iceBonNote">–</b>. Pri električnem je boniteta 0 €.</span></div>
+            <div class="fnote" data-biz-ice-only><span class="i">*</span><span>Podjetje je lastnik — za klasični se v dobi <b>obračuna boniteta</b> (dohodnina voznika): <b id="iceBonNote">–</b>. Pri električnem je boniteta 0 €.</span></div>
           </div>
         </div>
         <div>
@@ -983,7 +1003,8 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
     </div>
     <div class="sec-body">
 
-      <!-- DDV -->
+      <!-- DDV — samo če je električni na podjetje -->
+      <div data-biz-ev-only>
       <div class="shared" style="padding-top:16px">
         <div class="field">
           <label class="fl" for="bizShare">Delež poslovne rabe</label>
@@ -1005,7 +1026,10 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
       </div>
       <div class="fnote"><span class="i">ℹ️</span><span>Pogoj za odbitek DDV pri električnem: ničelne emisije CO₂, nabavna vrednost z DDV do <b>80.000 €</b> in uporaba za obdavčeno dejavnost. Odbije se v <b>sorazmerju med poslovno in zasebno rabo</b> — pri izključno poslovni rabi celoten vstopni DDV. Podjetje lahko odbija tudi DDV od stroškov polnjenja in servisa električnega — tu <b>ni</b> upoštevano (konservativno).</span></div>
 
-      <!-- Boniteta -->
+      </div><!-- /DDV -->
+
+      <!-- Boniteta — samo če je klasični na podjetje -->
+      <div data-biz-ice-only>
       <div class="col-head" style="margin-top:26px;color:var(--ink-2)">Boniteta za zasebno rabo službenega vozila</div>
       <div class="shared">
         <div class="field">
@@ -1026,6 +1050,7 @@ footer ul{margin:0;padding-left:18px} footer li{margin-bottom:4px}
           <div class="bd2">Za povsem električna vozila je boniteta <b>0 %</b>, brez omejitve vrednosti, do konca <b>2029</b>.</div>
         </div>
       </div>
+      </div><!-- /Boniteta -->
       <div class="fnote"><span class="i">ℹ️</span><span><b>Kako je vključeno:</b> boniteta klasičnega je dodana kot strošek voznika v celotni dobi, pri čemer se <b>osnova vsako leto zniža</b> po lestvici ZDoh-2 (100/85/70/55/45/35/25/15/10 %). Odbitek DDV zniža nabavno vrednost električnega. Oboje se pozna v skupnem izračunu zgoraj. Za natančno davčno obravnavo se posvetuj z računovodjo.</span></div>
     </div>
   </section>
@@ -1497,7 +1522,7 @@ function autoSubsidy(price, owner){
 }
 
 /* ============ state ============ */
-let state = {seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, owner:"private", grid:"si"};
+let state = {seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, ownerIce:"private", ownerEv:"private", grid:"si"};
 
 /* populate segment buttons */
 const segbar = $("segbar");
@@ -1528,7 +1553,7 @@ function loadVehicleDefaults(){
   $("servEv").value=ev.serv; $("insEv").value=ev.ins; $("regEv").value=ev.reg; $("tyreEv").value=ev.tyre;
   $("resIce").value=ice.res; $("resEv").value=ev.res;
   state.subsidyAuto=true;
-  $("subsidy").value=autoSubsidy(ev.price, state.owner);
+  $("subsidy").value=autoSubsidy(ev.price, state.ownerEv);
   $("subHint").textContent="samodejno";
 }
 
@@ -1536,15 +1561,21 @@ function loadVehicleDefaults(){
 $("selIce").onchange=e=>{ state.iceIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
 $("selEv").onchange=e=>{ state.evIdx=Number(e.target.value); loadVehicleDefaults(); recompute(); };
 
-/* ownership segmented control */
-const ownerSeg=$("ownerSeg");
+/* ownership segmented controls — ločeno za klasičnega in električnega */
+const ownerSegIce=$("ownerSegIce"), ownerSegEv=$("ownerSegEv");
 function syncOwner(){
-  [...ownerSeg.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.owner===state.owner));
-  document.body.classList.toggle("biz", state.owner==="biz");
+  [...ownerSegIce.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.owner===state.ownerIce));
+  [...ownerSegEv.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.owner===state.ownerEv));
+  document.body.classList.toggle("biz-ice", state.ownerIce==="biz");
+  document.body.classList.toggle("biz-ev", state.ownerEv==="biz");
 }
-[...ownerSeg.children].forEach(b=>{
-  b.onclick=()=>{ state.owner=b.dataset.owner; syncOwner();
-    if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value, state.owner); }
+[...ownerSegIce.children].forEach(b=>{
+  b.onclick=()=>{ state.ownerIce=b.dataset.owner; syncOwner(); recompute(); };
+});
+[...ownerSegEv.children].forEach(b=>{
+  b.onclick=()=>{ state.ownerEv=b.dataset.owner; syncOwner();
+    // subvencija sledi lastniku električnega
+    if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value, state.ownerEv); }
     recompute(); };
 });
 
@@ -1565,7 +1596,7 @@ function syncGrid(){
 });
 
 /* subsidy manual override detection */
-$("priceEv").addEventListener("input",()=>{ if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value, state.owner); } recompute(); });
+$("priceEv").addEventListener("input",()=>{ if(state.subsidyAuto){ $("subsidy").value=autoSubsidy(+$("priceEv").value, state.ownerEv); } recompute(); });
 $("subsidy").addEventListener("input",()=>{ state.subsidyAuto=false; $("subHint").textContent="ročno"; recompute(); });
 
 /* ============ compute ============ */
@@ -1602,30 +1633,32 @@ function recompute(){
   $("tyreYearIce").textContent=EUR(tyreIceYear);
   $("tyreYearEv").textContent=EUR(tyreEvYear);
 
-  // ---- business scenario: DDV odbitek + boniteta ----
-  const biz = state.owner==="biz";
-  $("subNote").innerHTML = biz
+  // ---- business scenario: DDV odbitek + boniteta (po straneh) ----
+  const bizIce = state.ownerIce==="biz";   // klasični na podjetje → boniteta
+  const bizEv  = state.ownerEv==="biz";    // električni na podjetje → odbitek DDV + poslovne subvencije
+  // subvencija sledi lastniku električnega
+  $("subNote").innerHTML = bizEv
     ? '<b>Pravne osebe / s. p.:</b> do 35.000 € → 7.200 €, do 45k → 6.500 €, do 65k → 4.500 € (nad 65.000 € ni subvencije). Posebnega razreda do 25.000 € <b>ni</b>.'
     : '<b>Fizične osebe:</b> do 25.000 € → 7.800 €, do 35k → 7.200 €, do 45k → 6.500 €, do 65k → 4.500 €* (nad 65.000 € ni subvencije). <span style="color:var(--muted)">*45–65k: vloga le do 31. 8. 2026.</span>';
   const bizShare = val("bizShare")/100;      // delež poslovne rabe
   const bonRate = val("bonRate")/100;
   $("bizShareOut").textContent = Math.round(bizShare*100)+"%";
   $("bonRateOut").textContent = Math.round(val("bonRate"))+"%";
-  // odbitek DDV: le pri BEV do 80.000 €, sorazmerno z deležem poslovne rabe; osebni klasični avto nima odbitka
+  // odbitek DDV: le pri električnem na podjetje (BEV do 80.000 €, sorazmerno z deležem poslovne rabe)
   const vatEvFull = (priceEv>0 && priceEv<=VAT_EV_CAP) ? priceEv*VAT/(1+VAT) : 0;
-  const vatEv = biz ? vatEvFull*bizShare : 0;
-  // boniteta: klasični 1,5 % vrednosti mesečno; osnova se z leti znižuje (ZDoh-2); električni 0
-  const bonBaseYr1 = biz ? priceIce*BONITETA_M*12 : 0;   // letna osnova bonitete v 1. letu
+  const vatEv = bizEv ? vatEvFull*bizShare : 0;
+  // boniteta: le pri klasičnem na podjetje; 1,5 % vrednosti mesečno; osnova se z leti znižuje (ZDoh-2); električni 0
+  const bonBaseYr1 = bizIce ? priceIce*BONITETA_M*12 : 0;   // letna osnova bonitete v 1. letu
   // vsota bonitete (davka) čez dobo, z upoštevanjem letnega znižanja osnove
   let bonBaseSum = 0;
-  if(biz){ for(let y=1;y<=years;y++){ bonBaseSum += priceIce*bonFactor(y)*BONITETA_M*12; } }
+  if(bizIce){ for(let y=1;y<=years;y++){ bonBaseSum += priceIce*bonFactor(y)*BONITETA_M*12; } }
   const bonTotal   = bonBaseSum*bonRate;                 // skupni davek bonitete v dobi (strošek voznika)
   const bonTaxAvg  = years>0 ? bonTotal/years : 0;       // povprečni letni davek (za točko preloma)
   // poslovne kartice
-  $("vatEv").textContent  = biz ? (vatEvFull>0 ? "−"+EUR(vatEv) : "0 € (nad 80.000 €)") : "—";
-  $("vatIce").textContent = biz ? "0 €" : "—";
+  $("vatEv").textContent  = bizEv ? (vatEvFull>0 ? "−"+EUR(vatEv) : "0 € (nad 80.000 €)") : "—";
+  $("vatIce").textContent = bizEv ? "0 €" : "—";
   $("bonBaseIce").textContent = EUR(bonBaseYr1);
-  $("bonIce").textContent = biz ? "−"+EUR(bonTotal) : "—";
+  $("bonIce").textContent = bizIce ? "−"+EUR(bonTotal) : "—";
 
   // yearly running (non-energy) — vzdrževanje (brez bonitete)
   const runIce = val("servIce")+val("insIce")+val("regIce")+tyreIceYear;
@@ -1716,7 +1749,7 @@ function recompute(){
     s += ' <span class="op">=</span> <b class="tot">'+EUR(tot)+'</b>';
     return s;
   };
-  $("exFormulaIce").innerHTML = exF(purchaseIce, energyIce, "gorivo", maintIce, biz?bonTotal:0, totIce);
+  $("exFormulaIce").innerHTML = exF(purchaseIce, energyIce, "gorivo", maintIce, bizIce?bonTotal:0, totIce);
   $("exFormulaEv").innerHTML  = exF(purchaseEv, energyEv, "elektrika", maintEv, 0, totEv);
   $("exDiff").innerHTML = evWins
     ? 'Razlika = <b class="g">'+EUR(save)+' manj z električnim</b> (≈ '+EUR(perMonth)+'/mesec). Višjo nabavno ceno sčasoma premagata cenejša vožnja in nižje vzdrževanje.'
@@ -1768,10 +1801,10 @@ function recompute(){
     {label:"Zavarovanje", ice:val("insIce")*years, ev:val("insEv")*years},
     {label:"Registracija", ice:val("regIce")*years, ev:val("regEv")*years}
   ];
-  if(biz) bdRows.push({label:"Boniteta (dohodnina)", ice:bonTotal, ev:0});
+  if(bizIce) bdRows.push({label:"Boniteta (dohodnina)", ice:bonTotal, ev:0});
   bdRows.push({label:"SKUPAJ", ice:totIce, ev:totEv, sum:true});
   renderBreakdown(bdRows);
-  $("bdSub").textContent = NUM(kmYear)+" km/leto × "+years+" let = "+NUM(totalKm)+" km"+(depOn?" · z upoštevano preostalo vrednostjo":" · brez amortizacije")+(biz?" · poslovno lastništvo":"");
+  $("bdSub").textContent = NUM(kmYear)+" km/leto × "+years+" let = "+NUM(totalKm)+" km"+(depOn?" · z upoštevano preostalo vrednostjo":" · brez amortizacije")+((bizIce||bizEv)?" · poslovno lastništvo":"");
 
   // ---- break-even chart ----
   renderChart(upIce, upEv, yrIce, yrEv, years, be);
@@ -1779,7 +1812,7 @@ function recompute(){
   // razlaga grafa: kaj krivulji pomenita + zakaj se razlikujeta od skupnega stroška (TCO)
   const iceNameG = ICE[state.iceIdx].name, evNameG = EV[state.evIdx].name;
   const grossIce = upIce + yrIce*years, grossEv = upEv + yrEv*years;
-  let g = '📈 Krivulji kažeta <b>ves denar, ki ga do posameznega leta odšteješ</b> (nakup − subvencija, gorivo/elektrika, servis, zavarovanje, registracija, gume'+(biz?', boniteta':'')+'). Zato <span class="o">'+iceNameG+'</span> do '+years+'. leta doseže ≈ <b>'+EUR(grossIce)+'</b>, električni pa ≈ <b>'+EUR(grossEv)+'</b>.';
+  let g = '📈 Krivulji kažeta <b>ves denar, ki ga do posameznega leta odšteješ</b> (nakup − subvencija, gorivo/elektrika, servis, zavarovanje, registracija, gume'+(bizIce?', boniteta':'')+'). Zato <span class="o">'+iceNameG+'</span> do '+years+'. leta doseže ≈ <b>'+EUR(grossIce)+'</b>, električni pa ≈ <b>'+EUR(grossEv)+'</b>.';
   if(depOn && (resIceEur>0 || resEvEur>0)){
     g += ' <b>Skupni strošek lastništva</b> ('+EUR(totIce)+' oz. '+EUR(totEv)+', spodaj) je nižji, ker ob prodaji dobiš nazaj <b>preostalo vrednost</b> avta (klasični ≈ '+EUR(resIceEur)+', električni ≈ '+EUR(resEvEur)+').';
   }
@@ -1804,19 +1837,19 @@ function recompute(){
   $("beNote").innerHTML = be===null
     ? 'Skupaj v '+letihTxt+' te <b class="o">'+iceName+'</b> stane <b>'+EUR(totIce)+'</b> (≈ '+EUR(monthIce)+'/mesec), <b class="g">'+evName+'</b> pa <b>'+EUR(totEv)+'</b> (≈ '+EUR(monthEv)+'/mesec). V teh pogojih se višja nabavna cena električnega <b>ne povrne</b> v tej dobi — klasični ostane cenejši iz žepa.'
     : be<=0
-      ? '<b class="g">'+evName+'</b> je cenejši <b>že od prvega dne</b>'+(biz?' (po subvenciji in odbitku DDV)':' (po subvenciji)')+' in razlika z vsakim kilometrom le raste. '+endTxt.charAt(0).toUpperCase()+endTxt.slice(1)+' — to je ≈ '+EUR(perMonth)+' na mesec.'
+      ? '<b class="g">'+evName+'</b> je cenejši <b>že od prvega dne</b>'+(bizEv?' (po subvenciji in odbitku DDV)':' (po subvenciji)')+' in razlika z vsakim kilometrom le raste. '+endTxt.charAt(0).toUpperCase()+endTxt.slice(1)+' — to je ≈ '+EUR(perMonth)+' na mesec.'
       : be<=years
         ? '<b class="g">'+evName+'</b> na začetku stane več (višja nabavna cena), a nižji stroški vožnje in vzdrževanja razliko izničijo po <b>'+NUM(be,1)+' letih</b> (pribl. '+beKm+' km) — to je <b>točka preloma</b>. Od tu naprej vsak prevožen kilometer dela plus, '+endTxt+' (≈ '+EUR(perMonth)+'/mesec).'
         : 'Skupaj v '+letihTxt+' te <b class="o">'+iceName+'</b> stane <b>'+EUR(totIce)+'</b> (≈ '+EUR(monthIce)+'/mesec), <b class="g">'+evName+'</b> pa <b>'+EUR(totEv)+'</b> (≈ '+EUR(monthEv)+'/mesec). Višja nabavna cena električnega bi se povrnila šele po <b>'+NUM(be,1)+' letih</b> (pribl. '+beKm+' km) — <b>po tvoji dobi</b> '+years+' let. V tej dobi '+endTxt.replace('do konca '+years+'. leta ','')+' (≈ '+EUR(perMonth)+'/mesec).';
 
   // ---- table ----
-  renderTable({purchaseIce,purchaseEv,energyIce,energyEv,maintIce,maintEv,totIce,totEv,depOn,biz,
+  renderTable({purchaseIce,purchaseEv,energyIce,energyEv,maintIce,maintEv,totIce,totEv,depOn,bizIce,bizEv,
     servIce:val("servIce")*years,servEv:val("servEv")*years,
     insIce:val("insIce")*years,insEv:val("insEv")*years,
     regIce:val("regIce")*years,regEv:val("regEv")*years,
     tyreIce:tyreIceYear*years,tyreEv:tyreEvYear*years,
     bonTotal, vatEv, subsidy, resIceEur, resEvEur});
-  $("tblSub").textContent="Za celotno dobo "+years+" let · "+NUM(totalKm)+" km"+(biz?" · poslovno lastništvo":"")+".";
+  $("tblSub").textContent="Za celotno dobo "+years+" let · "+NUM(totalKm)+" km"+((bizIce||bizEv)?" · poslovno lastništvo":"")+".";
 
   // ---- CO2 ----
   computeCO2({kmYear,years,totalKm,consIce,consEv,fuel:ICE[state.iceIdx].fuel,battEv:EV[state.evIdx].batt});
@@ -1905,17 +1938,17 @@ function renderTable(d){
   if(d.depOn){
     html+=row("Nakup − subvencija − iztržek", d.purchaseIce, d.purchaseEv);
     html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ vklj. subvencija</td><td>–</td><td style="color:var(--ev-ink)">−${NUM(d.subsidy)} €</td><td></td></tr>`;
-    if(d.biz && d.vatEv>0) html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ odbitek DDV</td><td>–</td><td style="color:var(--ev-ink)">−${NUM(d.vatEv)} €</td><td></td></tr>`;
+    if(d.bizEv && d.vatEv>0) html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ odbitek DDV</td><td>–</td><td style="color:var(--ev-ink)">−${NUM(d.vatEv)} €</td><td></td></tr>`;
     html+=`<tr><td style="padding-left:24px;color:var(--muted);font-size:12.5px">↳ preostala vrednost</td><td style="color:var(--muted)">−${NUM(d.resIceEur)} €</td><td style="color:var(--muted)">−${NUM(d.resEvEur)} €</td><td></td></tr>`;
   } else {
-    html+=row("Nakup − subvencija"+(d.biz&&d.vatEv>0?" − DDV":""), d.purchaseIce, d.purchaseEv);
+    html+=row("Nakup − subvencija"+(d.bizEv&&d.vatEv>0?" − DDV":""), d.purchaseIce, d.purchaseEv);
   }
   html+=row("Energija (gorivo / elektrika)", d.energyIce, d.energyEv);
   html+=row("Servis", d.servIce, d.servEv, true);
   html+=row("Zavarovanje", d.insIce, d.insEv, true);
   html+=row("Registracija", d.regIce, d.regEv, true);
   html+=row("Gume (obraba na km)", d.tyreIce, d.tyreEv, true);
-  if(d.biz) html+=row("Boniteta (dohodnina voznika)", d.bonTotal, 0, true);
+  if(d.bizIce) html+=row("Boniteta (dohodnina voznika)", d.bonTotal, 0, true);
   const save=d.totIce-d.totEv;
   html+=`<tr class="sum"><td>Skupni strošek lastništva</td><td>${EUR(d.totIce)}</td><td>${EUR(d.totEv)}</td>
     <td class="cell-save ${save>=0?'pos':'neg'}">${(save>=0?"+":"−")+EUR(Math.abs(save))}</td></tr>`;
@@ -2001,7 +2034,7 @@ const FIELD_KEYS=["kmYear","years","homeShare","priceIce","priceEv","subsidy","c
 $("btnShare").onclick=()=>{
   const p=new URLSearchParams();
   p.set("seg",state.seg); p.set("iceIdx",state.iceIdx); p.set("evIdx",state.evIdx);
-  p.set("owner",state.owner); p.set("grid",state.grid);
+  p.set("ownerIce",state.ownerIce); p.set("ownerEv",state.ownerEv); p.set("grid",state.grid);
   FIELD_KEYS.forEach(k=>p.set(k,$(k).value));
   p.set("depOn",$("depOn").checked?1:0);
   const url=location.origin+location.pathname+"#"+p.toString();
@@ -2021,9 +2054,13 @@ function loadFromHash(){
   loadVehicleDefaults();
   FIELD_KEYS.forEach(k=>{ if(p.has(k)) $(k).value=p.get(k); });
   if(p.has("depOn")) $("depOn").checked=p.get("depOn")==="1";
-  if(p.has("owner")){ state.owner=p.get("owner"); syncOwner(); }
+  // združljivost: stare povezave z enim "owner" veljajo za obe strani
+  if(p.has("owner")){ state.ownerIce=state.ownerEv=p.get("owner"); }
+  if(p.has("ownerIce")) state.ownerIce=p.get("ownerIce");
+  if(p.has("ownerEv")) state.ownerEv=p.get("ownerEv");
+  if(p.has("owner")||p.has("ownerIce")||p.has("ownerEv")) syncOwner();
   if(p.has("grid")){ state.grid=p.get("grid"); syncGrid(); }
-  if(p.get("subsidy")!==String(autoSubsidy(+$("priceEv").value, state.owner))){ state.subsidyAuto=false; $("subHint").textContent="ročno"; }
+  if(p.get("subsidy")!==String(autoSubsidy(+$("priceEv").value, state.ownerEv))){ state.subsidyAuto=false; $("subHint").textContent="ročno"; }
   return true;
 }
 
@@ -2170,7 +2207,7 @@ function openPrivacy(){ openModal("pPrivacy","Politika zasebnosti in pravno obve
 
 /* ============ init ============ */
 function init(reset){
-  state={seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, owner:"private", grid:"si"};
+  state={seg:"suv", iceIdx:null, evIdx:null, subsidyAuto:true, ownerIce:"private", ownerEv:"private", grid:"si"};
   syncSegButtons(); syncOwner(); refreshSegment(); loadVehicleDefaults();
   $("kmYear").value=DEF.kmYear; $("years").value=DEF.years; $("homeShare").value=DEF.homeShare;
   $("priceHome").value=DEF.priceHome; $("pricePublic").value=DEF.pricePublic;
@@ -2273,7 +2310,7 @@ document.addEventListener("input",e=>{
 document.addEventListener("click",e=>{
   if(!e.isTrusted) return;
   const t=e.target;
-  if(t&&t.closest&&t.closest("#segbar,#ownerSeg,#gridSeg")){
+  if(t&&t.closest&&t.closest("#segbar,#ownerSegIce,#ownerSegEv,#gridSeg")){
     if(window.__bumpScenario) window.__bumpScenario();
   }
 },true);
